@@ -9,5 +9,29 @@
   "requireSubscribe": true,
   "youtubeApiKey": "",
   "adsensePublisherId": "ca-pub-3266873353292561",
-  "adsenseSlot": ""
+  "adsenseSlot": "",
+  "channels": [
+    {
+      "id": "steel-sound-asmr",
+      "name": "Steel & Sound ASMR",
+      "url": "https://www.youtube.com/channel/UC47UDTYtHld2i0Uy50hQ0Q?sub_confirmation=1",
+      "genre": "ambient_asmr",
+      "tag": "ASMR Industriel & CNC",
+      "description": "Précision mécanique, usinage CNC grande vitesse et sons métalliques purs.",
+      "baseSubscribers": 15200,
+      "subscribersGained": 184,
+      "featuredVideoId": "p7fZuVUGoKg"
+    },
+    {
+      "id": "zenith-asmr",
+      "name": "Zenith ASMR",
+      "url": "https://www.youtube.com/channel/UCH4bJCe-lekDDVzNU8z7E-w?sub_confirmation=1",
+      "genre": "ambient_asmr",
+      "tag": "Relaxation & Nature",
+      "description": "Voyages visuels apaisants, horizons crépusculaires et relaxation profonde.",
+      "baseSubscribers": 11900,
+      "subscribersGained": 89,
+      "featuredVideoId": "Nwj4-VIUf6E"
+    }
+  ]
 }

@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-adsense-account" content="ca-pub-3266873353292561">
+<title>Music — Hub musical sans droits</title>
+<meta name="description" content="Music : recherche pro de musiques libres de droits (Openverse, Jamendo, Internet Archive), 27 genres, bibliothèque, crédits YouTube et gestion de chaînes.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FBBF24'/%3E%3Cstop offset='1' stop-color='%23FF2D2D'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='%230D111A' stroke='url(%23g)' stroke-width='4'/%3E%3Crect x='19' y='28' width='5' height='16' rx='2.5' fill='url(%23g)'/%3E%3Crect x='29.5' y='18' width='5' height='26' rx='2.5' fill='url(%23g)'/%3E%3Crect x='40' y='24' width='5' height='20' rx='2.5' fill='url(%23g)'/%3E%3C/svg%3E">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: { extend: {
+    fontFamily: { sans: ['"Plus Jakarta Sans"','sans-serif'], display: ['Cinzel','serif'], mono: ['"JetBrains Mono"','monospace'] },
+    colors: {
+      gold: { 300:'#FCD34D', 400:'#FBBF24', 500:'#D4AF37', 600:'#B4941F' },
+      yt: { red:'#FF0000' },
+      obsidian: { 950:'#07090E', 900:'#0D111A', 800:'#161D2B', 700:'#212B3F' }
+    }
+  } }
+}
+</script>
+<style>
+body{background-color:#07090E;color:#F3F4F6;
+  background-image:radial-gradient(circle at 12% 15%,rgba(212,175,55,.09) 0%,transparent 45%),radial-gradient(circle at 88% 82%,rgba(255,0,0,.06) 0%,transparent 45%),radial-gradient(circle at 50% 50%,rgba(30,41,59,.15) 0%,transparent 60%);
+  background-attachment:fixed;}
+.glass-card{background:rgba(22,29,43,.75);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.08);transition:all .25s ease}
+.glass-card:hover{border-color:rgba(212,175,55,.4);transform:translateY(-2px);box-shadow:0 15px 35px -10px rgba(0,0,0,.7)}
+.glass-card.is-current{border-color:rgba(212,175,55,.7);box-shadow:0 0 0 1px rgba(212,175,55,.35),0 15px 35px -10px rgba(212,175,55,.2)}
+.btn-youtube{background:linear-gradient(135deg,#FF0000,#C80000);box-shadow:0 4px 15px rgba(255,0,0,.25);transition:all .2s}
+.btn-youtube:hover{background:linear-gradient(135deg,#FF1A1A,#E00000);transform:scale(1.02)}
+.btn-gold{background:linear-gradient(135deg,#D4AF37,#AA8820);color:#07090E;transition:all .2s}
+.btn-gold:hover{filter:brightness(1.1);transform:translateY(-1px)}
+::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:#07090E}::-webkit-scrollbar-thumb{background:#212B3F;border-radius:9999px}::-webkit-scrollbar-thumb:hover{background:#D4AF37}
+.noscroll{scrollbar-width:none}.noscroll::-webkit-scrollbar{display:none}
+/* Logo animé */
+.logo-disc{animation:spin 9s linear infinite;transform-origin:32px 32px}
+.playing .logo-disc{animation-duration:2.4s}
+.eq-bar{transform-box:fill-box;transform-origin:center bottom;animation:eq 1.1s ease-in-out infinite}
+.eq-bar:nth-child(2){animation-delay:.2s}.eq-bar:nth-child(3){animation-delay:.45s}.eq-bar:nth-child(4){animation-delay:.1s}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes eq{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+/* Visualiseur */
+.viz{display:flex;align-items:flex-end;gap:2px;height:18px}
+.viz i{display:block;width:3px;border-radius:2px;background:linear-gradient(#FBBF24,#FF3B3B);height:30%;animation:eq 1s ease-in-out infinite;animation-play-state:paused}
+.viz i:nth-child(2n){animation-duration:.8s}.viz i:nth-child(3n){animation-duration:1.3s}.viz i:nth-child(4n){animation-delay:.25s}
+.is-playing .viz i{animation-play-state:running}
+.skeleton{background:linear-gradient(90deg,#161D2B 25%,#212B3F 50%,#161D2B 75%);background-size:200% 100%;animation:sk 1.3s infinite}
+@keyframes sk{to{background-position:-200% 0}}
+.fade-in{animation:fi .35s ease both}@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.chip{padding:.5rem .9rem;border-radius:.75rem;font-size:.75rem;font-weight:600;white-space:nowrap;display:inline-flex;align-items:center;gap:.45rem;cursor:pointer;border:1px solid rgba(255,255,255,.1);background:rgba(13,17,26,.8);color:#d1d5db;transition:all .2s}
+.chip:hover{color:#fff;border-color:rgba(212,175,55,.45)}
+.chip.on{background:#D4AF37;border-color:#FBBF24;color:#07090E;font-weight:800}
+.chip.mood.on{background:#FF3B3B;border-color:#FF6B6B;color:#fff}
+.pill{font-size:.7rem;padding:.35rem .7rem;border-radius:9999px;border:1px solid rgba(255,255,255,.12);cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;color:#d1d5db}
+.pill.on{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.5);color:#6ee7b7}
+input[type=range]{accent-color:#f59e0b}
+</style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-gold-500 selection:text-obsidian-950 pb-32">
+
+<div id="toast-container" class="fixed top-24 right-5 z-[90] flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+<!-- HEADER -->
+<header class="sticky top-0 z-40 border-b border-white/10 bg-obsidian-950/85 backdrop-blur-md">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3 shrink-0" id="brand">
+      <svg id="logo" class="w-11 h-11" viewBox="0 0 64 64" aria-label="Logo Music">
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBBF24"/><stop offset="1" stop-color="#FF2D2D"/></linearGradient>
+          <radialGradient id="lbg" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#161D2B"/><stop offset="1" stop-color="#07090E"/></radialGradient>
+        </defs>
+        <circle cx="32" cy="32" r="30" fill="url(#lbg)" stroke="url(#lg)" stroke-width="2.5"/>
+        <g class="logo-disc" fill="none" stroke="url(#lg)" stroke-opacity=".45" stroke-width="1">
+          <circle cx="32" cy="32" r="26" stroke-dasharray="6 5"/><circle cx="32" cy="32" r="21" stroke-dasharray="3 7"/>
+        </g>
+        <g fill="url(#lg)">
+          <rect class="eq-bar" x="18" y="22" width="5" height="22" rx="2.5"/>
+          <rect class="eq-bar" x="26" y="16" width="5" height="28" rx="2.5"/>
+          <rect class="eq-bar" x="34" y="20" width="5" height="24" rx="2.5"/>
+          <rect class="eq-bar" x="42" y="26" width="5" height="18" rx="2.5"/>
+        </g>
+      </svg>
+      <div>
+        <span class="font-display font-extrabold text-2xl tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-500 to-red-500 block leading-none">MUSIC</span>
+        <span class="text-[11px] text-gray-400 font-medium">Libre de droits · 27 genres · 3 sources</span>
+      </div>
+    </div>
+
+    <nav id="nav-desktop" class="hidden md:flex items-center gap-1 p-1 bg-obsidian-900/80 border border-white/10 rounded-xl"></nav>
+
+    <div class="flex items-center gap-2.5 shrink-0">
+      <div id="admin-actions" class="hidden items-center gap-2.5">
+        <div class="hidden lg:flex flex-col text-right pr-2 border-r border-white/10">
+          <span class="text-[10px] text-gray-400 uppercase tracking-wider">Écoutes</span>
+          <span class="font-mono text-xs font-bold text-emerald-400" id="header-subs-total">0</span>
+        </div>
+        <button onclick="openChannelModal()" class="btn-gold px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5">
+          <i class="fa-solid fa-plus"></i><span class="hidden sm:inline">Chaîne</span>
+        </button>
+      </div>
+      <div id="user-area" class="hidden items-center gap-2"></div>
+    </div>
+  </div>
+  <div id="nav-mobile" class="md:hidden flex items-center justify-around border-t border-white/10 px-2 py-2 bg-obsidian-950 text-xs"></div>
+</header>
+
+<main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
+
+<!-- ACCUEIL -->
+<section id="tab-home" class="space-y-8">
+  <div class="relative rounded-3xl p-6 sm:p-10 border border-gold-500/25 bg-gradient-to-r from-obsidian-950 via-obsidian-900 to-obsidian-950 overflow-hidden shadow-2xl">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-72 h-72 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="relative z-10 max-w-3xl">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-400 text-xs font-semibold mb-4"><i class="fa-solid fa-headphones"></i> Votre studio musical</div>
+      <h1 class="font-display text-3xl sm:text-5xl font-bold text-white tracking-tight leading-tight mb-3">Toute la musique libre,<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 via-amber-200 to-red-400">à portée d'un clic</span></h1>
+      <p class="text-gray-300 text-sm sm:text-base leading-relaxed mb-6">Cherchez dans des centaines de milliers de morceaux Creative Commons, filtrez par genre, ambiance et licence, ajoutez-les à vos chaînes et générez les crédits prêts pour YouTube.</p>
+      <div class="flex flex-wrap gap-3">
+        <button onclick="switchTab('discover')" class="btn-gold px-5 py-3 rounded-xl text-sm font-bold flex items-center gap-2"><i class="fa-solid fa-compass"></i> Découvrir de la musique</button>
+        <button onclick="surpriseMe()" class="px-5 py-3 rounded-xl text-sm font-bold flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/15"><i class="fa-solid fa-dice"></i> Surprends-moi</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-2 overflow-x-auto pb-2 noscroll" id="home-genres"></div>
+
+  <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-obsidian-900/60 border border-white/10">
+    <div class="relative w-full sm:w-80">
+      <i class="fa-solid fa-magnifying-glass text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 text-xs"></i>
+      <input id="home-search" type="text" oninput="renderHome()" placeholder="Filtrer ma bibliothèque (titre, artiste)…" class="w-full pl-9 pr-4 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white placeholder-gray-500 text-xs focus:outline-none focus:border-gold-500">
+    </div>
+    <div class="flex items-center gap-4 text-xs text-gray-400">
+      <span>Pistes : <strong class="text-white font-mono" id="home-count">0</strong></span>
+      <button id="home-online-btn" onclick="exploreGenreOnline()" class="btn-gold px-3 py-1.5 rounded-lg font-bold text-[11px]"><i class="fa-solid fa-earth-europe mr-1"></i> Explorer ce genre en ligne</button>
+    </div>
+  </div>
+  <div id="home-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+</section>
+
+<!-- DÉCOUVRIR -->
+<section id="tab-discover" class="hidden space-y-6">
+  <div class="rounded-3xl p-6 sm:p-8 border border-white/10 bg-obsidian-900/80 space-y-5">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-2"><i class="fa-solid fa-globe"></i> Recherche multi-sources en direct</div>
+        <h2 class="font-display text-2xl sm:text-3xl font-bold text-white">Découvrir</h2>
+        <p class="text-xs text-gray-400 mt-1">Les résultats viennent en direct des catalogues ouverts. Vérifiez toujours la licence avant publication.</p>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="surpriseMe()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15 border border-white/15 flex items-center gap-2"><i class="fa-solid fa-dice"></i> Surprends-moi</button>
+        <button onclick="openYTMusic()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-red-600/15 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 flex items-center gap-2"><i class="fa-brands fa-youtube"></i> Ouvrir dans YouTube Music</button>
+        <button onclick="openImportModal()" class="btn-gold px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2"><i class="fa-solid fa-link"></i> Importer une URL</button>
+      </div>
+    </div>
+
+    <form onsubmit="event.preventDefault();runSearch(true)" class="flex gap-2">
+      <div class="relative flex-1">
+        <i class="fa-solid fa-magnifying-glass text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 text-sm"></i>
+        <input id="q" type="search" list="q-hist" autocomplete="off" placeholder="Instrument, ambiance, artiste, titre… (ex : piano rain, saxophone, 80s synth)" class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-obsidian-950 border border-white/15 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-gold-500">
+        <datalist id="q-hist"></datalist>
+      </div>
+      <button class="btn-gold px-6 rounded-2xl font-bold text-sm flex items-center gap-2"><i class="fa-solid fa-magnifying-glass"></i><span class="hidden sm:inline">Rechercher</span></button>
+    </form>
+
+    <div>
+      <div class="text-[10px] uppercase tracking-wider text-gray-500 mb-2 font-semibold">Genres</div>
+      <div id="genre-chips" class="flex flex-wrap gap-2"></div>
+    </div>
+    <div>
+      <div class="text-[10px] uppercase tracking-wider text-gray-500 mb-2 font-semibold">Ambiances</div>
+      <div id="mood-chips" class="flex flex-wrap gap-2"></div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 pt-4 border-t border-white/10 items-end">
+      <label class="text-[11px] text-gray-400">Licence
+        <select id="f-license" onchange="applyFilters()" class="mt-1 w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs">
+          <option value="all">Toutes (CC)</option><option value="cc0">CC0 / Domaine public</option><option value="by">CC BY</option><option value="by-sa">CC BY-SA</option>
+        </select></label>
+      <label class="text-[11px] text-gray-400">Durée min.
+        <select id="f-dur" onchange="applyFilters()" class="mt-1 w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs">
+          <option value="0">Toutes</option><option value="60">&gt; 1 min</option><option value="180">&gt; 3 min</option><option value="600">&gt; 10 min</option><option value="1800">&gt; 30 min</option>
+        </select></label>
+      <label class="text-[11px] text-gray-400">Tri
+        <select id="f-sort" onchange="applyFilters()" class="mt-1 w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs">
+          <option value="rel">Pertinence (mixte)</option><option value="dur-desc">Plus longs</option><option value="dur-asc">Plus courts</option><option value="title">Titre A→Z</option>
+        </select></label>
+      <label class="flex items-center gap-2 text-[11px] text-gray-300 cursor-pointer md:col-span-1"><input id="f-commercial" type="checkbox" checked onchange="runSearch(true)" class="rounded"> Usage commercial uniquement <span class="text-gray-500">(décochez pour inclure l'écoute seule sur YouTube)</span></label>
+      <div class="flex flex-wrap gap-2 justify-end" id="source-pills"></div>
+    </div>
+    <details class="text-xs text-gray-400">
+      <summary class="cursor-pointer text-gold-400 font-semibold">Réglages des sources (clé Jamendo optionnelle)</summary>
+      <div class="mt-3 grid md:grid-cols-2 gap-3">
+        <label>Jamendo client_id (gratuit sur developer.jamendo.com)
+          <input id="jamendo-key" type="text" placeholder="ex : 1a2b3c4d" onchange="saveSettings()" class="mt-1 w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs font-mono"></label>
+        <p class="text-[11px] leading-relaxed self-end">Openverse et Internet Archive marchent sans clé. Jamendo ajoute des milliers de morceaux d'artistes indépendants, mais exige une clé. Le quota anonyme d'Openverse est limité : en cas d'erreur 429, patientez une minute.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="flex items-center justify-between text-xs text-gray-400"><div id="search-status">Lancez une recherche ou choisissez un genre.</div><div id="result-count" class="font-mono"></div></div>
+  <div id="discover-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+  <div class="text-center"><button id="more-btn" onclick="runSearch(false)" class="hidden px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-sm font-bold"><i class="fa-solid fa-angles-down mr-2"></i> Charger plus de résultats</button></div>
+</section>
+
+<!-- BIBLIOTHÈQUE -->
+<section id="tab-library" class="hidden space-y-6">
+  <div class="rounded-3xl p-6 sm:p-8 border border-white/10 bg-obsidian-900/80">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <h2 class="font-display text-2xl sm:text-3xl font-bold text-white">Ma Bibliothèque</h2>
+        <p class="text-xs text-gray-400 mt-1">Favoris, pistes placées dans vos chaînes, crédits et sauvegarde.</p>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button onclick="copyAllCredits()" class="btn-gold px-4 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-copy mr-1.5"></i> Crédits YouTube</button>
+        <button onclick="exportBackup()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15"><i class="fa-solid fa-download mr-1.5"></i> Sauvegarde JSON</button>
+        <label class="px-4 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15 cursor-pointer"><i class="fa-solid fa-upload mr-1.5"></i> Restaurer<input type="file" accept="application/json" class="hidden" onchange="importBackup(this)"></label>
+      </div>
+    </div>
+    <div class="flex gap-2 mt-5" id="lib-tabs"></div>
+  </div>
+  <div id="library-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+</section>
+
+<!-- CHAÎNES -->
+<section id="tab-channels" class="hidden space-y-8">
+  <div class="rounded-3xl p-6 sm:p-8 border border-white/10 bg-obsidian-900/80">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-white/10">
+      <div>
+        <h2 class="font-display text-2xl sm:text-3xl font-bold text-white">Mes Chaînes YouTube</h2>
+        <p class="text-xs text-gray-300 mt-1 max-w-2xl">Le paramètre <code class="text-gold-400 bg-black/40 px-1 rounded font-mono text-[11px]">?sub_confirmation=1</code> est ajouté automatiquement aux liens.</p>
+      </div>
+      <button onclick="openChannelModal()" class="btn-gold font-bold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2"><i class="fa-solid fa-plus"></i> Ajouter une chaîne</button>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
+      <div class="p-4 rounded-2xl bg-obsidian-950/70 border border-white/10"><span class="text-[10px] text-gray-400 uppercase tracking-wider block">Chaînes</span><span class="text-2xl font-bold font-mono text-white" id="kpi-channel-count">0</span></div>
+      <div class="p-4 rounded-2xl bg-obsidian-950/70 border border-white/10"><span class="text-[10px] text-gray-400 uppercase tracking-wider block">Vidéos lancées</span><span class="text-2xl font-bold font-mono text-emerald-400" id="kpi-subs-gained">+0</span></div>
+      <div class="p-4 rounded-2xl bg-obsidian-950/70 border border-white/10"><span class="text-[10px] text-gray-400 uppercase tracking-wider block">Audience estimée</span><span class="text-2xl font-bold font-mono text-gold-400" id="kpi-audience-total">0</span></div>
+    </div>
+  </div>
+  <div class="rounded-3xl p-6 sm:p-8 border border-gold-500/30 bg-obsidian-900/80 space-y-5">
+    <div>
+      <h3 class="font-display text-xl font-bold text-white">Réglages du réseau (administrateur)</h3>
+      <p class="text-xs text-gray-400 mt-1">Ces réglages sont enregistrés dans ce navigateur. Pour qu'ils s'appliquent à vos visiteurs, cliquez sur « Exporter la configuration » et déposez <code class="text-gold-400">music_config.json</code> à côté de la page.</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-4 text-xs text-gray-300">
+      <label>Client ID Google OAuth
+        <input id="cfg-client" placeholder="1234567890-abc.apps.googleusercontent.com" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white font-mono text-[11px]"></label>
+      <label>E-mails administrateurs (séparés par des virgules)
+        <input id="cfg-admins" placeholder="vous@gmail.com" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></label>
+      <label>Chaîne cible : celle où s'intègrent les musiques choisies
+        <select id="cfg-target" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></select></label>
+      <label>Vidéo de la chaîne proposée à chaque choix (URL ou ID)
+        <input id="cfg-video" placeholder="https://www.youtube.com/watch?v=…" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></label>
+      <label>Clé API YouTube (facultatif, restreinte à votre domaine)
+        <input id="cfg-ytkey" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white font-mono text-[11px]"></label>
+      <label>AdSense : ID éditeur (ca-pub-…)
+        <input id="cfg-adpub" placeholder="ca-pub-1234567890123456" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white font-mono text-[11px]"></label>
+      <label>AdSense : ID du bloc d'annonce (slot)
+        <input id="cfg-adslot" placeholder="1234567890" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white font-mono text-[11px]"></label>
+      <label class="flex items-center gap-2"><input id="cfg-login" type="checkbox" class="rounded"> Connexion Google obligatoire</label>
+      <label class="flex items-center gap-2"><input id="cfg-sub" type="checkbox" class="rounded"> Abonnement au réseau obligatoire <span class="text-amber-300">(déconseillé : interdit par les règles de l'API YouTube)</span></label>
+    </div>
+    <div class="flex flex-wrap gap-3">
+      <button onclick="saveConfig()" class="btn-gold px-5 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-floppy-disk mr-1.5"></i> Enregistrer</button>
+      <button onclick="exportConfig()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-file-export mr-1.5"></i> Exporter la configuration</button>
+    </div>
+    <details class="text-xs text-gray-400"><summary class="cursor-pointer text-gold-400 font-semibold">Comment obtenir le Client ID Google ?</summary>
+      <ol class="list-decimal ml-5 mt-2 space-y-1 leading-relaxed">
+        <li>Console Google Cloud → créer un projet → « API et services » → activer <b>YouTube Data API v3</b>.</li>
+        <li>Écran de consentement OAuth → ajouter le champ d'application <code>.../auth/youtube</code> (sensible).</li>
+        <li>Identifiants → créer un « ID client OAuth » de type <b>Application Web</b>, avec pour origine JavaScript autorisée l'adresse exacte de votre site (https://… ou http://localhost). Le fichier ouvert directement (file://) ne fonctionne pas.</li>
+        <li>Collez l'ID ci-dessus, ajoutez votre e-mail administrateur, enregistrez, puis exportez la configuration.</li>
+        <li>Verrouillé dehors ? Ajoutez <code>#reset</code> à l'adresse pour effacer les réglages de ce navigateur, ou <code>#admin</code> tant qu'aucune configuration complète n'existe.</li>
+      </ol></details>
+  </div>
+  <div id="channels-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+</section>
+
+<!-- STATS -->
+<section id="tab-stats" class="hidden space-y-8">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="rounded-3xl p-6 bg-obsidian-900/80 border border-white/10"><span class="text-[11px] uppercase tracking-wider text-gray-400 font-semibold block mb-1">Vidéos chaîne lancées</span><span class="text-3xl font-extrabold font-mono text-emerald-400" id="stats-total-subs">+0</span></div>
+    <div class="rounded-3xl p-6 bg-obsidian-900/80 border border-white/10"><span class="text-[11px] uppercase tracking-wider text-gray-400 font-semibold block mb-1">Pistes en bibliothèque</span><span class="text-3xl font-extrabold font-mono text-gold-400" id="stats-tracks">0</span></div>
+    <div class="rounded-3xl p-6 bg-obsidian-900/80 border border-white/10"><span class="text-[11px] uppercase tracking-wider text-gray-400 font-semibold block mb-1">Écoutes lancées</span><span class="text-3xl font-extrabold font-mono text-sky-400" id="stats-total-plays">0</span></div>
+    <div class="rounded-3xl p-6 bg-obsidian-900/80 border border-white/10"><span class="text-[11px] uppercase tracking-wider text-gray-400 font-semibold block mb-1">Contacts e-mail</span><span class="text-3xl font-extrabold font-mono text-white" id="stats-subscribers-count">0</span></div>
+  </div>
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <div class="lg:col-span-7 rounded-3xl p-6 sm:p-7 bg-obsidian-900/80 border border-white/10">
+      <h3 class="font-display text-lg font-bold text-white mb-4">Pistes par chaîne</h3>
+      <div id="stats-bars" class="space-y-3.5"></div>
+    </div>
+    <div class="lg:col-span-5 rounded-3xl p-6 sm:p-7 bg-obsidian-900/80 border border-gold-500/30 flex flex-col justify-between">
+      <div>
+        <h3 class="font-display text-lg font-bold text-white mb-2">Alertes nouvelles sorties</h3>
+        <p class="text-xs text-gray-300 mb-4">Collectez les e-mails des auditeurs (stockés localement dans votre navigateur).</p>
+        <form onsubmit="handleNewsletterSubmit(event)" class="space-y-3">
+          <input type="email" id="newsletter-email" required placeholder="auditeur@exemple.com" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs focus:outline-none focus:border-gold-500">
+          <button class="w-full btn-gold font-bold text-xs py-2.5 rounded-xl">S'inscrire aux alertes</button>
+        </form>
+      </div>
+      <button onclick="exportSubscribersCSV()" class="mt-6 w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-bold"><i class="fa-solid fa-download text-gold-400 mr-2"></i>Télécharger les e-mails (.CSV)</button>
+    </div>
+  </div>
+</section>
+<section id="about" class="max-w-4xl mx-auto mt-16 pt-10 border-t border-white/10 text-sm text-gray-300 leading-relaxed space-y-5">
+  <h2 class="font-display text-2xl font-bold text-white">À propos de Music</h2>
+  <p>Music est un moteur de recherche de musiques libres de droits. Il interroge en direct Openverse, Jamendo et Internet Archive, trois catalogues ouverts, et propose aussi la recherche sur YouTube pour l'écoute. Vous filtrez par genre (jazz, lo-fi, électro, classique, ambient, ASMR, cinématique…), par ambiance, par licence et par durée, puis vous écoutez, gardez vos favoris et copiez les crédits prêts à coller dans la description d'une vidéo.</p>
+  <h3 class="text-lg font-bold text-white">Comprendre les licences Creative Commons</h3>
+  <ul class="list-disc ml-5 space-y-1.5">
+    <li><b>CC0 / domaine public</b> : aucune obligation, usage commercial permis.</li>
+    <li><b>CC BY</b> : usage commercial permis à condition de citer l'auteur, le titre, la licence et la source.</li>
+    <li><b>CC BY-SA</b> : comme CC BY, mais votre création doit être partagée sous la même licence.</li>
+    <li><b>NC</b> (non commercial) : interdit dans une vidéo monétisée.</li>
+    <li><b>ND</b> (pas de modification) : le morceau ne peut être ni remixé ni coupé.</li>
+  </ul>
+  <h3 class="text-lg font-bold text-white">Conseils pour les créateurs YouTube</h3>
+  <p>Activez « Usage commercial uniquement » si votre chaîne est monétisée, copiez les crédits dès que vous utilisez un morceau et gardez la page source. Une licence peut changer : vérifiez-la chez l'auteur avant de publier. Les titres YouTube marqués « Écoute seule » ne sont pas réutilisables dans vos vidéos.</p>
+  <h3 class="text-lg font-bold text-white">Questions fréquentes</h3>
+  <p><b>Pourquoi une connexion Google ?</b> Elle permet de vérifier l'abonnement au réseau de chaînes. Rien n'est envoyé à un serveur : tout reste dans votre navigateur. <b>Où sont mes favoris ?</b> Dans ce navigateur : utilisez la sauvegarde JSON de la bibliothèque pour les déplacer. <b>Une piste ne se lance pas ?</b> Son fichier a peut-être été retiré : l'application passe à la suivante.</p>
+</section>
+</main>
+
+<!-- LECTEUR YOUTUBE (visible, conforme aux règles de YouTube) -->
+<div id="yt-dock" class="hidden fixed left-4 bottom-40 md:bottom-24 z-40 w-72 rounded-2xl bg-obsidian-900 border border-red-500/40 shadow-2xl overflow-hidden">
+  <div class="flex items-center justify-between px-3 py-1.5 border-b border-white/10 text-[10px] uppercase tracking-wider text-red-400 font-semibold"><span><i class="fa-brands fa-youtube mr-1"></i>YouTube Music</span><button onclick="stopYT()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button></div>
+  <div id="yt-holder" class="aspect-video bg-black"></div>
+</div>
+
+<footer class="max-w-7xl mx-auto w-full px-4 sm:px-6 pb-8 text-center text-[11px] text-gray-500 space-y-3">
+  <div id="ad-slot" class="hidden"></div>
+  <p>Music — musiques sous licences Creative Commons : respectez les crédits exigés par chaque licence. · <a href="privacy.html" target="_blank" rel="noopener" class="underline hover:text-gold-400">Politique de confidentialité</a></p>
+</footer>
+
+<!-- LECTEUR -->
+<aside id="player" class="fixed bottom-0 left-0 right-0 z-40 bg-obsidian-950/95 border-t border-gold-500/30 backdrop-blur-xl px-4 py-3 sm:px-6 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-3">
+  <div class="flex items-center gap-3.5 w-full md:w-1/3 min-w-0">
+    <img id="p-cover" alt="" class="w-12 h-12 rounded-xl object-cover border border-white/10">
+    <div class="min-w-0 flex-1">
+      <div class="flex items-center gap-2"><h4 id="p-title" class="text-sm font-bold text-white truncate">Sélectionnez une musique</h4><span id="p-genre" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-gold-400 hidden"></span></div>
+      <p id="p-artist" class="text-xs text-gray-400 truncate">—</p>
+      <span id="p-sub" class="text-[11px] text-gold-400/90 truncate block"></span>
+    </div>
+    <div class="viz hidden sm:flex"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="flex flex-col items-center gap-1.5 w-full md:w-2/5">
+    <div class="flex items-center gap-3">
+      <button id="p-shuf" onclick="toggleShuffle()" title="Aléatoire" class="p-1.5 text-gray-400 hover:text-white"><i class="fa-solid fa-shuffle"></i></button>
+      <button onclick="prevTrack()" class="p-1.5 text-gray-300 hover:text-white"><i class="fa-solid fa-backward-step"></i></button>
+      <button onclick="togglePlay()" class="w-10 h-10 rounded-full bg-gold-500 hover:bg-gold-400 text-obsidian-950 flex items-center justify-center shadow-lg"><i id="p-icon" class="fa-solid fa-play ml-0.5"></i></button>
+      <button onclick="nextTrack()" class="p-1.5 text-gray-300 hover:text-white"><i class="fa-solid fa-forward-step"></i></button>
+      <button id="p-rep" onclick="toggleRepeat()" title="Répéter" class="p-1.5 text-gray-400 hover:text-white"><i class="fa-solid fa-repeat"></i></button>
+    </div>
+    <div class="w-full flex items-center gap-2.5 text-[11px] font-mono text-gray-400">
+      <span id="p-cur" class="w-10 text-right tabular-nums">0:00</span>
+      <input type="range" id="p-seek" min="0" max="1000" value="0" oninput="handleSeek(this.value)" class="flex-1 h-1 cursor-pointer">
+      <span id="p-dur" class="w-10 tabular-nums">0:00</span>
+    </div>
+  </div>
+  <div class="hidden md:flex items-center justify-end gap-3 w-1/3">
+    <select id="p-sleep" onchange="setSleep(this.value)" title="Minuteur de sommeil" class="text-[11px] py-1 px-2 rounded-lg bg-obsidian-900 border border-white/15 text-gray-300">
+      <option value="0">Minuteur</option><option value="15">15 min</option><option value="30">30 min</option><option value="60">60 min</option><option value="120">2 h</option>
+    </select>
+    <i class="fa-solid fa-volume-high text-gray-400 text-xs"></i>
+    <input type="range" min="0" max="1" step="0.05" value="0.85" oninput="setVol(this.value)" class="w-20 h-1 cursor-pointer">
+    <button onclick="toggleFavCurrent()" id="p-fav" class="p-2 text-gray-400 hover:text-red-400"><i class="fa-regular fa-heart"></i></button>
+  </div>
+</aside>
+
+<!-- PORTE D'ACCÈS -->
+<div id="auth-gate" class="fixed inset-0 z-[70] hidden items-center justify-center p-4 bg-obsidian-950/98 backdrop-blur-xl overflow-y-auto">
+  <div class="max-w-md w-full rounded-3xl border border-gold-500/40 bg-obsidian-900 p-7 sm:p-8 text-center shadow-2xl my-6">
+    <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-gold-500/20 to-red-600/20 border border-gold-500/40 flex items-center justify-center text-gold-400 text-2xl mb-3"><i class="fa-solid fa-headphones"></i></div>
+    <h2 class="font-display text-2xl font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-gold-300 to-red-400">MUSIC</h2>
+    <p class="text-xs text-gray-300 mt-2 mb-5">Connectez-vous avec Google pour accéder à la musique.</p>
+    <ul id="auth-steps" class="text-left text-xs text-gray-200 space-y-3 mb-5"></ul>
+    <div class="space-y-3">
+      <button id="auth-btn-login" onclick="googleSignIn()" class="w-full py-3.5 rounded-2xl bg-white text-gray-900 font-bold text-sm flex items-center justify-center gap-2.5 hover:bg-gray-100"><i class="fa-brands fa-google"></i> Se connecter avec Google</button>
+      <button id="auth-btn-sub" onclick="subscribeNetwork()" class="hidden w-full py-3.5 rounded-2xl btn-youtube text-white font-bold text-sm items-center justify-center gap-2.5"><i class="fa-brands fa-youtube text-lg"></i> S'abonner au réseau en 1 clic</button>
+      <button id="auth-btn-verify" onclick="verifySubscriptions()" class="hidden w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-semibold">J'ai déjà fait : vérifier mon abonnement</button>
+      <button id="auth-btn-admin" onclick="location.hash='admin'" class="hidden w-full py-3 rounded-2xl bg-gold-500 text-obsidian-950 font-bold text-sm"><i class="fa-solid fa-gear mr-2"></i>Je suis l'administrateur : ouvrir et configurer</button>
+    </div>
+    <p id="auth-msg" class="text-xs mt-4 text-gray-400"></p>
+    <p class="text-[11px] text-gray-400 mt-5 leading-relaxed border-t border-white/10 pt-4">Music est un moteur de recherche de musiques libres de droits (Creative Commons) : jazz, lo-fi, électro, classique, ambient et plus de 20 genres, avec crédits prêts à copier pour vos vidéos.</p>
+    <p class="text-[10px] text-gray-500 mt-3 leading-relaxed">Google vous demande l'accès à votre profil et à votre compte YouTube, uniquement pour vérifier et créer l'abonnement. Aucune donnée n'est envoyée à un serveur : tout reste dans votre navigateur. <a href="privacy.html" target="_blank" rel="noopener" class="underline hover:text-gold-400">Politique de confidentialité</a></p>
+    <button onclick="signOut()" id="auth-signout" class="hidden mt-3 text-[11px] text-gray-500 underline hover:text-gold-400">Changer de compte</button>
+  </div>
+</div>
+
+<!-- CARTE CHAÎNE (vidéo proposée à chaque choix de musique) -->
+<div id="chan-card" class="hidden fixed right-4 bottom-40 md:bottom-24 z-40 w-72 rounded-2xl bg-obsidian-900 border border-gold-500/40 shadow-2xl overflow-hidden"></div>
+
+<!-- MODALE CHAÎNE -->
+<div id="channel-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+  <div class="bg-obsidian-900 border border-white/15 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+    <button onclick="closeModal('channel-modal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 text-gray-400"><i class="fa-solid fa-xmark"></i></button>
+    <h3 id="channel-modal-title" class="text-xl font-bold text-white mb-4">Ajouter une chaîne YouTube</h3>
+    <form id="channel-form" onsubmit="saveChannel(event)" class="space-y-4">
+      <input type="hidden" id="ch-id">
+      <div><label class="block text-xs text-gray-300 mb-1">Nom *</label><input id="ch-name" required class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></div>
+      <div><label class="block text-xs text-gray-300 mb-1">URL, @handle ou identifiant UC… *</label><input id="ch-url" required placeholder="https://www.youtube.com/@MaChaine" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></div>
+      <div class="grid sm:grid-cols-2 gap-3">
+        <div><label class="block text-xs text-gray-300 mb-1">Genre</label><select id="ch-genre" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></select></div>
+        <div><label class="block text-xs text-gray-300 mb-1">Badge *</label><input id="ch-tag" required class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></div>
+      </div>
+      <div><label class="block text-xs text-gray-300 mb-1">Description *</label><textarea id="ch-desc" rows="3" required class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></textarea></div>
+      <div class="flex justify-end gap-3 pt-4 border-t border-white/10"><button type="button" onclick="closeModal('channel-modal')" class="px-4 py-2.5 text-xs text-gray-400 hover:text-white">Annuler</button><button class="btn-gold font-bold text-xs px-5 py-2.5 rounded-xl">Enregistrer</button></div>
+    </form>
+  </div>
+</div>
+
+<!-- MODALE PLACER -->
+<div id="place-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+  <div class="bg-obsidian-900 border border-white/15 rounded-3xl max-w-md w-full p-6 shadow-2xl">
+    <h3 class="text-lg font-bold text-white mb-1">Ajouter à la bibliothèque</h3>
+    <p id="place-title" class="text-xs text-gray-400 mb-4 truncate"></p>
+    <label class="block text-xs text-gray-300 mb-1">Placer dans la chaîne</label>
+    <select id="place-channel" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs mb-5"></select>
+    <div class="flex justify-end gap-3"><button onclick="closeModal('place-modal')" class="px-4 py-2.5 text-xs text-gray-400 hover:text-white">Annuler</button><button onclick="confirmPlace()" class="btn-gold font-bold text-xs px-5 py-2.5 rounded-xl">Ajouter</button></div>
+  </div>
+</div>
+
+<!-- MODALE IMPORT URL -->
+<div id="import-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+  <div class="bg-obsidian-900 border border-white/15 rounded-3xl max-w-md w-full p-6 shadow-2xl">
+    <h3 class="text-lg font-bold text-white mb-1">Importer une vidéo YouTube</h3>
+    <p class="text-xs text-gray-400 mb-4">Collez l'URL d'une vidéo dont vous avez vérifié la licence (CC-BY ou autorisation). Elle sera lue dans la fenêtre vidéo.</p>
+    <input id="import-url" placeholder="https://www.youtube.com/watch?v=…" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs mb-3">
+    <input id="import-title" placeholder="Titre (facultatif)" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs mb-5">
+    <div class="flex justify-end gap-3"><button onclick="closeModal('import-modal')" class="px-4 py-2.5 text-xs text-gray-400 hover:text-white">Annuler</button><button onclick="confirmImport()" class="btn-gold font-bold text-xs px-5 py-2.5 rounded-xl">Importer</button></div>
+  </div>
+</div>
+
+<!-- MODALE VIDÉO -->
+<div id="video-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+  <div class="bg-obsidian-900 border border-white/15 rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-white/10"><h3 id="video-title" class="text-sm font-bold text-white truncate"></h3><button onclick="closeVideo()" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/15 text-gray-400"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="aspect-video bg-black"><iframe id="video-iframe" class="w-full h-full" src="" title="YouTube" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>
+    <div class="p-4 bg-obsidian-950 flex justify-between items-center gap-4"><span class="text-xs text-gray-400">Vérifiez la licence avant toute réutilisation.</span><button onclick="subFromVideo()" class="btn-youtube text-white font-bold text-xs px-5 py-2.5 rounded-xl"><i class="fa-brands fa-youtube mr-1.5"></i> Ouvrir la chaîne</button></div>
+  </div>
+</div>
+
+<script>
+/* =====================================================
+   DONNÉES DE BASE
+===================================================== */
+const PH = "data:image/svg+xml," + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#212B3F'/><stop offset='1' stop-color='#0D111A'/></linearGradient></defs><rect width='100' height='100' fill='url(#g)'/><g fill='#D4AF37' opacity='.75'><rect x='30' y='46' width='7' height='20' rx='3'/><rect x='42' y='34' width='7' height='32' rx='3'/><rect x='54' y='42' width='7' height='24' rx='3'/><rect x='66' y='52' width='7' height='14' rx='3'/></g></svg>");
+
+// tag = tag Jamendo ; q = termes de recherche Openverse / Internet Archive
+const GENRES = [
+  {id:'all', label:'Tous', icon:'fa-radio', q:'', tag:''},
+  {id:'jazz', label:'Jazz & Lounge', icon:'fa-music', q:'jazz', tag:'jazz'},
+  {id:'soul', label:'Soul & Neo-Soul', icon:'fa-fire', q:'soul', tag:'soul'},
+  {id:'lofi', label:'Lo-Fi & Chillhop', icon:'fa-mug-hot', q:'lofi chill', tag:'lofi'},
+  {id:'funk', label:'Funk & Groove', icon:'fa-bolt', q:'funk groove', tag:'funk'},
+  {id:'blues', label:'Blues', icon:'fa-guitar', q:'blues', tag:'blues'},
+  {id:'ambient_asmr', label:'Ambient & ASMR', icon:'fa-water', q:'ambient', tag:'ambient'},
+  {id:'classical', label:'Classique', icon:'fa-compact-disc', q:'classical orchestra', tag:'classical'},
+  {id:'piano', label:'Piano solo', icon:'fa-music', q:'piano', tag:'piano'},
+  {id:'electronic', label:'Électronique', icon:'fa-wave-square', q:'electronic', tag:'electronic'},
+  {id:'house', label:'House & Deep', icon:'fa-record-vinyl', q:'house deep', tag:'house'},
+  {id:'techno', label:'Techno & Trance', icon:'fa-robot', q:'techno', tag:'techno'},
+  {id:'synthwave', label:'Synthwave & Retro', icon:'fa-moon', q:'synthwave retro', tag:'synthwave'},
+  {id:'hiphop', label:'Hip-Hop & Beats', icon:'fa-microphone', q:'hip hop beat', tag:'hiphop'},
+  {id:'rnb', label:'R&B', icon:'fa-heart', q:'rnb', tag:'rnb'},
+  {id:'pop', label:'Pop', icon:'fa-star', q:'pop', tag:'pop'},
+  {id:'rock', label:'Rock', icon:'fa-guitar', q:'rock', tag:'rock'},
+  {id:'indie', label:'Indie & Alternatif', icon:'fa-headphones', q:'indie', tag:'indie'},
+  {id:'metal', label:'Metal & Hard', icon:'fa-skull', q:'metal', tag:'metal'},
+  {id:'folk', label:'Folk', icon:'fa-tree', q:'folk', tag:'folk'},
+  {id:'acoustic', label:'Acoustique', icon:'fa-guitar', q:'acoustic guitar', tag:'acoustic'},
+  {id:'country', label:'Country', icon:'fa-hat-cowboy', q:'country', tag:'country'},
+  {id:'reggae', label:'Reggae & Dub', icon:'fa-sun', q:'reggae', tag:'reggae'},
+  {id:'latin', label:'Latin & Bossa', icon:'fa-drum', q:'latin bossa nova', tag:'latin'},
+  {id:'afro', label:'Afro & Oriental', icon:'fa-drum', q:'afro oriental', tag:'world'},
+  {id:'world', label:'Musiques du monde', icon:'fa-globe', q:'world music', tag:'world'},
+  {id:'cinematic', label:'Cinématique & Épique', icon:'fa-film', q:'cinematic epic', tag:'soundtrack'},
+  {id:'meditation', label:'Méditation & Nature', icon:'fa-spa', q:'meditation nature', tag:'relaxation'}
+];
+const MOODS = [
+  {id:'chill', label:'Chill', q:'chill', tag:'chill'}, {id:'focus', label:'Concentration', q:'focus study', tag:'relaxing'},
+  {id:'energetic', label:'Énergique', q:'energetic', tag:'energetic'}, {id:'happy', label:'Joyeux', q:'happy', tag:'happy'},
+  {id:'sad', label:'Mélancolique', q:'sad melancholic', tag:'sad'}, {id:'dark', label:'Sombre', q:'dark', tag:'dark'},
+  {id:'romantic', label:'Romantique', q:'romantic', tag:'romantic'}, {id:'epic', label:'Épique', q:'epic', tag:'epic'},
+  {id:'sleep', label:'Sommeil', q:'sleep calm', tag:'calm'}, {id:'rain', label:'Pluie & Nuit', q:'rain night', tag:'nature'}
+];
+const gInfo = id => GENRES.find(g => g.id === id) || GENRES[0];
+
+const DEFAULT_CHANNELS = [
+  {id:"ch-jazz-lounge",name:"Midnight Jazz Sanctuary",url:"https://www.youtube.com/@MidnightJazzSanctuary?sub_confirmation=1",genre:"jazz",tag:"Jazz & Late Night Piano",description:"Sessions feutrées de smooth jazz, saxophones en sourdine et piano vintage.",baseSubscribers:28400,subscribersGained:142,featuredVideoId:"Dx5qFachd3A"},
+  {id:"ch-soul-grooves",name:"Velvet Soul & Vinyl Grooves",url:"https://www.youtube.com/@VelvetSoulGrooves?sub_confirmation=1",genre:"soul",tag:"Soul & Motown Revival",description:"Le meilleur de la soul vintage, groove chaleureux et neo-soul libre de droits.",baseSubscribers:19800,subscribersGained:98,featuredVideoId:"k1-TrAvp_xs"},
+  {id:"ch-lofi-cafe",name:"Lo-Fi Sunset Café",url:"https://www.youtube.com/@LofiSunsetCafe?sub_confirmation=1",genre:"lofi",tag:"Lo-Fi Study & Chillhop",description:"Rythmes Lo-Fi chill pour travailler ou étudier sous la pluie.",baseSubscribers:34200,subscribersGained:215,featuredVideoId:"5qap5aO4i9A"},
+  {id:"steel-sound-asmr",name:"Steel & Sound ASMR",url:"https://www.youtube.com/channel/UC47UDTYtHld2i0Uy50hQ0Q?sub_confirmation=1",genre:"ambient_asmr",tag:"ASMR Industriel & CNC",description:"Précision mécanique, usinage CNC grande vitesse et sons métalliques purs.",baseSubscribers:15200,subscribersGained:184,featuredVideoId:"p7fZuVUGoKg"},
+  {id:"zenith-asmr",name:"Zenith ASMR",url:"https://www.youtube.com/channel/UCH4bJCe-lekDDVzNU8z7E-w?sub_confirmation=1",genre:"ambient_asmr",tag:"Relaxation & Nature",description:"Voyages visuels apaisants, horizons crépusculaires et relaxation profonde.",baseSubscribers:11900,subscribersGained:89,featuredVideoId:"Nwj4-VIUf6E"}
+];
+const DEFAULT_TRACKS = [];
+
+/* =====================================================
+   ÉTAT
+===================================================== */
+const TABS = [
+  {id:'home', label:'Accueil', icon:'fa-house'}, {id:'discover', label:'Découvrir', icon:'fa-compass'},
+  {id:'library', label:'Bibliothèque', icon:'fa-bookmark'},
+  {id:'channels', label:'Chaînes & Réglages', icon:'fa-sliders', admin:true}, {id:'stats', label:'Stats', icon:'fa-chart-simple', admin:true}
+];
+const DEFAULT_CONFIG = {googleClientId:'', adminEmails:[], targetChannelId:'auto', targetVideoId:'', requireLogin:true, requireSubscribe:false, youtubeApiKey:'', adsensePublisherId:'', adsenseSlot:''};
+let CONFIG = {...DEFAULT_CONFIG}, fileChannels = [], localChannels = null, viewsLaunched = 0;
+const SOURCES = {
+  openverse:{label:'Openverse', icon:'fa-globe'},
+  jamendo:{label:'Jamendo', icon:'fa-guitar'},
+  archive:{label:'Internet Archive', icon:'fa-building-columns'},
+  youtube:{label:'YouTube Music', icon:'fa-circle-play'}
+};
+let channels = [], tracks = [], favorites = [], subscribers = [], history = [];
+let settings = {jamendoKey:'', sources:{openverse:true, jamendo:true, archive:true, youtube:true}};
+let totalPlays = 0, tab = 'home', homeGenre = 'all', libView = 'all';
+const S = {genre:'all', mood:null, page:1, raw:[], hasMore:{}, loading:false, token:0, searched:false, ytNext:''};
+const REG = new Map();      // uid -> track
+const CTX = {home:[], discover:[], library:[]};
+let current = null, queue = [], qi = 0, shuffle = false, repeat = false, pending = null, autoUnlock = false;
+let placing = null, videoChannel = null, sleepTimer = null;
+const audio = new Audio();
+audio.preload = 'none';
+
+/* =====================================================
+   OUTILS
+===================================================== */
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = sec => { sec = Math.max(0, Math.floor(sec||0)); const h = Math.floor(sec/3600), m = Math.floor(sec%3600/60), s = sec%60; return h ? `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}` : `${m}:${String(s).padStart(2,'0')}`; };
+const toSec = d => { if (typeof d === 'number') return d; const p = String(d||'').split(':').map(Number); return p.some(isNaN) ? 0 : p.reduce((a,v) => a*60+v, 0); };
+const save = (k, v) => { try { localStorage.setItem('music_hub_'+k, JSON.stringify(v)); } catch(e) {} };
+const load = (k, def, legacy) => { try { const r = localStorage.getItem('music_hub_'+k) ?? (legacy ? localStorage.getItem(legacy) : null); return r ? JSON.parse(r) : def; } catch(e) { return def; } };
+function persist(){ if (isAdmin()) { localChannels = channels; save('channels', channels); } save('tracks', tracks); save('subs', subscribers); save('favs', favorites); save('plays', totalPlays); save('views', viewsLaunched); }
+function toast(msg, type='info'){
+  const el = document.createElement('div');
+  const ok = type==='success', err = type==='error';
+  el.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-2xl border shadow-2xl text-xs font-medium backdrop-blur-md transition-all duration-300 ${ok?'border-emerald-500/50 bg-[#071a12]/95 text-emerald-100':err?'border-red-500/50 bg-[#1f0a0a]/95 text-red-100':'border-gold-500/40 bg-obsidian-900/95 text-white'}`;
+  el.innerHTML = `<i class="fa-solid ${ok?'fa-circle-check text-emerald-400':err?'fa-triangle-exclamation text-red-400':'fa-circle-info text-gold-400'}"></i><span>${esc(msg)}</span>`;
+  $('toast-container').appendChild(el);
+  setTimeout(() => { el.style.opacity = 0; setTimeout(() => el.remove(), 300); }, 3800);
+}
+const openModal = id => { $(id).classList.remove('hidden'); $(id).classList.add('flex'); };
+const closeModal = id => { $(id).classList.add('hidden'); $(id).classList.remove('flex'); };
+
+/* ---- Licences ---- */
+function parseLic(url, code, ver){
+  let c = code, v = ver;
+  if (!c && url) {
+    if (/publicdomain\/zero/.test(url)) c = 'cc0';
+    else if (/publicdomain\/mark/.test(url)) c = 'pdm';
+    else { const m = url.match(/licenses\/([a-z-]+)\/?([\d.]+)?/i); if (m) { c = m[1].toLowerCase(); v = m[2]; } }
+  }
+  c = (c || '').toLowerCase();
+  const label = c === 'cc0' ? 'CC0' : c === 'pdm' ? 'Domaine public' : c ? 'CC ' + c.toUpperCase() + (v ? ' ' + v : '') : 'Licence inconnue';
+  return {code:c, label, commercial: !!c && !c.includes('nc'), nd: c.includes('nd')};
+}
+const licBase = c => c === 'cc0' || c === 'pdm' ? 'cc0' : c;
+
+/* =====================================================
+   SOURCES DE RECHERCHE
+===================================================== */
+function buildParams(){
+  const q = $('q').value.trim(), g = gInfo(S.genre), m = MOODS.find(x => x.id === S.mood);
+  return {q, g, m, text:[q, g.q, m && m.q].filter(Boolean).join(' ').trim(), commercial:$('f-commercial').checked};
+}
+async function getJSON(url, headers){
+  let r;
+  try { r = await fetch(url, headers ? {headers} : undefined); } catch(e) { throw new Error('réseau indisponible ou accès bloqué par le navigateur'); }
+  if (r.status === 429) throw new Error('quota dépassé (429)');
+  if (r.status === 403) throw new Error('accès refusé ou quota du jour atteint (403)');
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();
+}
+const FETCHERS = {
+  async openverse(p, page){
+    const u = new URL('https://api.openverse.org/v1/audio/');
+    u.searchParams.set('q', p.text || 'music'); u.searchParams.set('page', page); u.searchParams.set('page_size', 20);
+    u.searchParams.set('category', 'music');
+    if (p.commercial) u.searchParams.set('license_type', 'commercial');
+    const d = await getJSON(u);
+    return {items:(d.results||[]).filter(r => r.url).map(r => {
+      const lic = parseLic(r.license_url, r.license, r.license_version);
+      return {source:'openverse', origId:r.id, title:r.title || 'Sans titre', artist:r.creator || 'Artiste inconnu',
+        durSec:Math.round((r.duration||0)/1000), audioUrl:r.url, coverUrl:r.thumbnail || '', lic, licUrl:r.license_url,
+        sourceUrl:r.foreign_landing_url || r.url, provider:r.provider || r.source || '', tags:(r.tags||[]).slice(0,4).map(t => t.name)};
+    }), more: !!d.page_count && page < d.page_count && page < 12};
+  },
+  async jamendo(p, page){
+    if (!settings.jamendoKey) throw new Error('clé Jamendo manquante');
+    const u = new URL('https://api.jamendo.com/v3.0/tracks/');
+    u.searchParams.set('client_id', settings.jamendoKey); u.searchParams.set('format', 'json');
+    u.searchParams.set('limit', 20); u.searchParams.set('offset', (page-1)*20);
+    u.searchParams.set('include', 'licenses'); u.searchParams.set('imagesize', 300); u.searchParams.set('audioformat', 'mp32');
+    if (p.q) u.searchParams.set('search', p.q);
+    if (p.g.tag) u.searchParams.set('tags', p.g.tag);
+    if (p.m) u.searchParams.set('fuzzytags', p.m.tag);
+    if (!p.q && !p.g.tag && !p.m) u.searchParams.set('order', 'popularity_week');
+    const d = await getJSON(u);
+    if (d.headers && d.headers.status === 'failed') throw new Error(d.headers.error_message || 'erreur Jamendo');
+    const rows = d.results || [];
+    return {items:rows.map(r => ({source:'jamendo', origId:String(r.id), title:r.name, artist:r.artist_name, durSec:+r.duration||0,
+      audioUrl:r.audio, coverUrl:r.image||r.album_image||'', lic:parseLic(r.license_ccurl), licUrl:r.license_ccurl,
+      sourceUrl:r.shareurl||'', downloadUrl:r.audiodownload_allowed ? r.audiodownload : '', provider:'Jamendo', tags:[]})), more: rows.length === 20};
+  },
+  async youtube(p, page){
+    if (!AUTH.token && !CONFIG.youtubeApiKey) throw new Error('connexion Google (ou clé API YouTube) requise');
+    const h = AUTH.token ? {Authorization:'Bearer ' + AUTH.token} : null;
+    const u = new URL('https://www.googleapis.com/youtube/v3/search');
+    u.searchParams.set('part', 'snippet'); u.searchParams.set('type', 'video'); u.searchParams.set('videoCategoryId', '10');
+    u.searchParams.set('videoEmbeddable', 'true'); u.searchParams.set('maxResults', 20); u.searchParams.set('q', p.text || 'music');
+    if (p.commercial) u.searchParams.set('videoLicense', 'creativeCommon');
+    if (page > 1 && S.ytNext) u.searchParams.set('pageToken', S.ytNext);
+    if (!h) u.searchParams.set('key', CONFIG.youtubeApiKey);
+    const d = await getJSON(u, h);
+    S.ytNext = d.nextPageToken || '';
+    const rows = (d.items || []).filter(i => i.id && i.id.videoId), det = {};
+    if (rows.length) {
+      const v = new URL('https://www.googleapis.com/youtube/v3/videos');
+      v.searchParams.set('part', 'contentDetails,status'); v.searchParams.set('id', rows.map(i => i.id.videoId).join(','));
+      if (!h) v.searchParams.set('key', CONFIG.youtubeApiKey);
+      try { ((await getJSON(v, h)).items || []).forEach(x => det[x.id] = x); } catch(e) {}
+    }
+    const isoSec = x => { const m = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/.exec(x || ''); return m ? (+m[1] || 0) * 3600 + (+m[2] || 0) * 60 + (+m[3] || 0) : 0; };
+    return {items:rows.filter(i => !(det[i.id.videoId] && det[i.id.videoId].status && det[i.id.videoId].status.embeddable === false)).map(i => {
+      const id = i.id.videoId, x = det[id] || {}, cc = x.status && x.status.license === 'creativeCommon', sn = i.snippet || {};
+      return {source:'youtube', origId:id, title:sn.title || id, artist:sn.channelTitle || 'YouTube', durSec:isoSec(x.contentDetails && x.contentDetails.duration),
+        audioUrl:'', youtubeVideoId:id, coverUrl:(sn.thumbnails && (sn.thumbnails.medium || sn.thumbnails.default) || {}).url || '',
+        lic:cc ? {code:'by', label:'CC BY (licence YouTube)', commercial:true, nd:false} : {code:'yt', label:'Licence YouTube standard (écoute seule)', commercial:false, nd:false},
+        licUrl:cc ? 'https://creativecommons.org/licenses/by/3.0/' : '', sourceUrl:'https://www.youtube.com/watch?v=' + id, provider:'YouTube', tags:[]};
+    }), more: !!S.ytNext};
+  },
+  async archive(p, page){
+    const terms = (p.text || 'music').replace(/["()]/g, ' ').trim().split(/\s+/).filter(Boolean).join(' OR ');
+    const lic = p.commercial ? 'licenseurl:(*creativecommons.org*) AND NOT licenseurl:(*-nc*)' : 'licenseurl:(*creativecommons.org*)';
+    const u = new URL('https://archive.org/advancedsearch.php');
+    u.searchParams.set('q', `(${terms}) AND mediatype:audio AND ${lic}`);
+    ['identifier','title','creator','licenseurl'].forEach(f => u.searchParams.append('fl[]', f));
+    u.searchParams.append('sort[]', 'downloads desc');
+    u.searchParams.set('rows', 20); u.searchParams.set('page', page); u.searchParams.set('output', 'json');
+    const d = await getJSON(u);
+    const docs = (d.response && d.response.docs) || [];
+    return {items:docs.map(r => ({source:'archive', origId:r.identifier, title:r.title || r.identifier, artist:Array.isArray(r.creator) ? r.creator[0] : (r.creator || 'Artiste inconnu'),
+      durSec:0, audioUrl:'', coverUrl:`https://archive.org/services/img/${encodeURIComponent(r.identifier)}`, lic:parseLic(Array.isArray(r.licenseurl) ? r.licenseurl[0] : r.licenseurl),
+      licUrl:Array.isArray(r.licenseurl) ? r.licenseurl[0] : r.licenseurl, sourceUrl:`https://archive.org/details/${encodeURIComponent(r.identifier)}`, provider:'Internet Archive', tags:[]})),
+      more: docs.length === 20 && page*20 < (d.response.numFound||0)};
+  }
+};
+async function resolveAudio(t){
+  if (t.audioUrl || t.source !== 'archive') return;
+  const d = await getJSON(`https://archive.org/metadata/${encodeURIComponent(t.origId)}`);
+  const files = (d.files||[]).filter(f => /\.mp3$/i.test(f.name) || /MP3/i.test(f.format||''));
+  if (!files.length) throw new Error('aucun fichier MP3');
+  files.sort((a,b) => (/VBR/i.test(b.format||'')) - (/VBR/i.test(a.format||'')));
+  t.audioUrl = `https://archive.org/download/${encodeURIComponent(t.origId)}/${files[0].name.split('/').map(encodeURIComponent).join('/')}`;
+  if (!t.durSec && files[0].length) { t.durSec = Math.round(parseFloat(files[0].length) || toSec(files[0].length)); t.duration = fmt(t.durSec); }
+  t.downloadUrl = t.audioUrl;
+}
+function normalize(t){
+  const lic = t.lic;
+  const uid = t.source + ':' + t.origId;
+  const out = {...t, uid, id:uid, genre:t.genre || S.genre, duration:t.durSec ? fmt(t.durSec) : '—', license:lic.label,
+    attribution:`« ${t.title} » — ${t.artist} — ${lic.label}${t.licUrl ? ' ('+t.licUrl+')' : ''} — Source : ${t.sourceUrl}`};
+  return REG.get(uid) ? REG.get(uid) : out;
+}
+
+/* =====================================================
+   RECHERCHE
+===================================================== */
+async function runSearch(reset = true){
+  if (reset) { S.page = 1; S.raw = []; S.hasMore = {}; S.ytNext = ''; }
+  else S.page++;
+  const p = buildParams();
+  const active = Object.keys(SOURCES).filter(s => settings.sources[s] && (reset || S.hasMore[s]));
+  if (!active.length) { $('search-status').textContent = 'Aucune source active.'; return; }
+  const token = ++S.token;
+  S.loading = true;
+  if (reset) { $('discover-grid').innerHTML = Array(6).fill('<div class="skeleton h-32 rounded-2xl"></div>').join(''); }
+  $('search-status').innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Recherche en cours…';
+  if (reset && p.q) { history = [p.q, ...history.filter(h => h !== p.q)].slice(0, 12); save('history', history); renderHistory(); }
+
+  const res = await Promise.all(active.map(src => FETCHERS[src](p, S.page).then(r => ({src, r})).catch(e => ({src, e}))));
+  if (token !== S.token) return;
+  S.loading = false; S.searched = true;
+  const errs = [], per = {}, lists = [];
+  res.forEach(({src, r, e}) => {
+    if (e) { errs.push(`${SOURCES[src].label} : ${e.message}`); S.hasMore[src] = false; return; }
+    S.hasMore[src] = r.more; per[src] = r.items.length; lists.push(r.items.map(normalize));
+  });
+  const seen = new Set(S.raw.map(t => t.uid)), merged = [];
+  for (let i = 0; lists.some(l => i < l.length); i++) lists.forEach(l => { if (l[i] && !seen.has(l[i].uid)) { seen.add(l[i].uid); merged.push(l[i]); } });
+  S.raw.push(...merged);
+  const counts = Object.entries(per).map(([s, n]) => `${SOURCES[s].label} ${n}`).join(' · ');
+  $('search-status').innerHTML = `${esc(counts)}${errs.length ? `<span class="text-amber-400 ml-3"><i class="fa-solid fa-triangle-exclamation mr-1"></i>${esc(errs.join(' · '))}</span>` : ''}`;
+  applyFilters();
+  $('more-btn').classList.toggle('hidden', !Object.values(S.hasMore).some(Boolean));
+}
+function applyFilters(){
+  const lf = $('f-license').value, minD = +$('f-dur').value, sort = $('f-sort').value;
+  let list = S.raw.filter(t => (lf === 'all' || licBase(t.lic.code) === lf) && (!minD || !t.durSec || t.durSec >= minD) && (!$('f-commercial').checked || t.lic.commercial));
+  if (sort === 'dur-desc') list = [...list].sort((a,b) => b.durSec - a.durSec);
+  else if (sort === 'dur-asc') list = [...list].sort((a,b) => (a.durSec||1e9) - (b.durSec||1e9));
+  else if (sort === 'title') list = [...list].sort((a,b) => a.title.localeCompare(b.title));
+  CTX.discover = list;
+  $('result-count').textContent = S.raw.length ? `${list.length} / ${S.raw.length} pistes` : '';
+  renderGrid('discover-grid', list, 'discover', S.raw.length ? 'Aucun résultat avec ces filtres.' : (S.searched ? 'Aucun résultat pour cette recherche : essayez d\'autres mots ou d\'autres sources.' : ''));
+}
+function surpriseMe(){
+  const pool = GENRES.filter(g => g.id !== 'all'), g = pool[Math.floor(Math.random()*pool.length)];
+  const m = MOODS[Math.floor(Math.random()*MOODS.length)];
+  S.genre = g.id; S.mood = m.id; $('q').value = '';
+  switchTab('discover'); renderChips();
+  toast(`Surprise : ${g.label} · ${m.label}`);
+  runSearch(true).then(() => { if (CTX.discover[0]) playTrack(CTX.discover[0], CTX.discover); });
+}
+function exploreGenreOnline(){ S.genre = homeGenre; S.mood = null; switchTab('discover'); renderChips(); runSearch(true); }
+
+/* =====================================================
+   RENDU
+===================================================== */
+function trackCard(t, ctx){
+  REG.set(t.uid, t);
+  const isCur = current && current.uid === t.uid, fav = isFav(t.uid);
+  const ch = channels.find(c => c.id === t.channelId);
+  const warn = t.lic && t.lic.nd ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300" title="Pas de modification (ND)">ND</span>' : '';
+  const comm = t.lic ? (t.lic.commercial ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300">Commercial OK</span>' : (t.source === 'youtube' ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-sky-500/15 text-sky-300" title="Lecteur officiel YouTube : pas de réutilisation">Écoute seule</span>' : '<span class="text-[10px] px-1.5 py-0.5 rounded bg-red-500/15 text-red-300">Non commercial</span>')) : '';
+  const a = (act, icon, cls, title) => `<button data-act="${act}" data-uid="${esc(t.uid)}" data-ctx="${ctx}" title="${title}" class="p-2 rounded-xl ${cls} transition text-xs"><i class="${icon}"></i></button>`;
+  return `<article class="glass-card ${isCur ? 'is-current is-playing' : ''} rounded-2xl p-4 flex flex-col gap-3 fade-in">
+    <div class="flex items-start gap-3.5">
+      <div class="relative shrink-0">
+        <img src="${esc(t.coverUrl || PH)}" onerror="this.onerror=null;this.src=PH" loading="lazy" alt="" class="w-20 h-20 rounded-xl object-cover border border-white/10 bg-obsidian-800">
+        <button data-act="play" data-uid="${esc(t.uid)}" data-ctx="${ctx}" class="absolute inset-0 m-auto w-9 h-9 rounded-full bg-gold-500 hover:bg-gold-400 text-obsidian-950 flex items-center justify-center shadow-lg"><i class="fa-solid ${isCur && !audio.paused ? 'fa-pause' : 'fa-play'} text-xs ml-0.5"></i></button>
+      </div>
+      <div class="min-w-0 flex-1">
+        <div class="flex flex-wrap items-center gap-1.5 mb-1">
+          ${t.genre && t.genre !== 'all' ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-gold-500/15 text-gold-400 uppercase">${esc(gInfo(t.genre).label.split(' ')[0])}</span>` : ''}
+          ${t.source !== 'local' ? `<span class="text-[10px] px-1.5 py-0.5 rounded bg-white/10 text-gray-300">${esc(SOURCES[t.source]?.label || t.source)}</span>` : ''}
+          ${comm}${warn}
+        </div>
+        <h3 class="font-bold text-sm text-white truncate" title="${esc(t.title)}">${esc(t.title)}</h3>
+        <p class="text-xs text-gray-400 truncate">${esc(t.artist)}</p>
+        <p class="text-[11px] text-gray-500 mt-0.5 flex items-center gap-2"><span class="font-mono">${esc(t.duration)}</span><span>·</span><span class="truncate">${esc(t.license)}</span></p>
+        ${t.tags && t.tags.length ? `<p class="text-[10px] text-gray-500 mt-1 truncate">#${t.tags.map(esc).join(' #')}</p>` : ''}
+      </div>
+    </div>
+    ${ctx === 'home' ? `<div class="p-2.5 rounded-xl bg-obsidian-950/70 border border-white/5 flex items-center justify-between"><span class="text-xs text-gray-400 truncate">${esc(ch ? ch.name : 'Chaîne officielle')}</span><span class="text-[11px] text-gray-500">Chaîne</span></div>` : ''}
+    ${ctx === 'library' && ch ? `<div class="text-[11px] text-gold-400/90 truncate"><i class="fa-brands fa-youtube mr-1"></i>${esc(ch.name)}</div>` : ''}
+    <div class="pt-2 border-t border-white/10 flex items-center gap-1.5 flex-wrap">
+      ${a('fav', fav ? 'fa-solid fa-heart' : 'fa-regular fa-heart', fav ? 'text-red-400 bg-red-500/10' : 'text-gray-400 bg-white/5 hover:text-red-400', 'Favori')}
+      ${ctx === 'discover' ? a('add', 'fa-solid fa-plus', 'bg-gold-500/15 text-gold-400 hover:bg-gold-500 hover:text-obsidian-950', 'Ajouter à une chaîne') : ''}
+      ${ctx === 'library' ? a('remove', 'fa-solid fa-trash', 'bg-red-600/10 text-red-400 hover:bg-red-600 hover:text-white', 'Retirer') : ''}
+      ${a('copy', 'fa-regular fa-copy', 'bg-white/5 text-gray-300 hover:bg-white/15', 'Copier le crédit')}
+      ${t.sourceUrl ? `<a href="${esc(t.sourceUrl)}" target="_blank" rel="noopener" title="Page source" class="p-2 rounded-xl bg-white/5 text-gray-300 hover:bg-white/15 text-xs"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
+      ${t.downloadUrl ? `<a href="${esc(t.downloadUrl)}" target="_blank" rel="noopener" title="Télécharger" class="p-2 rounded-xl bg-white/5 text-gray-300 hover:bg-white/15 text-xs"><i class="fa-solid fa-download"></i></a>` : ''}
+      ${t.youtubeVideoId ? `<button data-act="video" data-uid="${esc(t.uid)}" class="ml-auto p-2 rounded-xl bg-red-600/15 hover:bg-red-600 text-red-500 hover:text-white text-xs"><i class="fa-brands fa-youtube"></i></button>` : ''}
+    </div></article>`;
+}
+function renderGrid(id, list, ctx, emptyMsg){
+  const el = $(id);
+  el.innerHTML = list.length ? list.map(t => trackCard(t, ctx)).join('') : (emptyMsg ? `<div class="col-span-full text-center text-sm text-gray-500 py-12">${esc(emptyMsg)}</div>` : '');
+}
+function chipRow(el, items, sel, fn, cls = ''){
+  el.innerHTML = '';
+  items.forEach(it => {
+    const b = document.createElement('button');
+    b.className = `chip ${cls} ${sel === it.id ? 'on' : ''}`;
+    b.innerHTML = (it.icon ? `<i class="fa-solid ${it.icon}"></i>` : '') + esc(it.label);
+    b.onclick = () => fn(it.id);
+    el.appendChild(b);
+  });
+}
+function renderChips(){
+  chipRow($('genre-chips'), GENRES, S.genre, id => { S.genre = id; renderChips(); runSearch(true); });
+  chipRow($('mood-chips'), MOODS, S.mood, id => { S.mood = S.mood === id ? null : id; renderChips(); runSearch(true); }, 'mood');
+  $('source-pills').innerHTML = Object.entries(SOURCES).map(([k, v]) => `<button class="pill ${settings.sources[k] ? 'on' : ''}" onclick="toggleSource('${k}')"><i class="fa-solid ${v.icon}"></i>${v.label}</button>`).join('');
+}
+function toggleSource(k){ settings.sources[k] = !settings.sources[k]; saveSettings(); renderChips(); }
+function saveSettings(){ settings.jamendoKey = $('jamendo-key').value.trim(); save('settings', settings); }
+function renderHistory(){ $('q-hist').innerHTML = history.map(h => `<option value="${esc(h)}">`).join(''); }
+
+function renderHome(){
+  chipRow($('home-genres'), GENRES, homeGenre, id => { homeGenre = id; renderHome(); });
+  const s = $('home-search').value.toLowerCase();
+  const list = tracks.filter(t => (homeGenre === 'all' || t.genre === homeGenre) && (t.title.toLowerCase().includes(s) || t.artist.toLowerCase().includes(s)));
+  CTX.home = list; $('home-count').textContent = list.length;
+  $('home-online-btn').classList.toggle('hidden', homeGenre === 'all');
+  renderGrid('home-grid', list, 'home', 'Bibliothèque vide : choisissez une musique dans Découvrir, elle sera ajoutée automatiquement à la chaîne.');
+}
+function renderLibrary(){
+  const views = [['all','Toutes', tracks.length], ['fav','Favoris', favorites.length]];
+  $('lib-tabs').innerHTML = views.map(([id, l, n]) => `<button class="chip ${libView === id ? 'on' : ''}" onclick="libView='${id}';renderLibrary()">${l} (${n})</button>`).join('');
+  let list = tracks;
+  if (libView === 'fav') {
+    list = favorites;
+  }
+  CTX.library = list;
+  renderGrid('library-grid', list, 'library', libView === 'fav' ? 'Pas encore de favoris : cliquez sur le cœur d\'une piste.' : 'Bibliothèque vide : ajoutez des pistes depuis Découvrir.');
+}
+function renderChannels(){
+  $('kpi-channel-count').textContent = channels.length;
+  $('kpi-subs-gained').textContent = viewsLaunched;
+  $('kpi-audience-total').textContent = channels.reduce((a,c) => a + (c.baseSubscribers||0), 0).toLocaleString('fr-FR');
+  $('channels-grid').innerHTML = channels.map(ch => {
+    const bad = /youtube\.com\/channel\/UC/.test(ch.url) && !/youtube\.com\/channel\/UC[\w-]{22}(?:[?\/]|$)/.test(ch.url);
+    return `<div class="rounded-3xl p-6 bg-obsidian-900/70 border border-white/10 flex flex-col justify-between">
+    <div><div class="flex items-start justify-between gap-4 mb-3"><div><span class="text-[10px] font-bold px-2 py-0.5 rounded bg-gold-500/15 text-gold-400 uppercase">${esc(ch.tag)}</span><h3 class="text-xl font-bold text-white mt-1.5">${esc(ch.name)}</h3></div>
+    <div class="flex gap-1.5"><button onclick="openChannelModal('${esc(ch.id)}')" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs"><i class="fa-solid fa-pen"></i></button>${channels.length > 1 ? `<button onclick="deleteChannel('${esc(ch.id)}')" class="p-2 rounded-xl bg-red-600/15 hover:bg-red-600 text-red-400 hover:text-white text-xs"><i class="fa-solid fa-trash"></i></button>` : ''}</div></div>
+    <p class="text-xs text-gray-300 mb-3">${esc(ch.description)}</p>
+    ${bad ? '<p class="text-[11px] text-amber-300 mb-3"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Identifiant de chaîne invalide (24 caractères attendus) : l\'abonnement ne pourra pas être vérifié. Utilisez l\'URL @handle ou le bon identifiant.</p>' : ''}
+    <div class="p-3 rounded-2xl bg-obsidian-950/70 border border-white/5 flex justify-between text-xs mb-3"><div><span class="text-gray-500 uppercase text-[10px]">Base YouTube</span><strong class="block text-white font-mono">${(ch.baseSubscribers||0).toLocaleString('fr-FR')}</strong></div><div><span class="text-gray-500 uppercase text-[10px]">Pistes</span><strong class="block text-white font-mono">${tracks.filter(t => t.channelId === ch.id).length}</strong></div></div>
+    <label class="flex items-center gap-2 text-xs text-gray-300 mb-4 cursor-pointer"><input type="checkbox" class="rounded" ${ch.gate !== false ? 'checked' : ''} onchange="toggleGate('${esc(ch.id)}', this.checked)"> Abonnement obligatoire à l'entrée</label></div>
+    <a href="${esc(ch.url)}" target="_blank" rel="noopener" class="py-2.5 px-3 rounded-xl btn-youtube text-white text-xs font-bold flex items-center justify-center gap-2"><i class="fa-brands fa-youtube"></i> Ouvrir la chaîne</a></div>`;
+  }).join('');
+}
+function toggleGate(id, v){ const ch = channels.find(c => c.id === id); if (ch) { ch.gate = v; persist(); } }
+function renderStats(){
+  $('stats-total-subs').textContent = viewsLaunched; $('stats-tracks').textContent = tracks.length;
+  $('stats-total-plays').textContent = totalPlays; $('stats-subscribers-count').textContent = subscribers.length;
+  const counts = channels.map(c => tracks.filter(t => t.channelId === c.id).length), max = Math.max(...counts, 1);
+  $('stats-bars').innerHTML = channels.map((ch, i) => `<div class="p-3 rounded-2xl bg-obsidian-950/70 border border-white/5"><div class="flex justify-between text-xs mb-1.5"><span class="text-white font-medium">${esc(ch.name)}</span><span class="font-mono font-bold text-emerald-400">${counts[i]}</span></div><div class="w-full h-2 bg-obsidian-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-500 to-emerald-400" style="width:${Math.round(counts[i]/max*100)}%"></div></div></div>`).join('');
+}
+function renderHeader(){ $('header-subs-total').textContent = totalPlays; }
+function renderAll(){ renderHeader(); renderHome(); if (tab === 'discover') applyFilters(); renderLibrary(); renderChannels(); renderStats(); renderNav(); renderAdminSettings(); }
+function renderNav(){
+  const tabs = TABS.filter(t => !t.admin || isAdmin());
+  $('nav-desktop').innerHTML = tabs.map(t => `<button onclick="switchTab('${t.id}')" class="px-3.5 py-1.5 rounded-lg text-xs ${tab === t.id ? 'font-bold bg-gold-500 text-obsidian-950' : 'font-medium text-gray-300 hover:text-white hover:bg-white/5'} transition"><i class="fa-solid ${t.icon} mr-1.5"></i>${t.label}</button>`).join('');
+  $('nav-mobile').innerHTML = tabs.map(t => `<button onclick="switchTab('${t.id}')" class="px-2 py-1 ${tab === t.id ? 'text-gold-400 font-bold' : 'text-gray-400'}"><i class="fa-solid ${t.icon} block text-center mb-0.5"></i>${t.label.split(' ')[0]}</button>`).join('');
+  const aa = $('admin-actions'); aa.classList.toggle('hidden', !isAdmin()); aa.classList.toggle('flex', isAdmin());
+}
+function switchTab(id){
+  const def = TABS.find(t => t.id === id);
+  if (!def || (def.admin && !isAdmin())) id = 'home';
+  tab = id;
+  TABS.forEach(t => $('tab-' + t.id).classList.toggle('hidden', t.id !== id));
+  renderAll(); window.scrollTo({top:0, behavior:'smooth'});
+  if (id === 'discover' && !S.raw.length && !S.loading) runSearch(true);
+}
+function renderAdminSettings(){
+  if (!isAdmin()) return;
+  const act = document.activeElement; if (act && /cfg-/.test(act.id || '')) return;
+  $('cfg-client').value = CONFIG.googleClientId || ''; $('cfg-admins').value = (CONFIG.adminEmails || []).join(', ');
+  $('cfg-target').innerHTML = '<option value="auto">Automatique (selon le genre)</option>' + channels.map(c => `<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('');
+  $('cfg-target').value = CONFIG.targetChannelId || 'auto';
+  $('cfg-video').value = CONFIG.targetVideoId || '';
+  $('cfg-login').checked = CONFIG.requireLogin !== false; $('cfg-sub').checked = CONFIG.requireSubscribe !== false;
+  $('cfg-ytkey').value = CONFIG.youtubeApiKey || ''; $('cfg-adpub').value = CONFIG.adsensePublisherId || ''; $('cfg-adslot').value = CONFIG.adsenseSlot || '';
+}
+function parseVideoId(v){ v = String(v || '').trim(); const m = v.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/); return m ? m[1] : (/^[\w-]{11}$/.test(v) ? v : ''); }
+function saveConfig(){
+  CONFIG.googleClientId = $('cfg-client').value.trim();
+  CONFIG.adminEmails = $('cfg-admins').value.split(/[,;\s]+/).map(x => x.toLowerCase()).filter(Boolean);
+  CONFIG.targetChannelId = $('cfg-target').value; CONFIG.targetVideoId = parseVideoId($('cfg-video').value);
+  CONFIG.requireLogin = $('cfg-login').checked; CONFIG.requireSubscribe = $('cfg-sub').checked;
+  CONFIG.youtubeApiKey = $('cfg-ytkey').value.trim(); CONFIG.adsensePublisherId = $('cfg-adpub').value.trim(); CONFIG.adsenseSlot = $('cfg-adslot').value.trim();
+  const {channels: _c, ...rest} = CONFIG; save('config', rest); persist(); tokenClient = null;
+  toast('Réglages enregistrés dans ce navigateur. Exportez la configuration pour vos visiteurs.', 'success');
+}
+function exportConfig(){
+  saveConfig();
+  const {channels: _c, ...rest} = CONFIG;
+  download('music_config.json', JSON.stringify({...rest, channels}, null, 2), 'application/json');
+}
+
+/* =====================================================
+   ACTIONS SUR LES PISTES (délégation)
+===================================================== */
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const t = REG.get(b.dataset.uid); if (!t) return;
+  const ctx = b.dataset.ctx, act = b.dataset.act;
+  if (act === 'play') { current && current.uid === t.uid ? togglePlay() : playTrack(t, CTX[ctx] || [t]); }
+  else if (act === 'fav') toggleFav(t.uid);
+  else if (act === 'add') openPlace(t);
+  else if (act === 'remove') removeTrack(t.uid);
+  else if (act === 'copy') copyText(t.attribution || `« ${t.title} » — ${t.artist} — ${t.license}`, 'Crédit copié !');
+  else if (act === 'video') openVideo(t.youtubeVideoId, t.title, t.channelId);
+});
+const isFav = uid => favorites.some(f => f.uid === uid);
+function toggleFav(uid){
+  if (isFav(uid)) favorites = favorites.filter(f => f.uid !== uid);
+  else { const t = REG.get(uid); if (t) favorites = [...favorites, {...t}]; }
+  persist(); renderAll(); updatePlayerUI();
+}
+const toggleFavCurrent = () => current && toggleFav(current.uid);
+function removeTrack(uid){ tracks = tracks.filter(t => t.uid !== uid); persist(); renderAll(); toast('Piste retirée de la bibliothèque.'); }
+async function copyText(txt, msg){
+  try { await navigator.clipboard.writeText(txt); toast(msg, 'success'); }
+  catch(e) { const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); toast(msg, 'success'); }
+}
+function copyAllCredits(){
+  const list = tracks.filter(t => t.attribution);
+  if (!list.length) return toast('Aucun crédit à générer (les pistes en ligne ajoutées en contiennent un).', 'info');
+  copyText('Musiques utilisées :\n' + list.map(t => '• ' + t.attribution).join('\n'), `${list.length} crédit(s) copié(s) : collez-les dans la description YouTube.`);
+}
+function openPlace(t){
+  placing = t; $('place-title').textContent = `${t.title} — ${t.artist}`;
+  $('place-channel').innerHTML = channels.map(c => `<option value="${esc(c.id)}" ${c.genre === t.genre ? 'selected' : ''}>${esc(c.name)}</option>`).join('');
+  openModal('place-modal');
+}
+function confirmPlace(){
+  const ch = channels.find(c => c.id === $('place-channel').value) || channels[0];
+  if (tracks.some(t => t.uid === placing.uid)) { closeModal('place-modal'); return toast('Déjà dans la bibliothèque.'); }
+  tracks.unshift({...placing, channelId:ch.id});
+  persist(); closeModal('place-modal'); renderAll(); toast(`« ${placing.title} » ajoutée à ${ch.name}.`, 'success');
+}
+
+/* =====================================================
+   CONNEXION GOOGLE, ABONNEMENT AU RÉSEAU, RÔLES
+===================================================== */
+const gateScope = () => 'openid email profile ' + (CONFIG.requireSubscribe !== false ? 'https://www.googleapis.com/auth/youtube' : 'https://www.googleapis.com/auth/youtube.readonly');
+const AUTH = {token:null, user:null, admin:false, subscribed:false, status:{}, busy:false, msg:''};
+let tokenClient = null;
+const setupMode = () => location.hash === '#admin' && (!CONFIG.googleClientId || !CONFIG.adminEmails.length);
+const isAdmin = () => AUTH.admin || setupMode();
+const gateRequired = () => CONFIG.requireLogin !== false && !setupMode();
+const passed = () => !gateRequired() || (!!AUTH.user && (AUTH.admin || CONFIG.requireSubscribe === false || AUTH.subscribed));
+const gisReady = () => !!(window.google && google.accounts && google.accounts.oauth2);
+const gateChannels = () => channels.filter(c => c.gate !== false);
+function applyRole(){
+  channels = (isAdmin() && localChannels) ? localChannels : fileChannels;
+  if (!channels.length) channels = JSON.parse(JSON.stringify(DEFAULT_CHANNELS));
+}
+function authMsg(m, err){
+  AUTH.msg = m || '';
+  const el = $('auth-msg'); if (!el) return;
+  el.textContent = AUTH.msg; el.className = 'text-xs mt-4 ' + (err ? 'text-red-400' : 'text-gray-400');
+}
+function googleSignIn(){
+  if (!CONFIG.googleClientId) return authMsg("Connexion non configurée : l'administrateur doit renseigner le Client ID Google.", true);
+  if (!gisReady()) return authMsg('Le service Google est en cours de chargement ou bloqué (bloqueur de publicités ?). Réessayez dans un instant.', true);
+  if (!tokenClient) tokenClient = google.accounts.oauth2.initTokenClient({client_id:CONFIG.googleClientId, scope:gateScope(), callback:onToken,
+    error_callback:e => authMsg('Connexion annulée ou refusée (' + ((e && e.type) || 'erreur') + ').', true)});
+  tokenClient.requestAccessToken();
+}
+async function onToken(resp){
+  if (resp.error) return authMsg('Erreur Google : ' + (resp.error_description || resp.error), true);
+  if (!google.accounts.oauth2.hasGrantedAllScopes(resp, gateScope().split(' ').pop()))
+    return authMsg("Autorisez l'accès à votre compte YouTube (case à cocher sur l'écran Google) : il sert uniquement à vérifier et créer l'abonnement.", true);
+  AUTH.token = resp.access_token; authMsg('Vérification du compte…');
+  try {
+    const r = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {headers:{Authorization:'Bearer ' + AUTH.token}});
+    if (!r.ok) throw new Error('profil inaccessible (' + r.status + ')');
+    const u = await r.json();
+    AUTH.user = {email:u.email || '', name:u.name || u.email || 'Utilisateur', picture:u.picture || ''};
+    AUTH.admin = CONFIG.adminEmails.includes((u.email || '').toLowerCase());
+    applyRole();
+    if (!AUTH.admin && CONFIG.requireSubscribe !== false) await checkNetwork();
+    authMsg(''); initAds();
+  } catch(e) { AUTH.user = null; AUTH.admin = false; authMsg('Échec de la connexion : ' + e.message + (/accessNotConfigured|has not been used/i.test(e.message) ? " (l'administrateur doit activer YouTube Data API v3)" : ''), true); }
+  renderAuth(); renderAll();
+}
+async function ytFetch(path, opts = {}){
+  const r = await fetch('https://www.googleapis.com/youtube/v3/' + path, {...opts, headers:{Authorization:'Bearer ' + AUTH.token, 'Content-Type':'application/json'}});
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok) { const e = new Error((d.error && d.error.message) || ('HTTP ' + r.status)); e.status = r.status; e.reason = d.error && d.error.errors && d.error.errors[0] && d.error.errors[0].reason; throw e; }
+  return d;
+}
+async function resolveChannelId(ch){
+  if (ch.channelId) return ch.channelId;
+  const m = (ch.url || '').match(/youtube\.com\/channel\/(UC[\w-]+)/);
+  if (m) { ch.channelId = m[1]; return ch.channelId; }
+  const h = (ch.url || '').match(/youtube\.com\/(@[^\/?#]+)/);
+  if (h) { const d = await ytFetch('channels?part=id&forHandle=' + encodeURIComponent(decodeURIComponent(h[1]))); if (d.items && d.items[0]) { ch.channelId = d.items[0].id; return ch.channelId; } }
+  return null;
+}
+async function checkNetwork(){
+  const gate = gateChannels(); let fatal = null; AUTH.status = {};
+  await Promise.all(gate.map(async ch => {
+    try {
+      const id = await resolveChannelId(ch);
+      if (!id) { AUTH.status[ch.id] = 'unknown'; return; }
+      const d = await ytFetch('subscriptions?part=id&mine=true&forChannelId=' + encodeURIComponent(id));
+      AUTH.status[ch.id] = d.items && d.items.length ? 'ok' : 'todo';
+    } catch(e) { if (e.status === 401 || e.status === 403) fatal = fatal || e; AUTH.status[ch.id] = 'unknown'; }
+  }));
+  if (fatal) throw fatal;
+  AUTH.subscribed = Object.values(AUTH.status).every(v => v !== 'todo');
+}
+async function subscribeNetwork(){
+  if (AUTH.busy) return; AUTH.busy = true; authMsg('Abonnement en cours…'); renderAuth();
+  let fail = null;
+  for (const ch of gateChannels().filter(c => AUTH.status[c.id] === 'todo')) {
+    try { await ytFetch('subscriptions?part=snippet', {method:'POST', body:JSON.stringify({snippet:{resourceId:{kind:'youtube#channel', channelId:ch.channelId}}})}); AUTH.status[ch.id] = 'ok'; }
+    catch(e) {
+      if (e.reason === 'subscriptionDuplicate') AUTH.status[ch.id] = 'ok';
+      else if (e.status === 404) AUTH.status[ch.id] = 'unknown';
+      else fail = fail || {ch, e};
+    }
+  }
+  AUTH.subscribed = Object.values(AUTH.status).every(v => v !== 'todo'); AUTH.busy = false;
+  if (fail) { window.open(fail.ch.url, '_blank'); authMsg(`Abonnement automatique impossible pour « ${fail.ch.name} » (${fail.e.message}). Sa page s'ouvre : cliquez sur S'abonner, puis sur « Vérifier ».`, true); }
+  else authMsg('');
+  renderAuth(); if (AUTH.subscribed) renderAll();
+}
+async function verifySubscriptions(){
+  authMsg('Vérification…');
+  try { await checkNetwork(); authMsg(AUTH.subscribed ? '' : "Abonnement pas encore détecté : patientez quelques secondes puis réessayez.", !AUTH.subscribed); }
+  catch(e) { authMsg(e.message, true); }
+  renderAuth(); if (AUTH.subscribed) renderAll();
+}
+function signOut(){
+  pauseAll(); AUTH.token = null; AUTH.user = null; AUTH.admin = false; AUTH.subscribed = false; AUTH.status = {};
+  applyRole(); authMsg(''); renderAuth(); renderAll();
+}
+function renderAuth(){
+  const ok = passed(), g = $('auth-gate');
+  g.classList.toggle('hidden', ok); g.classList.toggle('flex', !ok);
+  if (!ok) {
+    const conf = !!CONFIG.googleClientId, ico = v => v === 'ok' ? '<i class="fa-solid fa-circle-check text-emerald-400"></i>' : v === 'unknown' ? '<i class="fa-regular fa-circle-question text-gray-500"></i>' : '<i class="fa-regular fa-circle text-gray-500"></i>';
+    $('auth-steps').innerHTML = `<li class="flex items-center gap-3">${AUTH.user ? ico('ok') : ico('todo')}<span>1. Connexion avec Google${AUTH.user ? ' · <b>' + esc(AUTH.user.name) + '</b>' : ''}</span></li>
+      ${CONFIG.requireSubscribe !== false ? `<li><div class="flex items-center gap-3">${AUTH.user && AUTH.subscribed ? ico('ok') : ico('todo')}<span>2. Abonnement au réseau YouTube</span></div>
+      <ul class="ml-8 mt-2 space-y-1.5 text-[11px] text-gray-400">${gateChannels().map(c => `<li class="flex items-center gap-2">${ico(AUTH.status[c.id])}${esc(c.name)}</li>`).join('')}</ul></li>` : ''}`;
+    const logged = !!AUTH.user, need = logged && !AUTH.subscribed;
+    $('auth-btn-login').classList.toggle('hidden', logged); $('auth-btn-login').disabled = !conf; $('auth-btn-admin').classList.toggle('hidden', conf);
+    ['auth-btn-sub', 'auth-btn-verify'].forEach(id => { $(id).classList.toggle('hidden', !need); $(id).classList.toggle('flex', need && id === 'auth-btn-sub'); });
+    $('auth-btn-sub').disabled = AUTH.busy; $('auth-signout').classList.toggle('hidden', !logged);
+    if (!conf && !AUTH.msg) authMsg("Application non configurée : l'administrateur doit renseigner un Client ID Google (ouvrir la page avec #admin).", true);
+  }
+  const ua = $('user-area');
+  if (AUTH.user) {
+    ua.classList.remove('hidden'); ua.classList.add('flex');
+    ua.innerHTML = `${AUTH.user.picture ? `<img src="${esc(AUTH.user.picture)}" referrerpolicy="no-referrer" alt="" class="w-8 h-8 rounded-full border border-white/15">` : ''}<div class="hidden sm:block text-right leading-tight"><div class="text-xs font-semibold text-white max-w-[9rem] truncate">${esc(AUTH.user.name)}</div><div class="text-[10px] ${AUTH.admin ? 'text-gold-400' : 'text-gray-500'}">${AUTH.admin ? 'Administrateur' : 'Abonné'}</div></div><button onclick="signOut()" title="Se déconnecter" class="p-2 rounded-xl bg-white/5 hover:bg-white/15 text-gray-300 text-xs"><i class="fa-solid fa-right-from-bracket"></i></button>`;
+  } else if (setupMode()) {
+    ua.classList.remove('hidden'); ua.classList.add('flex');
+    ua.innerHTML = '<span class="text-[10px] font-mono px-2 py-1 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">Mode configuration</span>';
+  } else { ua.classList.add('hidden'); ua.classList.remove('flex'); ua.innerHTML = ''; }
+}
+window.addEventListener('hashchange', () => { applyRole(); renderAuth(); renderAll(); });
+
+/* ---- Chaîne cible : intégration de la musique choisie + vidéo proposée ---- */
+function targetChannel(t){
+  const id = CONFIG.targetChannelId;
+  if (id && id !== 'auto') { const c = channels.find(x => x.id === id); if (c) return c; }
+  return channels.find(x => x.id === t.channelId) || channels.find(x => x.genre === t.genre) || channels[0];
+}
+function onTrackChosen(t){
+  const ch = targetChannel(t); if (!ch) return;
+  if (!t.channelId || (CONFIG.targetChannelId && CONFIG.targetChannelId !== 'auto')) t.channelId = ch.id;
+  if (!tracks.some(x => x.uid === t.uid)) { tracks.unshift({...t}); }
+  showChannelCard(ch);
+}
+function showChannelCard(ch){
+  const vid = CONFIG.targetVideoId || ch.featuredVideoId || '', card = $('chan-card');
+  card.classList.remove('hidden');
+  card.innerHTML = `<div class="flex items-center justify-between px-3 py-2 border-b border-white/10"><div class="min-w-0"><div class="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">Ajoutée à la chaîne</div><div class="text-xs font-bold text-white truncate">${esc(ch.name)}</div></div><button onclick="closeChannelCard()" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/15 text-gray-400"><i class="fa-solid fa-xmark"></i></button></div>
+    ${vid ? `<div id="chan-video" class="relative aspect-video bg-black cursor-pointer" onclick="launchChannelVideo('${esc(vid)}')"><img src="https://i.ytimg.com/vi/${esc(vid)}/hqdefault.jpg" alt="" class="w-full h-full object-cover opacity-80"><span class="absolute inset-0 m-auto w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white shadow-lg"><i class="fa-solid fa-play ml-0.5"></i></span></div>` : ''}
+    <div class="p-3"><a href="${esc(ch.url)}" target="_blank" rel="noopener" class="block text-center btn-youtube text-white text-[11px] font-bold py-2 rounded-xl"><i class="fa-brands fa-youtube mr-1"></i>Ouvrir la chaîne</a></div>`;
+}
+function closeChannelCard(){ const c = $('chan-card'); c.classList.add('hidden'); c.innerHTML = ''; }
+function launchChannelVideo(vid){
+  const box = $('chan-video'); if (!box) return;
+  pauseAll(); viewsLaunched++; persist(); renderStats();
+  box.removeAttribute('onclick'); box.classList.remove('cursor-pointer');
+  box.innerHTML = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/${encodeURIComponent(vid)}?autoplay=1&rel=0" title="Vidéo de la chaîne" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+}
+
+/* =====================================================
+   LECTEUR
+===================================================== */
+/* ---- YouTube : lecture intégrée officielle (lecteur visible) ---- */
+let ytPlayer = null, ytState = -1, ytTimer = null;
+const usingYT = () => !!(current && current.source === 'youtube' && ytPlayer && ytPlayer.getPlayerState);
+const isPlaying = () => usingYT() ? ytState === 1 : !audio.paused;
+function loadYT(){
+  return new Promise((res, rej) => {
+    if (window.YT && YT.Player) return res();
+    if (!document.getElementById('yt-api')) { const sc = document.createElement('script'); sc.id = 'yt-api'; sc.src = 'https://www.youtube.com/iframe_api'; sc.onerror = () => rej(new Error('lecteur YouTube bloqué')); document.head.appendChild(sc); }
+    let n = 0; const iv = setInterval(() => { if (window.YT && YT.Player) { clearInterval(iv); res(); } else if (++n > 50) { clearInterval(iv); rej(new Error('lecteur YouTube indisponible')); } }, 200);
+  });
+}
+async function playYT(t){
+  audio.pause(); await loadYT(); $('yt-dock').classList.remove('hidden');
+  if (!ytPlayer) {
+    await new Promise(res => { ytPlayer = new YT.Player('yt-holder', {width:'288', height:'162', videoId:t.youtubeVideoId, playerVars:{autoplay:1, rel:0, playsinline:1},
+      events:{onReady:() => { ytPlayer.setVolume(Math.round(audio.volume * 100)); res(); },
+        onStateChange:e => { ytState = e.data; if (e.data === 0) { repeat ? ytPlayer.playVideo() : nextTrack(); } if (e.data === 1) failStreak = 0; syncPlayState(); },
+        onError:() => failTrack('vidéo non lisible en intégré')}}); });
+  } else ytPlayer.loadVideoById(t.youtubeVideoId);
+  clearInterval(ytTimer);
+  ytTimer = setInterval(() => { if (!usingYT()) return; const d = ytPlayer.getDuration(), c = ytPlayer.getCurrentTime(); if (d) { $('p-seek').value = c / d * 1000; $('p-cur').textContent = fmt(c); $('p-dur').textContent = fmt(d); } }, 500);
+}
+function stopYT(){ clearInterval(ytTimer); ytState = -1; if (ytPlayer && ytPlayer.stopVideo) { try { ytPlayer.stopVideo(); } catch(e) {} } $('yt-dock').classList.add('hidden'); }
+function pauseAll(){ audio.pause(); if (ytPlayer && ytPlayer.pauseVideo) { try { ytPlayer.pauseVideo(); } catch(e) {} } }
+function setVol(v){ v = parseFloat(v); audio.volume = v; if (ytPlayer && ytPlayer.setVolume) ytPlayer.setVolume(Math.round(v * 100)); }
+let failStreak = 0, failedUid = null;
+async function playTrack(t, list){
+  if (!passed()) { renderAuth(); return; }
+  if (list) { queue = list.length ? list : [t]; qi = Math.max(0, queue.findIndex(x => x.uid === t.uid)); }
+  current = t; totalPlays++; failedUid = null;
+  if (list) onTrackChosen(t);
+  persist(); updatePlayerUI();
+  try {
+    if (t.source === 'youtube') await playYT(t);
+    else {
+      stopYT();
+      if (!t.audioUrl) { $('p-sub').textContent = 'Chargement du fichier audio…'; await resolveAudio(t); }
+      if (current !== t) return;
+      audio.src = t.audioUrl; await audio.play();
+    }
+  } catch(e) {
+    if (e.name === 'AbortError') return;
+    failTrack(e.message || 'fichier indisponible');
+  }
+  updatePlayerUI(); syncPlayState(); renderPlayingMarks();
+}
+function failTrack(why){
+  if (!current || failedUid === current.uid) return;
+  failedUid = current.uid;
+  toast(`Lecture impossible (${why}).`, 'error');
+  if (++failStreak >= queue.length) { failStreak = 0; toast('Aucune piste lisible dans cette liste.', 'error'); return; }
+  setTimeout(nextTrack, 900);
+}
+function syncCardIcons(){
+  document.querySelectorAll('[data-act="play"] i').forEach(i => {
+    const on = current && i.parentElement.dataset.uid === current.uid && isPlaying();
+    i.className = `fa-solid ${on ? 'fa-pause' : 'fa-play'} text-xs ml-0.5`;
+  });
+}
+function updatePlayerUI(){
+  if (!current) return;
+  $('p-cover').src = current.coverUrl || PH; $('p-cover').onerror = function(){ this.onerror = null; this.src = PH; };
+  $('p-title').textContent = current.title; $('p-artist').textContent = current.artist;
+  $('p-genre').textContent = gInfo(current.genre).label.split(' ')[0].toUpperCase(); $('p-genre').classList.remove('hidden');
+  const ch = channels.find(c => c.id === current.channelId);
+  $('p-sub').textContent = ch ? 'Chaîne : ' + ch.name : (current.license || '');
+  $('p-dur').textContent = current.duration && current.duration !== '—' ? current.duration : '0:00';
+  $('p-fav').innerHTML = `<i class="${isFav(current.uid) ? 'fa-solid text-red-400' : 'fa-regular'} fa-heart"></i>`;
+}
+function syncPlayState(){
+  const on = isPlaying(); syncCardIcons();
+  $('p-icon').className = on ? 'fa-solid fa-pause' : 'fa-solid fa-play ml-0.5';
+  $('player').classList.toggle('is-playing', on); $('brand').classList.toggle('playing', on);
+  document.title = on && current ? `▶ ${current.title} — Music` : 'Music — Hub musical sans droits';
+}
+function renderPlayingMarks(){ if (tab === 'home') renderHome(); else if (tab === 'discover') applyFilters(); else if (tab === 'library') renderLibrary(); }
+function togglePlay(){ if (!current) { const f = CTX.home[0] || CTX.discover[0]; if (f) playTrack(f, CTX.home[0] ? CTX.home : CTX.discover); return; } if (usingYT()) { isPlaying() ? ytPlayer.pauseVideo() : ytPlayer.playVideo(); } else { audio.paused ? audio.play().catch(() => {}) : audio.pause(); } }
+function step(d){
+  if (!queue.length) return;
+  qi = shuffle ? Math.floor(Math.random() * queue.length) : (qi + d + queue.length) % queue.length;
+  playTrack(queue[qi]);
+}
+const nextTrack = () => step(1), prevTrack = () => (audio.currentTime > 4 ? (audio.currentTime = 0) : step(-1));
+function toggleShuffle(){ shuffle = !shuffle; $('p-shuf').classList.toggle('text-gold-400', shuffle); toast(shuffle ? 'Lecture aléatoire activée' : 'Lecture aléatoire désactivée'); }
+function toggleRepeat(){ repeat = !repeat; $('p-rep').classList.toggle('text-gold-400', repeat); toast(repeat ? 'Répétition activée' : 'Répétition désactivée'); }
+function handleSeek(v){ if (usingYT()) { const d = ytPlayer.getDuration(); if (d) ytPlayer.seekTo(v / 1000 * d, true); } else if (audio.duration) audio.currentTime = v / 1000 * audio.duration; }
+function setSleep(min){
+  clearTimeout(sleepTimer); min = +min;
+  if (min) { sleepTimer = setTimeout(() => { pauseAll(); $('p-sleep').value = 0; toast('Minuteur écoulé : lecture arrêtée.'); }, min * 60000); toast(`Arrêt automatique dans ${min} min.`); }
+}
+audio.addEventListener('timeupdate', () => { if (audio.duration && isFinite(audio.duration)) { $('p-seek').value = audio.currentTime / audio.duration * 1000; $('p-cur').textContent = fmt(audio.currentTime); } });
+audio.addEventListener('loadedmetadata', () => { if (isFinite(audio.duration)) $('p-dur').textContent = fmt(audio.duration); });
+audio.addEventListener('play', syncPlayState); audio.addEventListener('pause', syncPlayState);
+audio.addEventListener('ended', () => { if (repeat) { audio.currentTime = 0; audio.play(); } else nextTrack(); });
+audio.addEventListener('playing', () => { failStreak = 0; });
+audio.addEventListener('error', () => { if (current && audio.getAttribute('src')) failTrack('fichier audio inaccessible'); });
+document.addEventListener('keydown', e => {
+  if (/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+  if (e.code === 'Space') { e.preventDefault(); togglePlay(); }
+  else if (e.key === 'ArrowRight') audio.currentTime += 10;
+  else if (e.key === 'ArrowLeft') audio.currentTime -= 10;
+  else if (e.key.toLowerCase() === 'n') nextTrack();
+  else if (e.key.toLowerCase() === 'p') prevTrack();
+  else if (e.key === '/') { e.preventDefault(); switchTab('discover'); $('q').focus(); }
+});
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.setActionHandler('nexttrack', nextTrack);
+  navigator.mediaSession.setActionHandler('previoustrack', prevTrack);
+}
+
+/* =====================================================
+   CHAÎNES
+===================================================== */
+function formatYouTubeUrl(raw){
+  let c = raw.trim();
+  if (/^UC[\w-]{20,}$/.test(c)) c = 'https://www.youtube.com/channel/' + c;
+  else if (!/^https?:\/\//i.test(c)) c = c.startsWith('@') ? 'https://www.youtube.com/' + c : 'https://' + c;
+  if (!c.includes('sub_confirmation=1')) c += (c.includes('?') ? '&' : '?') + 'sub_confirmation=1';
+  return c;
+}
+function openChannelModal(id){
+  $('channel-form').reset();
+  $('ch-genre').innerHTML = GENRES.filter(g => g.id !== 'all').map(g => `<option value="${g.id}">${esc(g.label)}</option>`).join('');
+  const ch = id && channels.find(c => c.id === id);
+  $('channel-modal-title').textContent = ch ? 'Modifier la chaîne' : 'Ajouter une chaîne YouTube';
+  $('ch-id').value = ch ? ch.id : '';
+  if (ch) { $('ch-name').value = ch.name; $('ch-url').value = ch.url; $('ch-genre').value = ch.genre; $('ch-tag').value = ch.tag; $('ch-desc').value = ch.description; }
+  openModal('channel-modal');
+}
+function saveChannel(e){
+  e.preventDefault();
+  const id = $('ch-id').value, data = {name:$('ch-name').value.trim(), url:formatYouTubeUrl($('ch-url').value), genre:$('ch-genre').value, tag:$('ch-tag').value.trim(), description:$('ch-desc').value.trim()};
+  if (id) Object.assign(channels.find(c => c.id === id), data);
+  else channels.push({id:'ch-' + Date.now(), ...data, baseSubscribers:1000, subscribersGained:0});
+  persist(); closeModal('channel-modal'); renderAll(); toast(`Chaîne « ${data.name} » enregistrée.`, 'success');
+}
+function deleteChannel(id){ channels = channels.filter(c => c.id !== id); persist(); renderAll(); toast('Chaîne supprimée.'); }
+
+/* =====================================================
+   VIDÉO / IMPORT
+===================================================== */
+function openVideo(vid, title, chId){
+  videoChannel = chId; $('video-title').textContent = title;
+  $('video-iframe').src = `https://www.youtube.com/embed/${encodeURIComponent(vid)}?autoplay=1&rel=0`; openModal('video-modal');
+}
+function closeVideo(){ $('video-iframe').src = ''; closeModal('video-modal'); }
+function subFromVideo(){
+  const ch = channels.find(c => c.id === videoChannel) || channels[0];
+  if (ch) window.open(ch.url, '_blank');
+}
+const openImportModal = () => openModal('import-modal');
+function confirmImport(){
+  const m = $('import-url').value.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/);
+  if (!m) return toast('URL YouTube non reconnue.', 'error');
+  closeModal('import-modal'); openVideo(m[1], $('import-title').value.trim() || 'Vidéo importée', channels[0].id);
+}
+
+/* =====================================================
+   STATS, EXPORTS
+===================================================== */
+function handleNewsletterSubmit(e){
+  e.preventDefault(); const i = $('newsletter-email');
+  subscribers.push({email:i.value.trim().toLowerCase(), date:new Date().toLocaleString('fr-FR')});
+  persist(); renderStats(); i.value = ''; toast('E-mail enregistré.', 'success');
+}
+function download(name, content, type){
+  const url = URL.createObjectURL(new Blob([content], {type})), a = document.createElement('a');
+  a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+}
+function exportSubscribersCSV(){
+  if (!subscribers.length) return toast('Aucun e-mail enregistré.');
+  download(`abonnes_${new Date().toISOString().slice(0,10)}.csv`, '\uFEFF' + 'Email;Date\n' + subscribers.map(s => `"${s.email}";"${s.date}"`).join('\n'), 'text/csv;charset=utf-8;');
+  toast(`${subscribers.length} contact(s) exporté(s).`, 'success');
+}
+function exportBackup(){
+  download(`music_sauvegarde_${new Date().toISOString().slice(0,10)}.json`, JSON.stringify({channels, tracks, favorites, subscribers, totalPlays}, null, 2), 'application/json');
+  toast('Sauvegarde téléchargée.', 'success');
+}
+function importBackup(input){
+  const f = input.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => { try {
+    const d = JSON.parse(r.result);
+    if (Array.isArray(d.channels) && d.channels.length) channels = d.channels;
+    if (Array.isArray(d.tracks)) tracks = d.tracks;
+    favorites = (d.favorites || []).filter(f => f && typeof f === 'object'); subscribers = d.subscribers || []; totalPlays = d.totalPlays || 0;
+    persist(); renderAll(); toast('Sauvegarde restaurée.', 'success');
+  } catch(e) { toast('Fichier de sauvegarde invalide.', 'error'); } input.value = ''; };
+  r.readAsText(f);
+}
+/* =====================================================
+   INIT
+===================================================== */
+let adsLoaded = false;
+function initAds(){
+  const id = CONFIG.adsensePublisherId, slot = CONFIG.adsenseSlot;
+  if (adsLoaded || isAdmin() || !passed() || !/^ca-pub-\d{8,}$/.test(id || '')) return;
+  adsLoaded = true;
+  const sc = document.createElement('script'); sc.async = true; sc.crossOrigin = 'anonymous';
+  sc.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + id; document.head.appendChild(sc);
+  if (!/^\d+$/.test(slot || '')) return;
+  const box = $('ad-slot'); box.classList.remove('hidden');
+  box.innerHTML = `<ins class="adsbygoogle" style="display:block" data-ad-client="${id}" data-ad-slot="${slot}" data-ad-format="auto" data-full-width-responsive="true"></ins>`;
+  try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+}
+function openYTMusic(){ const p = buildParams(); window.open('https://music.youtube.com/search?q=' + encodeURIComponent(p.text || 'music'), '_blank', 'noopener'); }
+async function loadConfig(){
+  let file = {};
+  try { const r = await fetch('music_config.json', {cache:'no-store'}); if (r.ok) file = await r.json(); } catch(e) {}
+  CONFIG = {...DEFAULT_CONFIG, ...file, ...(load('config', null) || {})};
+  CONFIG.adminEmails = (Array.isArray(CONFIG.adminEmails) ? CONFIG.adminEmails : []).map(x => String(x).toLowerCase().trim()).filter(Boolean);
+  fileChannels = Array.isArray(file.channels) && file.channels.length ? file.channels : JSON.parse(JSON.stringify(DEFAULT_CHANNELS));
+}
+document.addEventListener('DOMContentLoaded', async () => {
+  if (location.hash === '#reset') { try { ['config', 'channels'].forEach(k => localStorage.removeItem('music_hub_' + k)); } catch(e) {} history.replaceState(null, '', location.pathname); }
+  localChannels = load('channels', null, 'yt_hub_html_channels');
+  tracks = (load('tracks', []) || []).map(t => ({...t, uid:t.uid || ('lib:' + t.id), source:t.source || 'local'}));
+  subscribers = load('subs', []); favorites = (load('favs', []) || []).filter(f => f && typeof f === 'object');
+  totalPlays = load('plays', 0); viewsLaunched = load('views', 0);
+  history = load('history', []); settings = {...settings, ...load('settings', {})};
+  settings.sources = {openverse:true, jamendo:true, archive:true, youtube:true, ...(settings.sources || {})};
+  $('jamendo-key').value = settings.jamendoKey || '';
+  tracks.forEach(t => REG.set(t.uid, t));
+  current = null; audio.volume = 0.85; $('p-cover').src = PH;
+  await loadConfig(); applyRole();
+  renderChips(); renderHistory(); renderAll(); renderAuth(); initAds();
+});
+</script>
+</body>
+</html>

@@ -1,9 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /*?lang=*
-
-# Crawlers AdSense
-User-agent: Mediapartners-Google
-Allow: /
 
 Sitemap: https://haykellaouiti-collab.github.io/music/sitemap.xml

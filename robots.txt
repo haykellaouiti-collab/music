@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://haykellaouiti-collab.github.io/music/sitemap.xml

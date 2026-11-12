@@ -4,13 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Politique de confidentialité — Music</title>
+    <script>(function(){try{var l=localStorage.getItem("music_hub_ui");if(l!=="fr"&&l!=="en"&&l!=="ar"){l=(navigator.language||"fr").slice(0,2).toLowerCase();if(l!=="en"&&l!=="ar")l="fr"}var th=localStorage.getItem("music_hub_theme");if(th!=="light"&&th!=="dark")th=(window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches)?"light":"dark";var d=document.documentElement;d.lang=l;d.dir=l==="ar"?"rtl":"ltr";d.setAttribute("data-theme",th)}catch(e){}})();</script>
     <style>
-        body{font-family:system-ui,sans-serif;max-width:760px;margin:2rem auto;padding:0 1rem;line-height:1.6;color:#1f2937}
-        h1,h2{color:#111}
-        a{color:#b45309}
+        :root{--bg:#ffffff;--fg:#1f2937;--h:#111;--a:#b45309;color-scheme:light}
+        html[data-theme=dark]{--bg:#0d111a;--fg:#d1d5db;--h:#f3f4f6;--a:#fbbf24;color-scheme:dark}
+        body{background:var(--bg);font-family:system-ui,sans-serif;max-width:760px;margin:2rem auto;padding:0 1rem;line-height:1.6;color:var(--fg)}
+        html[lang=ar] body{font-family:Cairo,Tahoma,system-ui,sans-serif}
+        h1,h2{color:var(--h)}
+        a{color:var(--a)}
+        .bar{display:flex;gap:.5rem;justify-content:flex-end;margin-bottom:1rem}
+        .bar select,.bar button{font:inherit;font-size:.85rem;padding:.35rem .6rem;border-radius:.6rem;border:1px solid #9ca3af;background:transparent;color:var(--fg);cursor:pointer}
+        [data-l]{display:none}
+        html[lang=fr] [data-l=fr],html[lang=en] [data-l=en],html[lang=ar] [data-l=ar]{display:block}
     </style>
 </head>
 <body>
+    <div class="bar">
+        <select id="lang" aria-label="Langue / Language / اللغة">
+            <option value="fr">Français</option><option value="en">English</option><option value="ar">العربية</option>
+        </select>
+        <button id="theme" type="button" aria-label="Mode jour / nuit">☀ / ☾</button>
+    </div>
+    <div data-l="fr">
     <h1>Politique de confidentialité</h1>
     <p><em>Dernière mise à jour : 12 novembre 2026.</em></p>
 
@@ -42,5 +57,82 @@
     <h2>Vos droits</h2>
     <p>Vous pouvez demander l'accès, la rectification ou la suppression de vos données en écrivant à <a href="mailto:haykellaouiti@gmail.com">haykellaouiti@gmail.com</a>.</p>
     <p><a href="index.html">← Retour à l'accueil</a></p>
+    </div>
+    <div data-l="en">
+    <h1>Privacy policy</h1>
+    <p><em>Last updated: 12 November 2026.</em></p>
+
+    <h2>Who we are</h2>
+    <p>Music (<a href="https://haykellaouiti-collab.github.io/music/">haykellaouiti-collab.github.io/music</a>) is a royalty-free music search engine published by Heikel Laouiti. Contact: <a href="mailto:haykellaouiti@gmail.com">haykellaouiti@gmail.com</a>.</p>
+
+    <h2>Data we process</h2>
+    <ul>
+        <li><b>Google sign-in:</b> signing in is optional. With your consent, the application receives your name, e-mail address, profile picture and read-only access to YouTube. This access is used only to search for music on YouTube and to display trending music. This information stays in your browser's memory during the session and is not sent to any external server.</li>
+        <li><b>Local storage:</b> your favorites, library, search history and preferences (language, light/dark mode) are saved in your browser's local storage. You can erase them at any time by clearing the site data.</li>
+        <li><b>Alert e-mails:</b> if you voluntarily enter an address to receive alerts, it is kept locally in the administrator's browser.</li>
+    </ul>
+
+    <h2>Google and YouTube data</h2>
+    <p>Music's use and transfer of information received from Google APIs complies with the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google API Services User Data Policy</a>, including its Limited Use requirements.</p>
+    <ul>
+        <li>Google data is used only to provide the features described above: no sale, no transfer to third parties, no targeted advertising based on this data, no human reading.</li>
+        <li><b>Retention:</b> the access token stays in memory and disappears when you close the page. YouTube titles, thumbnails and statistics are not stored: they are not saved in favorites or in the library.</li>
+        <li>Trending music is offered for listening and viewing only, through the official YouTube player.</li>
+    </ul>
+
+    <h2>Third-party services</h2>
+    <ul>
+        <li><b>Openverse, Jamendo, Internet Archive:</b> your search query is sent to them to obtain results.</li>
+        <li><b>YouTube:</b> playback uses the official embedded player, subject to the <a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener">YouTube Terms of Service</a> and the <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a>. You can revoke Music's access to your account at any time at <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">myaccount.google.com/permissions</a>.</li>
+        <li><b>Google AdSense:</b> this site displays Google ads. Google and its partners use cookies to serve ads based on your visits to this and other sites. You can manage personalized ads at <a href="https://adssettings.google.com" target="_blank" rel="noopener">adssettings.google.com</a>. In the European Economic Area and the United Kingdom, a consent message is shown before these cookies are used.</li>
+    </ul>
+
+    <h2>Your rights</h2>
+    <p>You can request access to, correction or deletion of your data by writing to <a href="mailto:haykellaouiti@gmail.com">haykellaouiti@gmail.com</a>.</p>
+    <p><a href="index.html">← Back to home</a></p>
+    </div>
+    <div data-l="ar">
+    <h1>سياسة الخصوصية</h1>
+    <p><em>آخر تحديث: 12 نوفمبر 2026.</em></p>
+
+    <h2>من نحن</h2>
+    <p>Music (<a href="https://haykellaouiti-collab.github.io/music/">haykellaouiti-collab.github.io/music</a>) هو محرك بحث عن الموسيقى الحرة من الحقوق، ينشره Heikel Laouiti. للتواصل: <a href="mailto:haykellaouiti@gmail.com">haykellaouiti@gmail.com</a>.</p>
+
+    <h2>البيانات التي نعالجها</h2>
+    <ul>
+        <li><b>تسجيل الدخول بـ Google:</b> تسجيل الدخول اختياري. بموافقتك يتلقى التطبيق اسمك وبريدك الإلكتروني وصورة ملفك الشخصي وصلاحية قراءة فقط على YouTube. تُستخدم هذه الصلاحية حصرًا للبحث عن الموسيقى في YouTube وعرض الموسيقى الرائجة. تبقى هذه المعلومات في ذاكرة متصفحك أثناء الجلسة ولا تُرسل إلى أي خادم خارجي.</li>
+        <li><b>التخزين المحلي:</b> تُحفظ مفضلاتك ومكتبتك وسجل بحثك وتفضيلاتك (اللغة، الوضع النهاري/الليلي) في التخزين المحلي لمتصفحك. يمكنك مسحها في أي وقت بحذف بيانات الموقع.</li>
+        <li><b>بريد التنبيهات:</b> إذا أدخلت عنوانًا طوعًا لتلقي التنبيهات، فإنه يُحفظ محليًا في متصفح المسؤول.</li>
+    </ul>
+
+    <h2>بيانات Google وYouTube</h2>
+    <p>يلتزم استخدام Music للمعلومات الواردة من واجهات Google البرمجية ونقلها بـ <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">سياسة بيانات المستخدم لخدمات Google API</a>، بما في ذلك متطلبات الاستخدام المحدود (<i>Limited Use</i>).</p>
+    <ul>
+        <li>تُستخدم بيانات Google فقط لتقديم الميزات الموضحة أعلاه: لا بيع، ولا نقل إلى أطراف ثالثة، ولا إعلانات موجَّهة بناءً على هذه البيانات، ولا اطلاع بشري عليها.</li>
+        <li><b>الاحتفاظ:</b> يبقى رمز الوصول في الذاكرة ويختفي عند إغلاق الصفحة. لا تُخزَّن عناوين YouTube وصورها المصغرة وإحصاءاتها: فهي لا تُحفظ في المفضلة ولا في المكتبة.</li>
+        <li>تُقدَّم الموسيقى الرائجة للاستماع والمشاهدة فقط عبر مشغّل YouTube الرسمي.</li>
+    </ul>
+
+    <h2>خدمات الأطراف الثالثة</h2>
+    <ul>
+        <li><b>Openverse وJamendo وInternet Archive:</b> يُرسل إليها استعلام بحثك للحصول على النتائج.</li>
+        <li><b>YouTube:</b> يستخدم التشغيل المشغّل المدمج الرسمي، الخاضع لـ <a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener">شروط خدمة YouTube</a> و<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">سياسة خصوصية Google</a>. يمكنك سحب وصول Music إلى حسابك في أي وقت من <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">myaccount.google.com/permissions</a>.</li>
+        <li><b>Google AdSense:</b> يعرض هذا الموقع إعلانات Google. تستخدم Google وشركاؤها ملفات تعريف الارتباط لعرض إعلانات بناءً على زياراتك لهذا الموقع ولمواقع أخرى. يمكنك إدارة الإعلانات المخصصة عبر <a href="https://adssettings.google.com" target="_blank" rel="noopener">adssettings.google.com</a>. في المنطقة الاقتصادية الأوروبية والمملكة المتحدة تُعرض رسالة موافقة قبل استخدام هذه الملفات.</li>
+    </ul>
+
+    <h2>حقوقك</h2>
+    <p>يمكنك طلب الاطلاع على بياناتك أو تصحيحها أو حذفها بمراسلة <a href="mailto:haykellaouiti@gmail.com">haykellaouiti@gmail.com</a>.</p>
+    <p><a href="index.html">← العودة إلى الرئيسية</a></p>
+    </div>
+    <script>
+    (function(){
+        var d=document.documentElement,sel=document.getElementById("lang"),btn=document.getElementById("theme");
+        var T={fr:"Politique de confidentialité — Music",en:"Privacy policy — Music",ar:"سياسة الخصوصية — Music"};
+        function paint(){sel.value=d.lang;document.title=T[d.lang]}
+        sel.addEventListener("change",function(){d.lang=sel.value;d.dir=sel.value==="ar"?"rtl":"ltr";try{localStorage.setItem("music_hub_ui",sel.value)}catch(e){}paint()});
+        btn.addEventListener("click",function(){var t=d.getAttribute("data-theme")==="dark"?"light":"dark";d.setAttribute("data-theme",t);try{localStorage.setItem("music_hub_theme",t)}catch(e){}});
+        paint();
+    })();
+    </script>
 </body>
 </html>

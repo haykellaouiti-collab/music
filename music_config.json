@@ -1,25 +1,11 @@
 {
   "googleClientId": "502413181474-7ei3mhnqmk9uhcrm0v6b816csfbe5i5v.apps.googleusercontent.com",
-  "adminEmails": [
-    "haykellaouiti@gmail.com"
-  ],
+  "adminEmails": ["haykellaouiti@gmail.com"],
   "targetChannelId": "auto",
   "targetVideoId": "",
-  "requireLogin": true,
-  "requireSubscribe": true,
+  "requireLogin": false,
+  "requireSubscribe": false,
   "youtubeApiKey": "",
   "adsensePublisherId": "ca-pub-3266873353292561",
-  "adsenseSlot": "",
-  "channels": [
-    {
-      "id": "ch-1794476312366",
-      "name": "Music Hub – Libre de Droits",
-      "url": "https://www.youtube.com/@MusicHubLibredeDroits?sub_confirmation=1",
-      "genre": "jazz",
-      "tag": "HUB",
-      "description": "Music Hub, votre source dédiée aux meilleures ambiances sonores libres de droits.",
-      "baseSubscribers": 1000,
-      "subscribersGained": 0
-    }
-  ]
+  "adsenseSlot": "0000000000"
 }

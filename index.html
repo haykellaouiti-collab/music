@@ -65,7 +65,6 @@ body{background-color:#07090E;color:#F3F4F6;background-image:radial-gradient(cir
 .pill{font-size:.7rem;padding:.35rem .7rem;border-radius:9999px;border:1px solid rgba(255,255,255,.12);cursor:pointer;display:inline-flex;align-items:center;gap:.4rem;color:#d1d5db}
 .pill.on{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.5);color:#6ee7b7}
 input[type=range]{accent-color:#f59e0b}
-/* ---- RTL ---- */
 html[dir="rtl"] body,html[dir="rtl"] .font-display,html[dir="rtl"] .font-mono{font-family:'Cairo','Plus Jakarta Sans',sans-serif}
 html[dir="rtl"] .left-3\.5{left:auto;right:.875rem}
 html[dir="rtl"] .left-4{left:auto;right:1rem}
@@ -83,31 +82,27 @@ html[dir="rtl"] .mr-2{margin-right:0;margin-left:.5rem}
 html[dir="rtl"] .text-right{text-align:left}
 html[dir="rtl"] .text-left{text-align:right}
 html[dir="rtl"] .border-r{border-right:0;border-left-width:1px}
-/* Ad slot */
-#ad-slot{min-height:0}
-#ad-slot:empty{display:none}
+#ad-slot:empty,#ad-slot-discover:empty{display:none}
+.lang-btn.on{background:#D4AF37;color:#07090E}
 </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-gold-500 selection:text-obsidian-950 pb-32">
 
 <div id="toast-container" class="fixed top-24 right-5 z-[90] flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
 
-<!-- CMP AdSense : bannière de consentement (EEE/UK) -->
+<!-- CMP : bannière de consentement -->
 <div id="consent-banner" class="hidden fixed bottom-0 left-0 right-0 z-[95] p-4 bg-obsidian-950/98 backdrop-blur-md border-t border-gold-500/40 shadow-2xl">
   <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center gap-4">
-    <p class="text-xs text-gray-200 flex-1 leading-relaxed">
-      <b>🍪 Cookies &amp; publicité</b> — Nous utilisons des cookies pour diffuser des annonces Google AdSense et améliorer votre expérience. Voir notre
-      <a href="privacy.html" target="_blank" rel="noopener" class="underline text-gold-400">politique de confidentialité</a>.
-    </p>
+    <p class="text-xs text-gray-200 flex-1 leading-relaxed"><b>🍪 <span data-i18n="consent.title">Cookies &amp; publicité</span></b> — <span data-i18n="consent.desc">Nous utilisons des cookies pour diffuser des annonces Google AdSense et améliorer votre expérience.</span> <a href="privacy.html" target="_blank" rel="noopener" class="underline text-gold-400" data-i18n="footer.privacy">Politique de confidentialité</a>.</p>
     <div class="flex flex-wrap gap-2">
-      <button onclick="openConsentSettings()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-semibold">Personnaliser</button>
-      <button onclick="rejectAll()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-semibold">Refuser</button>
-      <button onclick="acceptAll()" class="btn-gold px-5 py-2 rounded-xl text-xs font-bold">Tout accepter</button>
+      <button onclick="openConsentSettings()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-semibold" data-i18n="consent.customize">Personnaliser</button>
+      <button onclick="rejectAll()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-semibold" data-i18n="consent.reject">Refuser</button>
+      <button onclick="acceptAll()" class="btn-gold px-5 py-2 rounded-xl text-xs font-bold" data-i18n="consent.accept">Tout accepter</button>
     </div>
   </div>
 </div>
 
-<!-- Modale de préférences de consentement -->
+<!-- CMP : préférences -->
 <div id="consent-modal" class="fixed inset-0 z-[96] hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
   <div class="bg-obsidian-900 border border-gold-500/30 rounded-3xl max-w-lg w-full p-6 shadow-2xl max-h-[92vh] overflow-y-auto">
     <h3 class="text-xl font-bold text-white mb-2" data-i18n="consent.title">Préférences de consentement</h3>
@@ -138,44 +133,26 @@ html[dir="rtl"] .border-r{border-right:0;border-left-width:1px}
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
     <div class="flex items-center gap-3 shrink-0" id="brand">
       <svg id="logo" class="w-11 h-11" viewBox="0 0 64 64" aria-label="Logo Music">
-        <defs>
-          <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBBF24"/><stop offset="1" stop-color="#FF2D2D"/></linearGradient>
-          <radialGradient id="lbg" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#161D2B"/><stop offset="1" stop-color="#07090E"/></radialGradient>
-        </defs>
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBBF24"/><stop offset="1" stop-color="#FF2D2D"/></linearGradient><radialGradient id="lbg" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#161D2B"/><stop offset="1" stop-color="#07090E"/></radialGradient></defs>
         <circle cx="32" cy="32" r="30" fill="url(#lbg)" stroke="url(#lg)" stroke-width="2.5"/>
-        <g class="logo-disc" fill="none" stroke="url(#lg)" stroke-opacity=".45" stroke-width="1">
-          <circle cx="32" cy="32" r="26" stroke-dasharray="6 5"/><circle cx="32" cy="32" r="21" stroke-dasharray="3 7"/>
-        </g>
-        <g fill="url(#lg)">
-          <rect class="eq-bar" x="18" y="22" width="5" height="22" rx="2.5"/>
-          <rect class="eq-bar" x="26" y="16" width="5" height="28" rx="2.5"/>
-          <rect class="eq-bar" x="34" y="20" width="5" height="24" rx="2.5"/>
-          <rect class="eq-bar" x="42" y="26" width="5" height="18" rx="2.5"/>
-        </g>
+        <g class="logo-disc" fill="none" stroke="url(#lg)" stroke-opacity=".45" stroke-width="1"><circle cx="32" cy="32" r="26" stroke-dasharray="6 5"/><circle cx="32" cy="32" r="21" stroke-dasharray="3 7"/></g>
+        <g fill="url(#lg)"><rect class="eq-bar" x="18" y="22" width="5" height="22" rx="2.5"/><rect class="eq-bar" x="26" y="16" width="5" height="28" rx="2.5"/><rect class="eq-bar" x="34" y="20" width="5" height="24" rx="2.5"/><rect class="eq-bar" x="42" y="26" width="5" height="18" rx="2.5"/></g>
       </svg>
       <div>
         <span class="font-display font-extrabold text-2xl tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-500 to-red-500 block leading-none">MUSIC</span>
         <span class="text-[11px] text-gray-400 font-medium" data-i18n="site.tagline">Libre de droits · 27 genres · 3 sources</span>
       </div>
     </div>
-
     <nav id="nav-desktop" class="hidden md:flex items-center gap-1 p-1 bg-obsidian-900/80 border border-white/10 rounded-xl"></nav>
-
     <div class="flex items-center gap-2.5 shrink-0">
-      <!-- Sélecteur de langue -->
       <div class="flex items-center gap-0.5 p-0.5 bg-obsidian-900/80 border border-white/10 rounded-xl" role="group" aria-label="Language">
         <button data-lang="fr" class="lang-btn px-2 py-1 rounded-lg text-[11px] font-bold hover:bg-white/10">FR</button>
         <button data-lang="en" class="lang-btn px-2 py-1 rounded-lg text-[11px] font-bold hover:bg-white/10">EN</button>
         <button data-lang="ar" class="lang-btn px-2 py-1 rounded-lg text-[11px] font-bold hover:bg-white/10">ع</button>
       </div>
       <div id="admin-actions" class="hidden items-center gap-2.5">
-        <div class="hidden lg:flex flex-col text-right pr-2 border-r border-white/10">
-          <span class="text-[10px] text-gray-400 uppercase tracking-wider" data-i18n="header.plays">Écoutes</span>
-          <span class="font-mono text-xs font-bold text-emerald-400" id="header-subs-total">0</span>
-        </div>
-        <button onclick="openChannelModal()" class="btn-gold px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5">
-          <i class="fa-solid fa-plus" aria-hidden="true"></i><span class="hidden sm:inline" data-i18n="channels.add">Chaîne</span>
-        </button>
+        <div class="hidden lg:flex flex-col text-right pr-2 border-r border-white/10"><span class="text-[10px] text-gray-400 uppercase tracking-wider" data-i18n="header.plays">Écoutes</span><span class="font-mono text-xs font-bold text-emerald-400" id="header-subs-total">0</span></div>
+        <button onclick="openChannelModal()" class="btn-gold px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5"><i class="fa-solid fa-plus" aria-hidden="true"></i><span class="hidden sm:inline" data-i18n="channels.add">Chaîne</span></button>
       </div>
       <div id="user-area" class="hidden items-center gap-2"></div>
     </div>
@@ -200,17 +177,13 @@ html[dir="rtl"] .border-r{border-right:0;border-left-width:1px}
       </div>
     </div>
   </div>
-
   <div class="flex items-center gap-2 overflow-x-auto pb-2 noscroll" id="home-genres"></div>
-
   <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-obsidian-900/60 border border-white/10">
-    <div class="relative w-full sm:w-80">
-      <i class="fa-solid fa-magnifying-glass text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 text-xs" aria-hidden="true"></i>
-      <input id="home-search" aria-label="Filtrer ma bibliothèque" type="text" oninput="renderHome()" data-i18n-ph="home.searchPh" placeholder="Filtrer ma bibliothèque (titre, artiste)…" class="w-full pl-9 pr-4 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white placeholder-gray-500 text-xs focus:outline-none focus:border-gold-500">
-    </div>
+    <div class="relative w-full sm:w-80"><i class="fa-solid fa-magnifying-glass text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 text-xs" aria-hidden="true"></i>
+      <input id="home-search" type="text" oninput="renderHome()" data-i18n-ph="home.searchPh" placeholder="Filtrer ma bibliothèque…" class="w-full pl-9 pr-4 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white placeholder-gray-500 text-xs focus:outline-none focus:border-gold-500"></div>
     <div class="flex items-center gap-4 text-xs text-gray-400">
       <span><span data-i18n="home.tracks">Pistes</span> : <strong class="text-white font-mono" id="home-count">0</strong></span>
-      <button id="home-online-btn" onclick="exploreGenreOnline()" class="btn-gold px-3 py-1.5 rounded-lg font-bold text-[11px]"><i class="fa-solid fa-earth-europe mr-1" aria-hidden="true"></i> <span data-i18n="home.exploreOnline">Explorer ce genre en ligne</span></button>
+      <button id="home-online-btn" onclick="exploreGenreOnline()" class="btn-gold px-3 py-1.5 rounded-lg font-bold text-[11px]"><i class="fa-solid fa-earth-europe mr-1" aria-hidden="true"></i> <span data-i18n="home.exploreOnline">Explorer en ligne</span></button>
     </div>
   </div>
   <div id="home-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
@@ -223,59 +196,33 @@ html[dir="rtl"] .border-r{border-right:0;border-left-width:1px}
       <div>
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-2"><i class="fa-solid fa-globe" aria-hidden="true"></i> <span data-i18n="discover.badge">Recherche multi-sources en direct</span></div>
         <h2 class="font-display text-2xl sm:text-3xl font-bold text-white" data-i18n="discover.title">Découvrir</h2>
-        <p class="text-xs text-gray-400 mt-1" data-i18n="discover.subtitle">Les résultats viennent en direct des catalogues ouverts. Vérifiez toujours la licence avant publication.</p>
+        <p class="text-xs text-gray-400 mt-1" data-i18n="discover.subtitle">Les résultats viennent en direct des catalogues ouverts.</p>
       </div>
       <div class="flex gap-2 flex-wrap">
         <button onclick="surpriseMe()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15 border border-white/15 flex items-center gap-2"><i class="fa-solid fa-dice" aria-hidden="true"></i> <span data-i18n="hero.cta.surprise">Surprends-moi</span></button>
-        <button onclick="openYTMusic()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-red-600/15 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 flex items-center gap-2"><i class="fa-brands fa-youtube" aria-hidden="true"></i> <span data-i18n="discover.openYT">Ouvrir dans YouTube Music</span></button>
-        <button onclick="openImportModal()" class="btn-gold px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2"><i class="fa-solid fa-link" aria-hidden="true"></i> <span data-i18n="discover.import">Importer une URL</span></button>
+        <button onclick="openYTMusic()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-red-600/15 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 flex items-center gap-2"><i class="fa-brands fa-youtube" aria-hidden="true"></i> <span data-i18n="discover.openYT">YouTube Music</span></button>
+        <button onclick="openImportModal()" class="btn-gold px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2"><i class="fa-solid fa-link" aria-hidden="true"></i> <span data-i18n="discover.import">Importer</span></button>
       </div>
     </div>
-
     <form onsubmit="event.preventDefault();runSearch(true)" class="flex gap-2">
-      <div class="relative flex-1">
-        <i class="fa-solid fa-magnifying-glass text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 text-sm" aria-hidden="true"></i>
-        <input id="q" aria-label="Rechercher une musique" type="search" list="q-hist" autocomplete="off" data-i18n-ph="discover.searchPh" placeholder="Instrument, ambiance, artiste, titre…" class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-obsidian-950 border border-white/15 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-gold-500">
-        <datalist id="q-hist"></datalist>
-      </div>
+      <div class="relative flex-1"><i class="fa-solid fa-magnifying-glass text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 text-sm" aria-hidden="true"></i>
+        <input id="q" type="search" list="q-hist" autocomplete="off" data-i18n-ph="discover.searchPh" placeholder="Instrument, ambiance…" class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-obsidian-950 border border-white/15 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-gold-500"><datalist id="q-hist"></datalist></div>
       <button class="btn-gold px-6 rounded-2xl font-bold text-sm flex items-center gap-2"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><span class="hidden sm:inline" data-i18n="discover.searchBtn">Rechercher</span></button>
     </form>
-
-    <div>
-      <div class="text-[10px] uppercase tracking-wider text-gray-400 mb-2 font-semibold" data-i18n="discover.langLabel">Langue des chansons</div>
-      <div id="lang-chips" class="flex flex-wrap gap-2"></div>
-    </div>
-    <div>
-      <div class="text-[10px] uppercase tracking-wider text-gray-400 mb-2 font-semibold" data-i18n="discover.genreLabel">Genres</div>
-      <div id="genre-chips" class="flex flex-wrap gap-2"></div>
-    </div>
-    <div>
-      <div class="text-[10px] uppercase tracking-wider text-gray-400 mb-2 font-semibold" data-i18n="discover.moodLabel">Ambiances</div>
-      <div id="mood-chips" class="flex flex-wrap gap-2"></div>
-    </div>
-
+    <div><div class="text-[10px] uppercase tracking-wider text-gray-400 mb-2 font-semibold" data-i18n="discover.langLabel">Langue</div><div id="lang-chips" class="flex flex-wrap gap-2"></div></div>
+    <div><div class="text-[10px] uppercase tracking-wider text-gray-400 mb-2 font-semibold" data-i18n="discover.genreLabel">Genres</div><div id="genre-chips" class="flex flex-wrap gap-2"></div></div>
+    <div><div class="text-[10px] uppercase tracking-wider text-gray-400 mb-2 font-semibold" data-i18n="discover.moodLabel">Ambiances</div><div id="mood-chips" class="flex flex-wrap gap-2"></div></div>
     <div class="grid grid-cols-2 md:grid-cols-5 gap-3 pt-4 border-t border-white/10 items-end">
-      <label class="text-[11px] text-gray-400"><span data-i18n="discover.licenseLabel">Licence</span>
-        <select id="f-license" onchange="applyFilters()" class="mt-1 w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs">
-          <option value="all" data-i18n="lic.all">Toutes (CC)</option><option value="cc0" data-i18n="lic.cc0">CC0 / Domaine public</option><option value="by" data-i18n="lic.by">CC BY</option><option value="by-sa" data-i18n="lic.bySa">CC BY-SA</option>
-        </select></label>
-      <label class="text-[11px] text-gray-400"><span data-i18n="discover.durationLabel">Durée min.</span>
-        <select id="f-dur" onchange="applyFilters()" class="mt-1 w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs">
-          <option value="0" data-i18n="dur.all">Toutes</option><option value="60">&gt; 1 min</option><option value="180">&gt; 3 min</option><option value="600">&gt; 10 min</option><option value="1800">&gt; 30 min</option>
-        </select></label>
-      <label class="text-[11px] text-gray-400"><span data-i18n="discover.sortLabel">Tri</span>
-        <select id="f-sort" onchange="applyFilters()" class="mt-1 w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs">
-          <option value="rel" data-i18n="sort.rel">Pertinence (mixte)</option><option value="dur-desc" data-i18n="sort.durDesc">Plus longs</option><option value="dur-asc" data-i18n="sort.durAsc">Plus courts</option><option value="title" data-i18n="sort.title">Titre A→Z</option>
-        </select></label>
+      <label class="text-[11px] text-gray-400"><span data-i18n="discover.licenseLabel">Licence</span><select id="f-license" onchange="applyFilters()" class="mt-1 w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"><option value="all" data-i18n="lic.all">Toutes</option><option value="cc0" data-i18n="lic.cc0">CC0</option><option value="by" data-i18n="lic.by">CC BY</option><option value="by-sa" data-i18n="lic.bySa">CC BY-SA</option></select></label>
+      <label class="text-[11px] text-gray-400"><span data-i18n="discover.durationLabel">Durée</span><select id="f-dur" onchange="applyFilters()" class="mt-1 w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"><option value="0" data-i18n="dur.all">Toutes</option><option value="60">&gt; 1 min</option><option value="180">&gt; 3 min</option><option value="600">&gt; 10 min</option><option value="1800">&gt; 30 min</option></select></label>
+      <label class="text-[11px] text-gray-400"><span data-i18n="discover.sortLabel">Tri</span><select id="f-sort" onchange="applyFilters()" class="mt-1 w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"><option value="rel" data-i18n="sort.rel">Pertinence</option><option value="dur-desc" data-i18n="sort.durDesc">Plus longs</option><option value="dur-asc" data-i18n="sort.durAsc">Plus courts</option><option value="title" data-i18n="sort.title">A→Z</option></select></label>
       <label class="flex items-center gap-2 text-[11px] text-gray-300 cursor-pointer md:col-span-1"><input id="f-commercial" type="checkbox" checked onchange="runSearch(true)" class="rounded"> <span data-i18n="discover.commercial">Usage commercial uniquement</span></label>
       <div class="flex flex-wrap gap-2 justify-end" id="source-pills"></div>
     </div>
   </div>
-
   <div class="flex items-center justify-between text-xs text-gray-400"><div id="search-status" data-i18n="discover.status.start">Lancez une recherche ou choisissez un genre.</div><div id="result-count" class="font-mono"></div></div>
   <div id="discover-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
-  <div class="text-center"><button id="more-btn" onclick="runSearch(false)" class="hidden px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-sm font-bold"><i class="fa-solid fa-angles-down mr-2" aria-hidden="true"></i> <span data-i18n="discover.more">Charger plus de résultats</span></button></div>
-  <!-- Ad slot dans la section Découvrir (conforme AdSense : contenu autour) -->
+  <div class="text-center"><button id="more-btn" onclick="runSearch(false)" class="hidden px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-sm font-bold"><i class="fa-solid fa-angles-down mr-2" aria-hidden="true"></i> <span data-i18n="discover.more">Charger plus</span></button></div>
   <div id="ad-slot-discover" class="max-w-3xl mx-auto my-6"></div>
 </section>
 
@@ -284,7 +231,7 @@ html[dir="rtl"] .border-r{border-right:0;border-left-width:1px}
   <div class="rounded-3xl p-6 sm:p-8 border border-white/10 bg-obsidian-900/80 space-y-4">
     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/15 border border-sky-500/30 text-sky-300 text-xs font-semibold"><i class="fa-solid fa-eye" aria-hidden="true"></i> <span data-i18n="trending.badge">Écoute et visionnage uniquement</span></div>
     <h2 class="font-display text-2xl sm:text-3xl font-bold text-white" data-i18n="trending.title">Musiques tendance</h2>
-    <p class="text-xs text-gray-400 max-w-3xl" data-i18n="trending.desc">Les titres les plus écoutés du moment sur YouTube, par langue. Ils sont lus dans le lecteur officiel YouTube : ils ne sont jamais ajoutés à vos chaînes ni à votre bibliothèque, et ne peuvent pas être réutilisés dans vos vidéos.</p>
+    <p class="text-xs text-gray-400 max-w-3xl" data-i18n="trending.desc">Les titres les plus écoutés du moment sur YouTube, par langue.</p>
     <div id="trend-lang" class="flex flex-wrap gap-2"></div>
   </div>
   <div id="trend-status" class="text-xs text-gray-400"></div>
@@ -296,13 +243,10 @@ html[dir="rtl"] .border-r{border-right:0;border-left-width:1px}
 <section id="tab-library" class="hidden space-y-6">
   <div class="rounded-3xl p-6 sm:p-8 border border-white/10 bg-obsidian-900/80">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-      <div>
-        <h2 class="font-display text-2xl sm:text-3xl font-bold text-white" data-i18n="library.title">Ma Bibliothèque</h2>
-        <p class="text-xs text-gray-400 mt-1" data-i18n="library.subtitle">Favoris, pistes placées dans vos chaînes, crédits et sauvegarde.</p>
-      </div>
+      <div><h2 class="font-display text-2xl sm:text-3xl font-bold text-white" data-i18n="library.title">Ma Bibliothèque</h2><p class="text-xs text-gray-400 mt-1" data-i18n="library.subtitle">Favoris, pistes placées dans vos chaînes, crédits et sauvegarde.</p></div>
       <div class="flex flex-wrap gap-2">
         <button onclick="copyAllCredits()" class="btn-gold px-4 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-copy mr-1.5" aria-hidden="true"></i> <span data-i18n="library.creditsBtn">Crédits YouTube</span></button>
-        <button onclick="exportBackup()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15"><i class="fa-solid fa-download mr-1.5" aria-hidden="true"></i> <span data-i18n="library.backupBtn">Sauvegarde JSON</span></button>
+        <button onclick="exportBackup()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15"><i class="fa-solid fa-download mr-1.5" aria-hidden="true"></i> <span data-i18n="library.backupBtn">Sauvegarde</span></button>
         <label class="px-4 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15 cursor-pointer"><i class="fa-solid fa-upload mr-1.5" aria-hidden="true"></i> <span data-i18n="library.restoreBtn">Restaurer</span><input type="file" accept="application/json" class="hidden" onchange="importBackup(this)"></label>
       </div>
     </div>
@@ -315,10 +259,7 @@ html[dir="rtl"] .border-r{border-right:0;border-left-width:1px}
 <section id="tab-channels" class="hidden space-y-8">
   <div class="rounded-3xl p-6 sm:p-8 border border-white/10 bg-obsidian-900/80">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-white/10">
-      <div>
-        <h2 class="font-display text-2xl sm:text-3xl font-bold text-white" data-i18n="channels.title">Mes Chaînes YouTube</h2>
-        <p class="text-xs text-gray-300 mt-1 max-w-2xl" data-i18n="channels.subtitle">Le paramètre <code class="text-gold-400 bg-black/40 px-1 rounded font-mono text-[11px]">?sub_confirmation=1</code> est ajouté automatiquement aux liens.</p>
-      </div>
+      <div><h2 class="font-display text-2xl sm:text-3xl font-bold text-white" data-i18n="channels.title">Mes Chaînes YouTube</h2><p class="text-xs text-gray-300 mt-1 max-w-2xl" data-i18n="channels.subtitle">Le paramètre sub_confirmation=1 est ajouté automatiquement.</p></div>
       <button onclick="openChannelModal()" class="btn-gold font-bold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2"><i class="fa-solid fa-plus" aria-hidden="true"></i> <span data-i18n="channels.add">Ajouter une chaîne</span></button>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
@@ -328,24 +269,21 @@ html[dir="rtl"] .border-r{border-right:0;border-left-width:1px}
     </div>
   </div>
   <div class="rounded-3xl p-6 sm:p-8 border border-gold-500/30 bg-obsidian-900/80 space-y-5">
-    <div>
-      <h3 class="font-display text-xl font-bold text-white" data-i18n="settings.title">Réglages du réseau (administrateur)</h3>
-      <p class="text-xs text-gray-400 mt-1" data-i18n="settings.desc">Ces réglages sont enregistrés dans ce navigateur. Pour qu'ils s'appliquent à vos visiteurs, cliquez sur « Exporter la configuration » et déposez <code class="text-gold-400">music_config.json</code> à côté de la page.</p>
-    </div>
+    <div><h3 class="font-display text-xl font-bold text-white" data-i18n="settings.title">Réglages du réseau (administrateur)</h3><p class="text-xs text-gray-400 mt-1" data-i18n="settings.desc">Ces réglages sont enregistrés dans ce navigateur.</p></div>
     <div class="grid md:grid-cols-2 gap-4 text-xs text-gray-300">
       <label>Client ID Google OAuth <input id="cfg-client" placeholder="1234567890-abc.apps.googleusercontent.com" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white font-mono text-[11px]"></label>
-      <label>E-mails administrateurs <input id="cfg-admins" placeholder="vous@gmail.com" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></label>
+      <label>E-mails admins <input id="cfg-admins" placeholder="vous@gmail.com" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></label>
       <label>Chaîne cible <select id="cfg-target" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></select></label>
       <label>Vidéo proposée <input id="cfg-video" placeholder="https://www.youtube.com/watch?v=…" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></label>
       <label>Clé API YouTube <input id="cfg-ytkey" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white font-mono text-[11px]"></label>
       <label>AdSense ID éditeur <input id="cfg-adpub" placeholder="ca-pub-1234567890123456" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white font-mono text-[11px]"></label>
       <label>AdSense slot <input id="cfg-adslot" placeholder="1234567890" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white font-mono text-[11px]"></label>
-      <label class="flex items-center gap-2"><input id="cfg-login" type="checkbox" class="rounded"> Connexion Google obligatoire</label>
+      <label class="flex items-center gap-2"><input id="cfg-login" type="checkbox" class="rounded"> Connexion obligatoire</label>
       <label class="flex items-center gap-2"><input id="cfg-sub" type="checkbox" class="rounded"> Abonnement obligatoire</label>
     </div>
     <div class="flex flex-wrap gap-3">
       <button onclick="saveConfig()" class="btn-gold px-5 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-floppy-disk mr-1.5" aria-hidden="true"></i> <span data-i18n="settings.save">Enregistrer</span></button>
-      <button onclick="exportConfig()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-file-export mr-1.5" aria-hidden="true"></i> <span data-i18n="settings.export">Exporter la configuration</span></button>
+      <button onclick="exportConfig()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-file-export mr-1.5" aria-hidden="true"></i> <span data-i18n="settings.export">Exporter</span></button>
     </div>
   </div>
   <div id="channels-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
@@ -354,49 +292,40 @@ html[dir="rtl"] .border-r{border-right:0;border-left-width:1px}
 <!-- STATS -->
 <section id="tab-stats" class="hidden space-y-8">
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-    <div class="rounded-3xl p-6 bg-obsidian-900/80 border border-white/10"><span class="text-[11px] uppercase tracking-wider text-gray-400 font-semibold block mb-1" data-i18n="stats.launched">Vidéos chaîne lancées</span><span class="text-3xl font-extrabold font-mono text-emerald-400" id="stats-total-subs">+0</span></div>
-    <div class="rounded-3xl p-6 bg-obsidian-900/80 border border-white/10"><span class="text-[11px] uppercase tracking-wider text-gray-400 font-semibold block mb-1" data-i18n="stats.tracks">Pistes en bibliothèque</span><span class="text-3xl font-extrabold font-mono text-gold-400" id="stats-tracks">0</span></div>
-    <div class="rounded-3xl p-6 bg-obsidian-900/80 border border-white/10"><span class="text-[11px] uppercase tracking-wider text-gray-400 font-semibold block mb-1" data-i18n="stats.plays">Écoutes lancées</span><span class="text-3xl font-extrabold font-mono text-sky-400" id="stats-total-plays">0</span></div>
-    <div class="rounded-3xl p-6 bg-obsidian-900/80 border border-white/10"><span class="text-[11px] uppercase tracking-wider text-gray-400 font-semibold block mb-1" data-i18n="stats.emails">Contacts e-mail</span><span class="text-3xl font-extrabold font-mono text-white" id="stats-subscribers-count">0</span></div>
+    <div class="rounded-3xl p-6 bg-obsidian-900/80 border border-white/10"><span class="text-[11px] uppercase tracking-wider text-gray-400 font-semibold block mb-1" data-i18n="stats.launched">Vidéos lancées</span><span class="text-3xl font-extrabold font-mono text-emerald-400" id="stats-total-subs">+0</span></div>
+    <div class="rounded-3xl p-6 bg-obsidian-900/80 border border-white/10"><span class="text-[11px] uppercase tracking-wider text-gray-400 font-semibold block mb-1" data-i18n="stats.tracks">Pistes</span><span class="text-3xl font-extrabold font-mono text-gold-400" id="stats-tracks">0</span></div>
+    <div class="rounded-3xl p-6 bg-obsidian-900/80 border border-white/10"><span class="text-[11px] uppercase tracking-wider text-gray-400 font-semibold block mb-1" data-i18n="stats.plays">Écoutes</span><span class="text-3xl font-extrabold font-mono text-sky-400" id="stats-total-plays">0</span></div>
+    <div class="rounded-3xl p-6 bg-obsidian-900/80 border border-white/10"><span class="text-[11px] uppercase tracking-wider text-gray-400 font-semibold block mb-1" data-i18n="stats.emails">Contacts</span><span class="text-3xl font-extrabold font-mono text-white" id="stats-subscribers-count">0</span></div>
   </div>
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-    <div class="lg:col-span-7 rounded-3xl p-6 sm:p-7 bg-obsidian-900/80 border border-white/10">
-      <h3 class="font-display text-lg font-bold text-white mb-4" data-i18n="stats.bars">Pistes par chaîne</h3>
-      <div id="stats-bars" class="space-y-3.5"></div>
-    </div>
+    <div class="lg:col-span-7 rounded-3xl p-6 sm:p-7 bg-obsidian-900/80 border border-white/10"><h3 class="font-display text-lg font-bold text-white mb-4" data-i18n="stats.bars">Pistes par chaîne</h3><div id="stats-bars" class="space-y-3.5"></div></div>
     <div class="lg:col-span-5 rounded-3xl p-6 sm:p-7 bg-obsidian-900/80 border border-gold-500/30 flex flex-col justify-between">
-      <div>
-        <h3 class="font-display text-lg font-bold text-white mb-2" data-i18n="stats.alerts">Alertes nouvelles sorties</h3>
-        <p class="text-xs text-gray-300 mb-4" data-i18n="stats.alertsDesc">Collectez les e-mails des auditeurs (stockés localement dans votre navigateur).</p>
-        <form onsubmit="handleNewsletterSubmit(event)" class="space-y-3">
-          <input type="email" id="newsletter-email" required placeholder="auditeur@exemple.com" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs focus:outline-none focus:border-gold-500">
-          <button class="w-full btn-gold font-bold text-xs py-2.5 rounded-xl" data-i18n="stats.newsletter">S'inscrire aux alertes</button>
-        </form>
+      <div><h3 class="font-display text-lg font-bold text-white mb-2" data-i18n="stats.alerts">Alertes</h3><p class="text-xs text-gray-300 mb-4" data-i18n="stats.alertsDesc">Collectez les e-mails des auditeurs (stockés localement).</p>
+        <form onsubmit="handleNewsletterSubmit(event)" class="space-y-3"><input type="email" id="newsletter-email" required placeholder="auditeur@exemple.com" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs focus:outline-none focus:border-gold-500"><button class="w-full btn-gold font-bold text-xs py-2.5 rounded-xl" data-i18n="stats.newsletter">S'inscrire</button></form>
       </div>
-      <button onclick="exportSubscribersCSV()" class="mt-6 w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-bold"><i class="fa-solid fa-download text-gold-400 mr-2" aria-hidden="true"></i> <span data-i18n="stats.exportCsv">Télécharger les e-mails (.CSV)</span></button>
+      <button onclick="exportSubscribersCSV()" class="mt-6 w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-bold"><i class="fa-solid fa-download text-gold-400 mr-2" aria-hidden="true"></i> <span data-i18n="stats.exportCsv">Télécharger (.CSV)</span></button>
     </div>
   </div>
 </section>
 
 <section id="about" class="max-w-4xl mx-auto mt-16 pt-10 border-t border-white/10 text-sm text-gray-300 leading-relaxed space-y-5">
   <h2 class="font-display text-2xl font-bold text-white" data-i18n="about.title">À propos de Music</h2>
-  <p data-i18n="about.p1">Music est un moteur de recherche de musiques libres de droits. Il interroge en direct Openverse, Jamendo et Internet Archive, trois catalogues ouverts, et propose aussi la recherche sur YouTube pour l'écoute. Vous filtrez par genre (jazz, lo-fi, électro, classique, ambient, ASMR, cinématique…), par ambiance, par licence et par durée, puis vous écoutez, gardez vos favoris et copiez les crédits prêts à coller dans la description d'une vidéo.</p>
+  <p data-i18n="about.p1">Music est un moteur de recherche de musiques libres de droits. Il interroge en direct Openverse, Jamendo et Internet Archive.</p>
   <h3 class="text-lg font-bold text-white" data-i18n="about.licenses">Comprendre les licences Creative Commons</h3>
   <ul class="list-disc ml-5 space-y-1.5">
     <li data-i18n="about.lic.cc0"><b>CC0 / domaine public</b> : aucune obligation, usage commercial permis.</li>
-    <li data-i18n="about.lic.by"><b>CC BY</b> : usage commercial permis à condition de citer l'auteur, le titre, la licence et la source.</li>
+    <li data-i18n="about.lic.by"><b>CC BY</b> : usage commercial permis à condition de citer l'auteur.</li>
     <li data-i18n="about.lic.bySa"><b>CC BY-SA</b> : comme CC BY, mais votre création doit être partagée sous la même licence.</li>
-    <li data-i18n="about.lic.nc"><b>NC</b> (non commercial) : interdit dans une vidéo monétisée.</li>
-    <li data-i18n="about.lic.nd"><b>ND</b> (pas de modification) : le morceau ne peut être ni remixé ni coupé.</li>
+    <li data-i18n="about.lic.nc"><b>NC</b> : interdit dans une vidéo monétisée.</li>
+    <li data-i18n="about.lic.nd"><b>ND</b> : le morceau ne peut être ni remixé ni coupé.</li>
   </ul>
-  <h3 class="text-lg font-bold text-white" data-i18n="about.tips">Conseils pour les créateurs YouTube</h3>
-  <p data-i18n="about.tipsDesc">Activez « Usage commercial uniquement » si votre chaîne est monétisée, copiez les crédits dès que vous utilisez un morceau et gardez la page source. Une licence peut changer : vérifiez-la chez l'auteur avant de publier. Les titres YouTube marqués « Écoute seule » ne sont pas réutilisables dans vos vidéos.</p>
+  <h3 class="text-lg font-bold text-white" data-i18n="about.tips">Conseils YouTube</h3>
+  <p data-i18n="about.tipsDesc">Activez « Usage commercial uniquement » si votre chaîne est monétisée, copiez les crédits et gardez la page source.</p>
   <h3 class="text-lg font-bold text-white" data-i18n="about.faq.title">Questions fréquentes</h3>
-  <p data-i18n="about.faq.desc"><b>Pourquoi une connexion Google ?</b> Facultative : elle sert à la recherche YouTube et aux tendances. Rien n'est envoyé à un serveur. <b>Où sont mes favoris ?</b> Dans ce navigateur : utilisez la sauvegarde JSON. <b>Une piste ne se lance pas ?</b> Son fichier a peut-être été retiré : l'application passe à la suivante.</p>
+  <p data-i18n="about.faq.desc"><b>Pourquoi une connexion Google ?</b> Facultative : elle sert à la recherche YouTube et aux tendances. <b>Où sont mes favoris ?</b> Dans ce navigateur : utilisez la sauvegarde JSON.</p>
 </section>
 </main>
 
-<!-- LECTEUR YOUTUBE -->
 <div id="yt-dock" class="hidden fixed left-4 bottom-40 md:bottom-24 z-40 w-72 rounded-2xl bg-obsidian-900 border border-red-500/40 shadow-2xl overflow-hidden">
   <div class="flex items-center justify-between px-3 py-1.5 border-b border-white/10 text-[10px] uppercase tracking-wider text-red-400 font-semibold"><span><i class="fa-brands fa-youtube mr-1" aria-hidden="true"></i>YouTube Music</span><button onclick="stopYT()" class="text-gray-400 hover:text-white" aria-label="Fermer"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div>
   <div id="yt-holder" class="aspect-video bg-black"></div>
@@ -404,38 +333,28 @@ html[dir="rtl"] .border-r{border-right:0;border-left-width:1px}
 
 <footer class="max-w-7xl mx-auto w-full px-4 sm:px-6 pb-8 text-center text-[11px] text-gray-400 space-y-3">
   <div id="ad-slot"></div>
-  <p><span data-i18n="footer.tagline">Music — musiques sous licences Creative Commons : respectez les crédits exigés par chaque licence.</span> · <a href="privacy.html" target="_blank" rel="noopener" class="underline hover:text-gold-400" data-i18n="footer.privacy">Politique de confidentialité</a> · <button onclick="openConsentSettings()" class="underline hover:text-gold-400" data-i18n="footer.cookies">Cookies</button></p>
+  <p><span data-i18n="footer.tagline">Music — musiques sous licences Creative Commons.</span> · <a href="privacy.html" target="_blank" rel="noopener" class="underline hover:text-gold-400" data-i18n="footer.privacy">Politique de confidentialité</a> · <button onclick="openConsentSettings()" class="underline hover:text-gold-400" data-i18n="footer.cookies">Cookies</button></p>
 </footer>
 
 <!-- LECTEUR -->
 <aside id="player" class="fixed bottom-0 left-0 right-0 z-40 bg-obsidian-950/95 border-t border-gold-500/30 backdrop-blur-xl px-4 py-3 sm:px-6 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-3">
   <div class="flex items-center gap-3.5 w-full md:w-1/3 min-w-0">
     <img id="p-cover" alt="" class="w-12 h-12 rounded-xl object-cover border border-white/10">
-    <div class="min-w-0 flex-1">
-      <div class="flex items-center gap-2"><h4 id="p-title" class="text-sm font-bold text-white truncate" data-i18n="player.placeholder">Sélectionnez une musique</h4><span id="p-genre" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-gold-400 hidden"></span></div>
-      <p id="p-artist" class="text-xs text-gray-400 truncate">—</p>
-      <span id="p-sub" class="text-[11px] text-gold-400/90 truncate block"></span>
-    </div>
+    <div class="min-w-0 flex-1"><div class="flex items-center gap-2"><h4 id="p-title" class="text-sm font-bold text-white truncate" data-i18n="player.placeholder">Sélectionnez une musique</h4><span id="p-genre" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/10 text-gold-400 hidden"></span></div><p id="p-artist" class="text-xs text-gray-400 truncate">—</p><span id="p-sub" class="text-[11px] text-gold-400/90 truncate block"></span></div>
     <div class="viz hidden sm:flex"><i></i><i></i><i></i><i></i><i></i><i></i></div>
   </div>
   <div class="flex flex-col items-center gap-1.5 w-full md:w-2/5">
     <div class="flex items-center gap-3">
-      <button id="p-shuf" onclick="toggleShuffle()" title="Aléatoire" aria-label="Lecture aléatoire" class="p-1.5 text-gray-400 hover:text-white"><i class="fa-solid fa-shuffle" aria-hidden="true"></i></button>
-      <button onclick="prevTrack()" aria-label="Piste précédente" class="p-1.5 text-gray-300 hover:text-white"><i class="fa-solid fa-backward-step" aria-hidden="true"></i></button>
-      <button onclick="togglePlay()" aria-label="Lecture / pause" class="w-10 h-10 rounded-full bg-gold-500 hover:bg-gold-400 text-obsidian-950 flex items-center justify-center shadow-lg"><i id="p-icon" class="fa-solid fa-play ml-0.5"></i></button>
-      <button onclick="nextTrack()" aria-label="Piste suivante" class="p-1.5 text-gray-300 hover:text-white"><i class="fa-solid fa-forward-step" aria-hidden="true"></i></button>
-      <button id="p-rep" onclick="toggleRepeat()" title="Répéter" aria-label="Répéter" class="p-1.5 text-gray-400 hover:text-white"><i class="fa-solid fa-repeat" aria-hidden="true"></i></button>
+      <button id="p-shuf" onclick="toggleShuffle()" aria-label="Aléatoire" class="p-1.5 text-gray-400 hover:text-white"><i class="fa-solid fa-shuffle" aria-hidden="true"></i></button>
+      <button onclick="prevTrack()" aria-label="Précédent" class="p-1.5 text-gray-300 hover:text-white"><i class="fa-solid fa-backward-step" aria-hidden="true"></i></button>
+      <button onclick="togglePlay()" aria-label="Lecture" class="w-10 h-10 rounded-full bg-gold-500 hover:bg-gold-400 text-obsidian-950 flex items-center justify-center shadow-lg"><i id="p-icon" class="fa-solid fa-play ml-0.5"></i></button>
+      <button onclick="nextTrack()" aria-label="Suivant" class="p-1.5 text-gray-300 hover:text-white"><i class="fa-solid fa-forward-step" aria-hidden="true"></i></button>
+      <button id="p-rep" onclick="toggleRepeat()" aria-label="Répéter" class="p-1.5 text-gray-400 hover:text-white"><i class="fa-solid fa-repeat" aria-hidden="true"></i></button>
     </div>
-    <div class="w-full flex items-center gap-2.5 text-[11px] font-mono text-gray-400">
-      <span id="p-cur" class="w-10 text-right tabular-nums">0:00</span>
-      <input type="range" id="p-seek" aria-label="Position" min="0" max="1000" value="0" oninput="handleSeek(this.value)" class="flex-1 h-1 cursor-pointer">
-      <span id="p-dur" class="w-10 tabular-nums">0:00</span>
-    </div>
+    <div class="w-full flex items-center gap-2.5 text-[11px] font-mono text-gray-400"><span id="p-cur" class="w-10 text-right tabular-nums">0:00</span><input type="range" id="p-seek" aria-label="Position" min="0" max="1000" value="0" oninput="handleSeek(this.value)" class="flex-1 h-1 cursor-pointer"><span id="p-dur" class="w-10 tabular-nums">0:00</span></div>
   </div>
   <div class="hidden md:flex items-center justify-end gap-3 w-1/3">
-    <select id="p-sleep" onchange="setSleep(this.value)" class="text-[11px] py-1 px-2 rounded-lg bg-obsidian-900 border border-white/15 text-gray-300">
-      <option value="0">Minuteur</option><option value="15">15 min</option><option value="30">30 min</option><option value="60">60 min</option><option value="120">2 h</option>
-    </select>
+    <select id="p-sleep" onchange="setSleep(this.value)" class="text-[11px] py-1 px-2 rounded-lg bg-obsidian-900 border border-white/15 text-gray-300"><option value="0">Minuteur</option><option value="15">15 min</option><option value="30">30 min</option><option value="60">60 min</option><option value="120">2 h</option></select>
     <i class="fa-solid fa-volume-high text-gray-400 text-xs" aria-hidden="true"></i>
     <input type="range" aria-label="Volume" min="0" max="1" step="0.05" value="0.85" oninput="setVol(this.value)" class="w-20 h-1 cursor-pointer">
     <button onclick="toggleFavCurrent()" id="p-fav" aria-label="Favori" class="p-2 text-gray-400 hover:text-red-400"><i class="fa-regular fa-heart" aria-hidden="true"></i></button>
@@ -451,32 +370,28 @@ html[dir="rtl"] .border-r{border-right:0;border-left-width:1px}
     <ul id="auth-steps" class="text-left text-xs text-gray-200 space-y-3 mb-5"></ul>
     <div class="space-y-3">
       <button id="auth-btn-login" onclick="googleSignIn()" class="w-full py-3.5 rounded-2xl bg-white text-gray-900 font-bold text-sm flex items-center justify-center gap-2.5 hover:bg-gray-100"><i class="fa-brands fa-google" aria-hidden="true"></i> <span data-i18n="auth.google">Se connecter avec Google</span></button>
-      <button id="auth-btn-sub" onclick="subscribeNetwork()" class="hidden w-full py-3.5 rounded-2xl btn-youtube text-white font-bold text-sm items-center justify-center gap-2.5"><i class="fa-brands fa-youtube text-lg" aria-hidden="true"></i> <span data-i18n="auth.subscribe">S'abonner au réseau</span></button>
-      <button id="auth-btn-verify" onclick="verifySubscriptions()" class="hidden w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-semibold" data-i18n="auth.verify">Vérifier mon abonnement</button>
+      <button id="auth-btn-sub" onclick="subscribeNetwork()" class="hidden w-full py-3.5 rounded-2xl btn-youtube text-white font-bold text-sm items-center justify-center gap-2.5"><i class="fa-brands fa-youtube text-lg" aria-hidden="true"></i> <span data-i18n="auth.subscribe">S'abonner</span></button>
+      <button id="auth-btn-verify" onclick="verifySubscriptions()" class="hidden w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-semibold" data-i18n="auth.verify">Vérifier</button>
       <button id="auth-btn-admin" onclick="location.hash='admin'" class="hidden w-full py-3 rounded-2xl bg-gold-500 text-obsidian-950 font-bold text-sm"><i class="fa-solid fa-gear mr-2" aria-hidden="true"></i><span data-i18n="auth.admin">Configurer</span></button>
     </div>
     <p id="auth-msg" class="text-xs mt-4 text-gray-400"></p>
-    <p class="text-[10px] text-gray-400 mt-3 leading-relaxed">Google vous demande l'accès à votre profil et à la lecture de YouTube, uniquement pour la recherche et les tendances. Aucune donnée n'est envoyée à un serveur. <a href="privacy.html" target="_blank" rel="noopener" class="underline hover:text-gold-400" data-i18n="footer.privacy">Politique de confidentialité</a></p>
+    <p class="text-[10px] text-gray-400 mt-3 leading-relaxed"><span data-i18n="auth.gdpr">Aucune donnée n'est envoyée à un serveur.</span> <a href="privacy.html" target="_blank" rel="noopener" class="underline hover:text-gold-400" data-i18n="footer.privacy">Politique de confidentialité</a></p>
     <button onclick="signOut()" id="auth-signout" class="hidden mt-3 text-[11px] text-gray-400 underline hover:text-gold-400" data-i18n="auth.switch">Changer de compte</button>
   </div>
 </div>
 
-<!-- CARTE CHAÎNE -->
 <div id="chan-card" class="hidden fixed right-4 bottom-40 md:bottom-24 z-40 w-72 rounded-2xl bg-obsidian-900 border border-gold-500/40 shadow-2xl overflow-hidden"></div>
 
 <!-- MODALE CHAÎNE -->
 <div id="channel-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
   <div class="bg-obsidian-900 border border-white/15 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative max-h-[92vh] overflow-y-auto">
-    <button onclick="closeModal('channel-modal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 text-gray-400" aria-label="Fermer"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
-    <h3 id="channel-modal-title" class="text-xl font-bold text-white mb-4">Ajouter une chaîne YouTube</h3>
+    <button onclick="closeModal('channel-modal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 text-gray-400"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+    <h3 id="channel-modal-title" class="text-xl font-bold text-white mb-4">Chaîne YouTube</h3>
     <form id="channel-form" onsubmit="saveChannel(event)" class="space-y-4">
       <input type="hidden" id="ch-id">
       <div><label class="block text-xs text-gray-300 mb-1">Nom *</label><input id="ch-name" required class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></div>
-      <div><label class="block text-xs text-gray-300 mb-1">URL, @handle ou UC… *</label><input id="ch-url" required placeholder="https://www.youtube.com/@MaChaine" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></div>
-      <div class="grid sm:grid-cols-2 gap-3">
-        <div><label class="block text-xs text-gray-300 mb-1">Genre</label><select id="ch-genre" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></select></div>
-        <div><label class="block text-xs text-gray-300 mb-1">Badge *</label><input id="ch-tag" required class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></div>
-      </div>
+      <div><label class="block text-xs text-gray-300 mb-1">URL/@handle/UC… *</label><input id="ch-url" required placeholder="https://www.youtube.com/@MaChaine" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></div>
+      <div class="grid sm:grid-cols-2 gap-3"><div><label class="block text-xs text-gray-300 mb-1">Genre</label><select id="ch-genre" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></select></div><div><label class="block text-xs text-gray-300 mb-1">Badge *</label><input id="ch-tag" required class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></div></div>
       <div><label class="block text-xs text-gray-300 mb-1">Description *</label><textarea id="ch-desc" rows="3" required class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs"></textarea></div>
       <div class="flex justify-end gap-3 pt-4 border-t border-white/10"><button type="button" onclick="closeModal('channel-modal')" class="px-4 py-2.5 text-xs text-gray-400 hover:text-white" data-i18n="common.cancel">Annuler</button><button class="btn-gold font-bold text-xs px-5 py-2.5 rounded-xl" data-i18n="common.save">Enregistrer</button></div>
     </form>
@@ -488,7 +403,7 @@ html[dir="rtl"] .border-r{border-right:0;border-left-width:1px}
   <div class="bg-obsidian-900 border border-white/15 rounded-3xl max-w-md w-full p-6 shadow-2xl">
     <h3 class="text-lg font-bold text-white mb-1">Ajouter à la bibliothèque</h3>
     <p id="place-title" class="text-xs text-gray-400 mb-4 truncate"></p>
-    <label class="block text-xs text-gray-300 mb-1">Placer dans la chaîne</label>
+    <label class="block text-xs text-gray-300 mb-1">Chaîne</label>
     <select id="place-channel" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs mb-5"></select>
     <div class="flex justify-end gap-3"><button onclick="closeModal('place-modal')" class="px-4 py-2.5 text-xs text-gray-400 hover:text-white" data-i18n="common.cancel">Annuler</button><button onclick="confirmPlace()" class="btn-gold font-bold text-xs px-5 py-2.5 rounded-xl" data-i18n="common.add">Ajouter</button></div>
   </div>
@@ -496,7 +411,7 @@ html[dir="rtl"] .border-r{border-right:0;border-left-width:1px}
 <div id="import-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
   <div class="bg-obsidian-900 border border-white/15 rounded-3xl max-w-md w-full p-6 shadow-2xl">
     <h3 class="text-lg font-bold text-white mb-1">Importer une vidéo YouTube</h3>
-    <p class="text-xs text-gray-400 mb-4">Collez l'URL d'une vidéo dont vous avez vérifié la licence. Elle sera lue dans la fenêtre vidéo.</p>
+    <p class="text-xs text-gray-400 mb-4">Vérifiez la licence avant import.</p>
     <input id="import-url" placeholder="https://www.youtube.com/watch?v=…" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs mb-3">
     <input id="import-title" placeholder="Titre (facultatif)" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs mb-5">
     <div class="flex justify-end gap-3"><button onclick="closeModal('import-modal')" class="px-4 py-2.5 text-xs text-gray-400 hover:text-white" data-i18n="common.cancel">Annuler</button><button onclick="confirmImport()" class="btn-gold font-bold text-xs px-5 py-2.5 rounded-xl">Importer</button></div>
@@ -504,296 +419,12 @@ html[dir="rtl"] .border-r{border-right:0;border-left-width:1px}
 </div>
 <div id="video-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/90 backdrop-blur-md">
   <div class="bg-obsidian-900 border border-white/15 rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl">
-    <div class="flex items-center justify-between px-5 py-4 border-b border-white/10"><h3 id="video-title" class="text-sm font-bold text-white truncate"></h3><button onclick="closeVideo()" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/15 text-gray-400" aria-label="Fermer"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div>
+    <div class="flex items-center justify-between px-5 py-4 border-b border-white/10"><h3 id="video-title" class="text-sm font-bold text-white truncate"></h3><button onclick="closeVideo()" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/15 text-gray-400"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div>
     <div class="aspect-video bg-black"><iframe id="video-iframe" class="w-full h-full" src="" title="YouTube" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>
-    <div class="p-4 bg-obsidian-950 flex justify-between items-center gap-4"><span class="text-xs text-gray-400">Vérifiez la licence avant toute réutilisation.</span><button onclick="subFromVideo()" class="btn-youtube text-white font-bold text-xs px-5 py-2.5 rounded-xl"><i class="fa-brands fa-youtube mr-1.5" aria-hidden="true"></i> Ouvrir la chaîne</button></div>
+    <div class="p-4 bg-obsidian-950 flex justify-between items-center gap-4"><span class="text-xs text-gray-400">Vérifiez la licence.</span><button onclick="subFromVideo()" class="btn-youtube text-white font-bold text-xs px-5 py-2.5 rounded-xl"><i class="fa-brands fa-youtube mr-1.5" aria-hidden="true"></i> Chaîne</button></div>
   </div>
 </div>
 
-<script>
-/* ============================================================
-   i18n — FR / EN / AR
-============================================================ */
-const I18N = {
-  fr: {
-    "site.tagline":"Libre de droits · 27 genres · 3 sources",
-    "site.title":"Music — Hub musical sans droits",
-    "site.description":"Recherche pro de musiques libres de droits (Openverse, Jamendo, Internet Archive), 27 genres, crédits YouTube prêts à copier.",
-    "nav.home":"Accueil","nav.discover":"Découvrir","nav.trending":"Tendances","nav.library":"Bibliothèque","nav.channels":"Chaînes & Réglages","nav.stats":"Stats",
-    "hero.badge":"Votre studio musical","hero.title1":"Toute la musique libre,","hero.title2":"à portée d'un clic",
-    "hero.desc":"Cherchez dans des centaines de milliers de morceaux Creative Commons, filtrez par genre, ambiance et licence, ajoutez-les à vos chaînes et générez les crédits prêts pour YouTube.",
-    "hero.cta.discover":"Découvrir de la musique","hero.cta.surprise":"Surprends-moi",
-    "home.searchPh":"Filtrer ma bibliothèque (titre, artiste)…","home.tracks":"Pistes","home.exploreOnline":"Explorer ce genre en ligne",
-    "discover.badge":"Recherche multi-sources en direct","discover.title":"Découvrir",
-    "discover.subtitle":"Les résultats viennent en direct des catalogues ouverts. Vérifiez toujours la licence avant publication.",
-    "discover.openYT":"Ouvrir dans YouTube Music","discover.import":"Importer une URL",
-    "discover.searchPh":"Instrument, ambiance, artiste, titre…","discover.searchBtn":"Rechercher",
-    "discover.langLabel":"Langue des chansons","discover.genreLabel":"Genres","discover.moodLabel":"Ambiances",
-    "discover.licenseLabel":"Licence","discover.durationLabel":"Durée min.","discover.sortLabel":"Tri",
-    "discover.commercial":"Usage commercial uniquement","discover.more":"Charger plus de résultats",
-    "discover.status.start":"Lancez une recherche ou choisissez un genre.",
-    "trending.badge":"Écoute et visionnage uniquement","trending.title":"Musiques tendance",
-    "trending.desc":"Les titres les plus écoutés du moment sur YouTube, par langue. Ils sont lus dans le lecteur officiel YouTube : ils ne sont jamais ajoutés à vos chaînes ni à votre bibliothèque, et ne peuvent pas être réutilisés dans vos vidéos.",
-    "trending.more":"Charger plus",
-    "library.title":"Ma Bibliothèque","library.subtitle":"Favoris, pistes placées dans vos chaînes, crédits et sauvegarde.",
-    "library.creditsBtn":"Crédits YouTube","library.backupBtn":"Sauvegarde JSON","library.restoreBtn":"Restaurer",
-    "library.empty":"Bibliothèque vide : ajoutez des pistes depuis Découvrir.","library.emptyFav":"Pas encore de favoris.",
-    "channels.title":"Mes Chaînes YouTube","channels.subtitle":"Le paramètre sub_confirmation=1 est ajouté automatiquement aux liens.",
-    "channels.add":"Ajouter une chaîne","kpi.channels":"Chaînes","kpi.launched":"Vidéos lancées","kpi.audience":"Audience estimée",
-    "settings.title":"Réglages du réseau (administrateur)","settings.desc":"Ces réglages sont enregistrés dans ce navigateur. Exportez la configuration pour vos visiteurs.","settings.save":"Enregistrer","settings.export":"Exporter la configuration",
-    "stats.launched":"Vidéos chaîne lancées","stats.tracks":"Pistes en bibliothèque","stats.plays":"Écoutes lancées","stats.emails":"Contacts e-mail",
-    "stats.bars":"Pistes par chaîne","stats.alerts":"Alertes nouvelles sorties","stats.alertsDesc":"Collectez les e-mails des auditeurs (stockés localement).","stats.newsletter":"S'inscrire aux alertes","stats.exportCsv":"Télécharger les e-mails (.CSV)",
-    "player.placeholder":"Sélectionnez une musique",
-    "lic.all":"Toutes (CC)","lic.cc0":"CC0 / Domaine public","lic.by":"CC BY","lic.bySa":"CC BY-SA","lic.nc":"Non commercial","lic.nd":"Pas de modification","lic.yt":"Écoute seule",
-    "dur.all":"Toutes","sort.rel":"Pertinence (mixte)","sort.durDesc":"Plus longs","sort.durAsc":"Plus courts","sort.title":"Titre A→Z",
-    "common.play":"Lire","common.pause":"Pause","common.next":"Suivant","common.prev":"Précédent","common.close":"Fermer","common.cancel":"Annuler","common.save":"Enregistrer","common.copy":"Copier","common.remove":"Retirer","common.add":"Ajouter",
-    "toast.track.removed":"Piste retirée de la bibliothèque.","toast.track.added":"ajoutée à","toast.credit.copied":"Crédit copié !","toast.fav.blocked":"Les titres YouTube ne peuvent pas être gardés en favoris.",
-    "toast.shuffle.on":"Lecture aléatoire activée","toast.shuffle.off":"Lecture aléatoire désactivée","toast.repeat.on":"Répétition activée","toast.repeat.off":"Répétition désactivée",
-    "toast.error.play":"Lecture impossible","toast.error.noTrack":"Aucune piste lisible dans cette liste.",
-    "auth.subtitle":"Connectez-vous avec Google pour accéder à la musique.","auth.google":"Se connecter avec Google","auth.subscribe":"S'abonner au réseau","auth.verify":"Vérifier mon abonnement","auth.admin":"Configurer","auth.switch":"Changer de compte",
-    "about.title":"À propos de Music","about.p1":"Music est un moteur de recherche de musiques libres de droits. Il interroge en direct Openverse, Jamendo et Internet Archive, trois catalogues ouverts, et propose aussi la recherche sur YouTube pour l'écoute.",
-    "about.licenses":"Comprendre les licences Creative Commons","about.tips":"Conseils pour les créateurs YouTube","about.tipsDesc":"Activez « Usage commercial uniquement » si votre chaîne est monétisée, copiez les crédits dès que vous utilisez un morceau et gardez la page source.",
-    "about.faq.title":"Questions fréquentes","about.faq.desc":"Connexion Google facultative, favoris dans ce navigateur, redémarrage automatique en cas d'erreur.",
-    "footer.tagline":"Music — musiques sous licences Creative Commons : respectez les crédits exigés par chaque licence.","footer.privacy":"Politique de confidentialité","footer.cookies":"Cookies",
-    "header.plays":"Écoutes","consent.title":"Préférences de consentement","consent.desc":"Gérez vos préférences pour les cookies utilisés par ce site.",
-    "consent.necessary":"Cookies nécessaires","consent.necessary.desc":"Toujours actifs (session, préférences de langue, stockage local).",
-    "consent.ads":"Cookies publicitaires (Google AdSense)","consent.ads.desc":"Permet l'affichage d'annonces pertinentes. Requis pour afficher les annonces AdSense.",
-    "consent.analytics":"Cookies analytiques","consent.analytics.desc":"Nous aident à comprendre l'usage du site.","consent.save":"Enregistrer mes choix",
-    "genre.all":"Tous","genre.jazz":"Jazz & Lounge","genre.soul":"Soul & Neo-Soul","genre.lofi":"Lo-Fi & Chillhop","genre.funk":"Funk & Groove","genre.blues":"Blues","genre.ambient_asmr":"Ambient & ASMR","genre.classical":"Classique","genre.piano":"Piano solo","genre.electronic":"Électronique","genre.house":"House & Deep","genre.techno":"Techno & Trance","genre.synthwave":"Synthwave & Retro","genre.hiphop":"Hip-Hop & Beats","genre.rnb":"R&B","genre.pop":"Pop","genre.rock":"Rock","genre.indie":"Indie & Alternatif","genre.metal":"Metal & Hard","genre.folk":"Folk","genre.acoustic":"Acoustique","genre.country":"Country","genre.reggae":"Reggae & Dub","genre.latin":"Latin & Bossa","genre.afro":"Afro & Oriental","genre.world":"Musiques du monde","genre.cinematic":"Cinématique & Épique","genre.meditation":"Méditation & Nature","genre.chanson":"Chanson française","genre.rapfr":"Rap français","genre.arabic_pop":"Pop arabe","genre.oud":"Oud & Tarab","genre.rai":"Raï & Chaâbi","genre.maghreb":"Maghreb & Malouf","genre.arabic_rap":"Rap arabe","genre.engpop":"Pop & Rock anglais","genre.singer":"Singer-songwriter",
-    "mood.chill":"Chill","mood.focus":"Concentration","mood.energetic":"Énergique","mood.happy":"Joyeux","mood.sad":"Mélancolique","mood.dark":"Sombre","mood.romantic":"Romantique","mood.epic":"Épique","mood.sleep":"Sommeil","mood.rain":"Pluie & Nuit",
-    "lang.all":"Toutes","lang.fr":"Français","lang.ar":"العربية","lang.en":"English"
-  },
-  en: {
-    "site.tagline":"Royalty-free · 27 genres · 3 sources",
-    "site.title":"Music — Free Music Hub",
-    "site.description":"Professional search of royalty-free music (Openverse, Jamendo, Internet Archive), 27 genres, ready-to-paste YouTube credits.",
-    "nav.home":"Home","nav.discover":"Discover","nav.trending":"Trending","nav.library":"Library","nav.channels":"Channels & Settings","nav.stats":"Stats",
-    "hero.badge":"Your music studio","hero.title1":"All free music,","hero.title2":"one click away",
-    "hero.desc":"Search hundreds of thousands of Creative Commons tracks, filter by genre, mood and license, add them to your channels and generate ready-to-paste YouTube credits.",
-    "hero.cta.discover":"Discover music","hero.cta.surprise":"Surprise me",
-    "home.searchPh":"Filter my library (title, artist)…","home.tracks":"Tracks","home.exploreOnline":"Explore this genre online",
-    "discover.badge":"Live multi-source search","discover.title":"Discover",
-    "discover.subtitle":"Results come live from open catalogs. Always check the license before publishing.",
-    "discover.openYT":"Open in YouTube Music","discover.import":"Import a URL",
-    "discover.searchPh":"Instrument, mood, artist, title…","discover.searchBtn":"Search",
-    "discover.langLabel":"Song language","discover.genreLabel":"Genres","discover.moodLabel":"Moods",
-    "discover.licenseLabel":"License","discover.durationLabel":"Min. duration","discover.sortLabel":"Sort",
-    "discover.commercial":"Commercial use only","discover.more":"Load more results",
-    "discover.status.start":"Run a search or pick a genre.",
-    "trending.badge":"Listen & watch only","trending.title":"Trending music",
-    "trending.desc":"Most-watched YouTube tracks right now, by language. They play in the official YouTube player: they are never added to your channels or library and cannot be reused in your videos.",
-    "trending.more":"Load more",
-    "library.title":"My Library","library.subtitle":"Favorites, tracks placed in your channels, credits and backups.",
-    "library.creditsBtn":"YouTube credits","library.backupBtn":"JSON backup","library.restoreBtn":"Restore",
-    "library.empty":"Library empty: add tracks from Discover.","library.emptyFav":"No favorites yet.",
-    "channels.title":"My YouTube Channels","channels.subtitle":"The sub_confirmation=1 parameter is added automatically.",
-    "channels.add":"Add a channel","kpi.channels":"Channels","kpi.launched":"Videos launched","kpi.audience":"Estimated audience",
-    "settings.title":"Network settings (admin)","settings.desc":"These settings are saved in this browser. Export the config for your visitors.","settings.save":"Save","settings.export":"Export config",
-    "stats.launched":"Videos launched","stats.tracks":"Tracks in library","stats.plays":"Plays launched","stats.emails":"Email contacts",
-    "stats.bars":"Tracks by channel","stats.alerts":"New release alerts","stats.alertsDesc":"Collect listener emails (stored locally).","stats.newsletter":"Subscribe to alerts","stats.exportCsv":"Download emails (.CSV)",
-    "player.placeholder":"Select a track",
-    "lic.all":"All (CC)","lic.cc0":"CC0 / Public domain","lic.by":"CC BY","lic.bySa":"CC BY-SA","lic.nc":"Non commercial","lic.nd":"No derivatives","lic.yt":"Listen-only",
-    "dur.all":"All","sort.rel":"Relevance (mixed)","sort.durDesc":"Longest","sort.durAsc":"Shortest","sort.title":"Title A→Z",
-    "common.play":"Play","common.pause":"Pause","common.next":"Next","common.prev":"Previous","common.close":"Close","common.cancel":"Cancel","common.save":"Save","common.copy":"Copy","common.remove":"Remove","common.add":"Add",
-    "toast.track.removed":"Track removed from library.","toast.track.added":"added to","toast.credit.copied":"Credit copied!","toast.fav.blocked":"YouTube tracks cannot be saved as favorites.",
-    "toast.shuffle.on":"Shuffle enabled","toast.shuffle.off":"Shuffle disabled","toast.repeat.on":"Repeat enabled","toast.repeat.off":"Repeat disabled",
-    "toast.error.play":"Playback failed","toast.error.noTrack":"No playable track in this list.",
-    "auth.subtitle":"Sign in with Google to access music.","auth.google":"Sign in with Google","auth.subscribe":"Subscribe to network","auth.verify":"Verify subscription","auth.admin":"Configure","auth.switch":"Switch account",
-    "about.title":"About Music","about.p1":"Music is a search engine for royalty-free music. It queries Openverse, Jamendo and Internet Archive live, three open catalogs, and also offers YouTube search for listening.",
-    "about.licenses":"Understanding Creative Commons licenses","about.tips":"Tips for YouTube creators","about.tipsDesc":"Enable 'Commercial use only' if your channel is monetized, copy credits when you use a track and keep the source page.",
-    "about.faq.title":"Frequently asked questions","about.faq.desc":"Optional Google login, favorites in this browser, auto-skip on errors.",
-    "footer.tagline":"Music — Creative Commons music: respect the credits required by each license.","footer.privacy":"Privacy policy","footer.cookies":"Cookies",
-    "header.plays":"Plays","consent.title":"Consent preferences","consent.desc":"Manage your cookie preferences for this site.",
-    "consent.necessary":"Necessary cookies","consent.necessary.desc":"Always active (session, language preferences, local storage).",
-    "consent.ads":"Advertising cookies (Google AdSense)","consent.ads.desc":"Enables relevant ad display. Required to show AdSense ads.",
-    "consent.analytics":"Analytics cookies","consent.analytics.desc":"Help us understand site usage.","consent.save":"Save my choices",
-    "genre.all":"All","genre.jazz":"Jazz & Lounge","genre.soul":"Soul & Neo-Soul","genre.lofi":"Lo-Fi & Chillhop","genre.funk":"Funk & Groove","genre.blues":"Blues","genre.ambient_asmr":"Ambient & ASMR","genre.classical":"Classical","genre.piano":"Solo Piano","genre.electronic":"Electronic","genre.house":"House & Deep","genre.techno":"Techno & Trance","genre.synthwave":"Synthwave & Retro","genre.hiphop":"Hip-Hop & Beats","genre.rnb":"R&B","genre.pop":"Pop","genre.rock":"Rock","genre.indie":"Indie & Alternative","genre.metal":"Metal & Hard","genre.folk":"Folk","genre.acoustic":"Acoustic","genre.country":"Country","genre.reggae":"Reggae & Dub","genre.latin":"Latin & Bossa","genre.afro":"Afro & Oriental","genre.world":"World Music","genre.cinematic":"Cinematic & Epic","genre.meditation":"Meditation & Nature","genre.chanson":"French Chanson","genre.rapfr":"French Rap","genre.arabic_pop":"Arabic Pop","genre.oud":"Oud & Tarab","genre.rai":"Raï & Chaâbi","genre.maghreb":"Maghreb & Malouf","genre.arabic_rap":"Arabic Rap","genre.engpop":"English Pop & Rock","genre.singer":"Singer-songwriter",
-    "mood.chill":"Chill","mood.focus":"Focus","mood.energetic":"Energetic","mood.happy":"Happy","mood.sad":"Melancholic","mood.dark":"Dark","mood.romantic":"Romantic","mood.epic":"Epic","mood.sleep":"Sleep","mood.rain":"Rain & Night",
-    "lang.all":"All","lang.fr":"Français","lang.ar":"العربية","lang.en":"English"
-  },
-  ar: {
-    "site.tagline":"خالية من الحقوق · 27 نوعًا · 3 مصادر",
-    "site.title":"Music — مركز الموسيقى المجانية",
-    "site.description":"بحث احترافي عن الموسيقى الخالية من الحقوق (Openverse وJamendo وInternet Archive)، 27 نوعًا، اعتمادات جاهزة للنسخ إلى YouTube.",
-    "nav.home":"الرئيسية","nav.discover":"استكشاف","nav.trending":"الأكثر رواجًا","nav.library":"المكتبة","nav.channels":"القنوات والإعدادات","nav.stats":"الإحصائيات",
-    "hero.badge":"استوديوك الموسيقي","hero.title1":"كل الموسيقى الحرة،","hero.title2":"على بُعد نقرة",
-    "hero.desc":"ابحث في مئات الآلاف من المقطوعات المرخّصة بـ Creative Commons، وفلتر حسب النوع والمزاج والترخيص، وأضفها إلى قنواتك وأنشئ اعتمادات جاهزة للصق في YouTube.",
-    "hero.cta.discover":"اكتشف الموسيقى","hero.cta.surprise":"فاجئني",
-    "home.searchPh":"تصفية مكتبتي (العنوان، الفنان)…","home.tracks":"المقطوعات","home.exploreOnline":"استكشف هذا النوع عبر الإنترنت",
-    "discover.badge":"بحث مباشر متعدد المصادر","discover.title":"استكشاف",
-    "discover.subtitle":"النتائج تأتي مباشرة من الفهارس المفتوحة. تحقق دائمًا من الترخيص قبل النشر.",
-    "discover.openYT":"افتح في YouTube Music","discover.import":"استيراد رابط",
-    "discover.searchPh":"آلة، مزاج، فنان، عنوان…","discover.searchBtn":"بحث",
-    "discover.langLabel":"لغة الأغنية","discover.genreLabel":"الأنواع","discover.moodLabel":"الأمزجة",
-    "discover.licenseLabel":"الترخيص","discover.durationLabel":"المدة الدنيا","discover.sortLabel":"الترتيب",
-    "discover.commercial":"للاستخدام التجاري فقط","discover.more":"تحميل المزيد من النتائج",
-    "discover.status.start":"ابدأ بحثًا أو اختر نوعًا.",
-    "trending.badge":"استماع ومشاهدة فقط","trending.title":"الموسيقى الرائجة",
-    "trending.desc":"المقطوعات الأكثر مشاهدة على YouTube حاليًا، حسب اللغة. تُشغَّل في مشغل YouTube الرسمي: لا تُضاف أبدًا إلى قنواتك أو مكتبتك، ولا يمكن إعادة استخدامها في فيديوهاتك.",
-    "trending.more":"تحميل المزيد",
-    "library.title":"مكتبتي","library.subtitle":"المفضلات، المقطوعات المُدرجة في قنواتك، الاعتمادات والنسخ الاحتياطي.",
-    "library.creditsBtn":"اعتمادات YouTube","library.backupBtn":"نسخة احتياطية JSON","library.restoreBtn":"استعادة",
-    "library.empty":"المكتبة فارغة: أضف مقطوعات من صفحة الاستكشاف.","library.emptyFav":"لا مفضلات بعد.",
-    "channels.title":"قنواتي على YouTube","channels.subtitle":"تتم إضافة sub_confirmation=1 تلقائيًا إلى الروابط.",
-    "channels.add":"إضافة قناة","kpi.channels":"القنوات","kpi.launched":"الفيديوهات المُشغَّلة","kpi.audience":"الجمهور المقدَّر",
-    "settings.title":"إعدادات الشبكة (المسؤول)","settings.desc":"تُحفظ هذه الإعدادات في متصفحك. صدّر التكوين لزوار موقعك.","settings.save":"حفظ","settings.export":"تصدير التكوين",
-    "stats.launched":"فيديوهات القناة المُشغَّلة","stats.tracks":"مقطوعات في المكتبة","stats.plays":"تشغيلات مُطلقة","stats.emails":"جهات اتصال بريد",
-    "stats.bars":"المقطوعات حسب القناة","stats.alerts":"تنبيهات الإصدارات الجديدة","stats.alertsDesc":"اجمع رسائل البريد (تُحفظ محليًا).","stats.newsletter":"اشترك في التنبيهات","stats.exportCsv":"تنزيل رسائل البريد (.CSV)",
-    "player.placeholder":"اختر مقطوعة",
-    "lic.all":"الكل (CC)","lic.cc0":"CC0 / ملكية عامة","lic.by":"CC BY","lic.bySa":"CC BY-SA","lic.nc":"غير تجاري","lic.nd":"بدون تعديل","lic.yt":"استماع فقط",
-    "dur.all":"الكل","sort.rel":"الصلة (مختلط)","sort.durDesc":"الأطول","sort.durAsc":"الأقصر","sort.title":"العنوان A→Z",
-    "common.play":"تشغيل","common.pause":"إيقاف مؤقت","common.next":"التالي","common.prev":"السابق","common.close":"إغلاق","common.cancel":"إلغاء","common.save":"حفظ","common.copy":"نسخ","common.remove":"إزالة","common.add":"إضافة",
-    "toast.track.removed":"تم حذف المقطوعة من المكتبة.","toast.track.added":"أُضيفت إلى","toast.credit.copied":"تم نسخ الاعتماد!","toast.fav.blocked":"لا يمكن حفظ مقطوعات YouTube في المفضلة.",
-    "toast.shuffle.on":"تم تفعيل التشغيل العشوائي","toast.shuffle.off":"تم إيقاف التشغيل العشوائي","toast.repeat.on":"تم تفعيل التكرار","toast.repeat.off":"تم إيقاف التكرار",
-    "toast.error.play":"تعذّر التشغيل","toast.error.noTrack":"لا توجد مقطوعة قابلة للتشغيل في هذه القائمة.",
-    "auth.subtitle":"سجّل الدخول عبر Google للوصول إلى الموسيقى.","auth.google":"تسجيل الدخول عبر Google","auth.subscribe":"الاشتراك في الشبكة","auth.verify":"التحقق من الاشتراك","auth.admin":"تكوين","auth.switch":"تغيير الحساب",
-    "about.title":"حول Music","about.p1":"Music هو محرك بحث عن الموسيقى الخالية من الحقوق. يستعلم مباشرة من Openverse وJamendo وInternet Archive، ويقدم أيضًا البحث على YouTube للاستماع.",
-    "about.licenses":"فهم تراخيص Creative Commons","about.tips":"نصائح لمنشئي محتوى YouTube","about.tipsDesc":"فعّل 'للاستخدام التجاري فقط' إذا كانت قناتك مُحقَّقة الدخل، وانسخ الاعتمادات عند استخدام مقطوعة، واحتفظ بصفحة المصدر.",
-    "about.faq.title":"الأسئلة الشائعة","about.faq.desc":"تسجيل دخول Google اختياري، المفضلات في هذا المتصفح، تخطي تلقائي عند الأخطاء.",
-    "footer.tagline":"Music — موسيقى بتراخيص Creative Commons: احترم الاعتمادات التي يتطلبها كل ترخيص.","footer.privacy":"سياسة الخصوصية","footer.cookies":"ملفات تعريف الارتباط",
-    "header.plays":"الاستماعات","consent.title":"تفضيلات الموافقة","consent.desc":"أدر تفضيلات ملفات تعريف الارتباط لهذا الموقع.",
-    "consent.necessary":"ملفات ضرورية","consent.necessary.desc":"نشطة دائمًا (الجلسة، تفضيلات اللغة، التخزين المحلي).",
-    "consent.ads":"ملفات إعلانية (Google AdSense)","consent.ads.desc":"تمكّن عرض إعلانات ملائمة. مطلوبة لعرض إعلانات AdSense.",
-    "consent.analytics":"ملفات تحليلية","consent.analytics.desc":"تساعدنا على فهم استخدام الموقع.","consent.save":"حفظ اختياراتي",
-    "genre.all":"الكل","genre.jazz":"جاز ولاونج","genre.soul":"سول ونيو سول","genre.lofi":"لو-فاي وتشيلهوب","genre.funk":"فانك وغرووف","genre.blues":"بلوز","genre.ambient_asmr":"أمبينت وASMR","genre.classical":"كلاسيكي","genre.piano":"بيانو منفرد","genre.electronic":"إلكتروني","genre.house":"هاوس وديب","genre.techno":"تكنو وترانس","genre.synthwave":"سينثويف وريترو","genre.hiphop":"هيب هوب وبيتس","genre.rnb":"R&B","genre.pop":"بوب","genre.rock":"روك","genre.indie":"إيندي وبديل","genre.metal":"ميتال وهارد","genre.folk":"فولك","genre.acoustic":"أكوستيك","genre.country":"كانتري","genre.reggae":"ريغي ودب","genre.latin":"لاتيني وبوسا","genre.afro":"أفرو وشرقي","genre.world":"موسيقى العالم","genre.cinematic":"سينمائي وملحمي","genre.meditation":"تأمل وطبيعة","genre.chanson":"أغنية فرنسية","genre.rapfr":"راب فرنسي","genre.arabic_pop":"بوب عربي","genre.oud":"عود وطرب","genre.rai":"راي وشعبي","genre.maghreb":"مغاربي ومالوف","genre.arabic_rap":"راب عربي","genre.engpop":"بوب وروك إنجليزي","genre.singer":"مغنٍّ ومؤلف",
-    "mood.chill":"هادئ","mood.focus":"تركيز","mood.energetic":"حماسي","mood.happy":"سعيد","mood.sad":"حزين","mood.dark":"مظلم","mood.romantic":"رومانسي","mood.epic":"ملحمي","mood.sleep":"نوم","mood.rain":"مطر وليل",
-    "lang.all":"الكل","lang.fr":"Français","lang.ar":"العربية","lang.en":"English"
-  }
-};
-
-let LANG = 'fr';
-const SUPPORTED = ['fr','en','ar'];
-function t(key, fb){ return I18N[LANG]?.[key] ?? I18N.fr?.[key] ?? fb ?? key; }
-function applyI18n(){
-  document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t(el.dataset.i18n, el.textContent));
-  document.querySelectorAll('[data-i18n-ph]').forEach(el => el.setAttribute('placeholder', t(el.dataset.i18nPh)));
-  document.querySelectorAll('[data-i18n-aria]').forEach(el => el.setAttribute('aria-label', t(el.dataset.i18nAria)));
-}
-function setLang(lang, persist = true){
-  LANG = SUPPORTED.includes(lang) ? lang : 'fr';
-  document.documentElement.lang = LANG;
-  document.documentElement.dir = LANG === 'ar' ? 'rtl' : 'ltr';
-  if (persist) { try { localStorage.setItem('music_hub_lang', LANG); } catch(e) {} }
-  document.title = t('site.title');
-  const md = document.querySelector('meta[name="description"]'); if (md) md.setAttribute('content', t('site.description'));
-  const ogT = document.querySelector('meta[property="og:title"]'); if (ogT) ogT.setAttribute('content', t('site.title'));
-  const ogD = document.querySelector('meta[property="og:description"]'); if (ogD) ogD.setAttribute('content', t('site.description'));
-  const ogL = document.querySelector('meta[property="og:locale"]'); if (ogL) ogL.setAttribute('content', LANG === 'ar' ? 'ar_AR' : LANG === 'en' ? 'en_US' : 'fr_FR');
-  const u = new URL(location.href); u.searchParams.set('lang', LANG); history.replaceState(null, '', u);
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('bg-gold-500', b.dataset.lang === LANG) || b.classList.toggle('text-obsidian-950', b.dataset.lang === LANG));
-  applyI18n();
-  if (typeof renderAll === 'function') renderAll();
-  if (typeof renderNav === 'function') renderNav();
-  if (typeof renderAuth === 'function') renderAuth();
-}
-function detectLang(){
-  const s = (()=>{try{return localStorage.getItem('music_hub_lang')}catch(e){return null}})();
-  if (s && SUPPORTED.includes(s)) return s;
-  const qs = new URL(location.href).searchParams.get('lang');
-  if (qs && SUPPORTED.includes(qs)) return qs;
-  const n = (navigator.language || 'fr').slice(0,2).toLowerCase();
-  return SUPPORTED.includes(n) ? n : 'fr';
-}
-document.addEventListener('click', e => { const b = e.target.closest('.lang-btn'); if (b) setLang(b.dataset.lang); });
-
-/* ============================================================
-   Consentement CMP (AdSense/EEE)
-============================================================ */
-const CONSENT_KEY = 'music_hub_consent';
-function getConsent(){ try { return JSON.parse(localStorage.getItem(CONSENT_KEY)); } catch(e){ return null; } }
-function setConsentObj(o){ try { localStorage.setItem(CONSENT_KEY, JSON.stringify({...o, date: new Date().toISOString()})); } catch(e){} }
-function needsConsent(){
-  const c = getConsent(); if (!c || !c.date) return true;
-  if (Date.now() - new Date(c.date).getTime() > 365*864e5) return true;
-  return false;
-}
-function showConsentBanner(){ if (needsConsent()) $('consent-banner').classList.remove('hidden'); }
-function openConsentSettings(){
-  const c = getConsent() || { ad:false, analytics:false };
-  $('consent-ad').checked = !!c.ad; $('consent-analytics').checked = !!c.analytics;
-  openModal('consent-modal');
-}
-function acceptAll(){ setConsentObj({ad:true, analytics:true}); $('consent-banner').classList.add('hidden'); initAds(); toast('Cookies acceptés.', 'success'); }
-function rejectAll(){ setConsentObj({ad:false, analytics:false}); $('consent-banner').classList.add('hidden'); toast('Cookies refusés.', 'info'); }
-function saveConsent(){
-  setConsentObj({ad:$('consent-ad').checked, analytics:$('consent-analytics').checked});
-  closeModal('consent-modal'); $('consent-banner').classList.add('hidden');
-  if (getConsent().ad) initAds();
-  toast('Préférences enregistrées.', 'success');
-}
-
-/* ============================================================
-   DONNÉES
-============================================================ */
-const PH = "data:image/svg+xml," + encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#212B3F'/><stop offset='1' stop-color='#0D111A'/></linearGradient></defs><rect width='100' height='100' fill='url(#g)'/><g fill='#D4AF37' opacity='.75'><rect x='30' y='46' width='7' height='20' rx='3'/><rect x='42' y='34' width='7' height='32' rx='3'/><rect x='54' y='42' width='7' height='24' rx='3'/><rect x='66' y='52' width='7' height='14' rx='3'/></g></svg>");
-
-const GENRES = [
-  {id:'all',labelKey:'genre.all',icon:'fa-radio',q:'',tag:''},
-  {id:'jazz',labelKey:'genre.jazz',icon:'fa-music',q:'jazz',tag:'jazz'},
-  {id:'soul',labelKey:'genre.soul',icon:'fa-fire',q:'soul',tag:'soul'},
-  {id:'lofi',labelKey:'genre.lofi',icon:'fa-mug-hot',q:'lofi chill',tag:'lofi'},
-  {id:'funk',labelKey:'genre.funk',icon:'fa-bolt',q:'funk groove',tag:'funk'},
-  {id:'blues',labelKey:'genre.blues',icon:'fa-guitar',q:'blues',tag:'blues'},
-  {id:'ambient_asmr',labelKey:'genre.ambient_asmr',icon:'fa-water',q:'ambient',tag:'ambient'},
-  {id:'classical',labelKey:'genre.classical',icon:'fa-compact-disc',q:'classical orchestra',tag:'classical'},
-  {id:'piano',labelKey:'genre.piano',icon:'fa-music',q:'piano',tag:'piano'},
-  {id:'electronic',labelKey:'genre.electronic',icon:'fa-wave-square',q:'electronic',tag:'electronic'},
-  {id:'house',labelKey:'genre.house',icon:'fa-record-vinyl',q:'house deep',tag:'house'},
-  {id:'techno',labelKey:'genre.techno',icon:'fa-robot',q:'techno',tag:'techno'},
-  {id:'synthwave',labelKey:'genre.synthwave',icon:'fa-moon',q:'synthwave retro',tag:'synthwave'},
-  {id:'hiphop',labelKey:'genre.hiphop',icon:'fa-microphone',q:'hip hop beat',tag:'hiphop'},
-  {id:'rnb',labelKey:'genre.rnb',icon:'fa-heart',q:'rnb',tag:'rnb'},
-  {id:'pop',labelKey:'genre.pop',icon:'fa-star',q:'pop',tag:'pop'},
-  {id:'rock',labelKey:'genre.rock',icon:'fa-guitar',q:'rock',tag:'rock'},
-  {id:'indie',labelKey:'genre.indie',icon:'fa-headphones',q:'indie',tag:'indie'},
-  {id:'metal',labelKey:'genre.metal',icon:'fa-skull',q:'metal',tag:'metal'},
-  {id:'folk',labelKey:'genre.folk',icon:'fa-tree',q:'folk',tag:'folk'},
-  {id:'acoustic',labelKey:'genre.acoustic',icon:'fa-guitar',q:'acoustic guitar',tag:'acoustic'},
-  {id:'country',labelKey:'genre.country',icon:'fa-hat-cowboy',q:'country',tag:'country'},
-  {id:'reggae',labelKey:'genre.reggae',icon:'fa-sun',q:'reggae',tag:'reggae'},
-  {id:'latin',labelKey:'genre.latin',icon:'fa-drum',q:'latin bossa nova',tag:'latin'},
-  {id:'afro',labelKey:'genre.afro',icon:'fa-drum',q:'afro oriental',tag:'world'},
-  {id:'world',labelKey:'genre.world',icon:'fa-globe',q:'world music',tag:'world'},
-  {id:'cinematic',labelKey:'genre.cinematic',icon:'fa-film',q:'cinematic epic',tag:'soundtrack'},
-  {id:'meditation',labelKey:'genre.meditation',icon:'fa-spa',q:'meditation nature',tag:'relaxation'},
-  {id:'chanson',labelKey:'genre.chanson',icon:'fa-music',q:'chanson française',tag:'chanson',lang:'fr'},
-  {id:'rapfr',labelKey:'genre.rapfr',icon:'fa-microphone',q:'rap français',tag:'rap',lang:'fr'},
-  {id:'arabic_pop',labelKey:'genre.arabic_pop',icon:'fa-star',q:'arabic pop عربي',tag:'arabic',lang:'ar'},
-  {id:'oud',labelKey:'genre.oud',icon:'fa-guitar',q:'oud arabic tarab',tag:'oriental',lang:'ar'},
-  {id:'rai',labelKey:'genre.rai',icon:'fa-drum',q:'rai chaabi',tag:'rai',lang:'ar'},
-  {id:'maghreb',labelKey:'genre.maghreb',icon:'fa-sun',q:'maghreb tunisian malouf',tag:'world',lang:'ar'},
-  {id:'arabic_rap',labelKey:'genre.arabic_rap',icon:'fa-microphone',q:'arabic rap',tag:'rap',lang:'ar'},
-  {id:'engpop',labelKey:'genre.engpop',icon:'fa-headphones',q:'english pop rock',tag:'pop',lang:'en'},
-  {id:'singer',labelKey:'genre.singer',icon:'fa-guitar',q:'singer songwriter',tag:'singersongwriter',lang:'en'}
-];
-const LANGS = [
-  {id:'all',labelKey:'lang.all',icon:'fa-language',q:'',jam:'',ia:'',region:'FR',hl:'fr'},
-  {id:'fr',labelKey:'lang.fr',icon:'fa-language',q:'français',jam:'fr',ia:'French',region:'FR',hl:'fr'},
-  {id:'ar',labelKey:'lang.ar',icon:'fa-language',q:'عربي arabic',jam:'ar',ia:'Arabic',region:'TN',hl:'ar'},
-  {id:'en',labelKey:'lang.en',icon:'fa-language',q:'english',jam:'en',ia:'English',region:'US',hl:'en'}
-];
-const MOODS = [
-  {id:'chill',labelKey:'mood.chill',q:'chill',tag:'chill'},{id:'focus',labelKey:'mood.focus',q:'focus study',tag:'relaxing'},
-  {id:'energetic',labelKey:'mood.energetic',q:'energetic',tag:'energetic'},{id:'happy',labelKey:'mood.happy',q:'happy',tag:'happy'},
-  {id:'sad',labelKey:'mood.sad',q:'sad melancholic',tag:'sad'},{id:'dark',labelKey:'mood.dark',q:'dark',tag:'dark'},
-  {id:'romantic',labelKey:'mood.romantic',q:'romantic',tag:'romantic'},{id:'epic',labelKey:'mood.epic',q:'epic',tag:'epic'},
-  {id:'sleep',labelKey:'mood.sleep',q:'sleep calm',tag:'calm'},{id:'rain',labelKey:'mood.rain',q:'rain night',tag:'nature'}
-];
-const lInfo = id => LANGS.find(l => l.id === id) || LANGS[0];
-const gInfo = id => GENRES.find(g => g.id === id) || GENRES[0];
-const gLabel = g => t(g.labelKey || g.label, g.label);
-
-const DEFAULT_CHANNELS = [
-  {id:"ch-jazz-lounge",name:"Midnight Jazz Sanctuary",url:"https://www.youtube.com/@MidnightJazzSanctuary?sub_confirmation=1",genre:"jazz",tag:"Jazz & Late Night Piano",description:"Sessions feutrées de smooth jazz.",baseSubscribers:28400,subscribersGained:142,featuredVideoId:"Dx5qFachd3A"},
-  {id:"ch-soul-grooves",name:"Velvet Soul & Vinyl Grooves",url:"https://www.youtube.com/@VelvetSoulGrooves?sub_confirmation=1",genre:"soul",tag:"Soul & Motown Revival",description:"Le meilleur de la soul vintage.",baseSubscribers:19800,subscribersGained:98,featuredVideoId:"k1-TrAvp_xs"},
-  {id:"ch-lofi-cafe",name:"Lo-Fi Sunset Café",url:"https://www.youtube.com/@LofiSunsetCafe?sub_confirmation=1",genre:"lofi",tag:"Lo-Fi Study & Chillhop",description:"Rythmes Lo-Fi chill pour travailler ou étudier.",baseSubscribers:34200,subscribersGained:215,featuredVideoId:"5qap5aO4i9A"},
-  {id:"steel-sound-asmr",name:"Steel & Sound ASMR",url:"https://www.youtube.com/channel/UC47UDTYtHld2i0Uy50hQ0Q?sub_confirmation=1",genre:"ambient_asmr",tag:"ASMR Industriel & CNC",description:"Précision mécanique et sons métalliques purs.",baseSubscribers:15200,subscribersGained:184,featuredVideoId:"p7fZuVUGoKg"},
-  {id:"zenith-asmr",name:"Zenith ASMR",url:"https://www.youtube.com/channel/UCH4bJCe-lekDDVzNU8z7E-w?sub_confirmation=1",genre:"ambient_asmr",tag:"Relaxation & Nature",description:"Voyages visuels apaisants.",baseSubscribers:11900,subscribersGained:89,featuredVideoId:"Nwj4-VIUf6E"}
-];
-
-/* ============================================================
-   ÉTAT
-============================================================ */
-const TABS = [
-  {id:'home',labelKey:'nav.home',icon:'fa-house'},{id:'discover',labelKey:'nav.discover',icon:'fa-compass'},
-  {id:'trending
+<script src="app.js"></script>
+</body>
+</html>

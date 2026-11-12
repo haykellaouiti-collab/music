@@ -1,11 +1,13 @@
 {
   "googleClientId": "502413181474-7ei3mhnqmk9uhcrm0v6b816csfbe5i5v.apps.googleusercontent.com",
-  "adminEmails": ["haykellaouiti@gmail.com"],
+  "adminEmails": [
+    "haykellaouiti@gmail.com"
+  ],
   "targetChannelId": "auto",
   "targetVideoId": "",
   "requireLogin": false,
   "requireSubscribe": false,
   "youtubeApiKey": "",
   "adsensePublisherId": "ca-pub-3266873353292561",
-  "adsenseSlot": "0000000000"
+  "adsenseSlot": ""
 }

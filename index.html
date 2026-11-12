@@ -6,26 +6,18 @@
 <meta name="google-adsense-account" content="ca-pub-3266873353292561">
 <title>Music — Hub musical sans droits</title>
 <meta name="description" content="Music : recherche pro de musiques libres de droits (Openverse, Jamendo, Internet Archive), 27 genres, bibliothèque, crédits YouTube et gestion de chaînes.">
+<link rel="canonical" href="https://haykellaouiti-collab.github.io/music/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Music — Hub musical sans droits">
+<meta property="og:description" content="Recherche de musiques libres de droits en français, arabe et anglais : Openverse, Jamendo, Internet Archive, crédits YouTube prêts à copier.">
+<meta property="og:url" content="https://haykellaouiti-collab.github.io/music/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FBBF24'/%3E%3Cstop offset='1' stop-color='%23FF2D2D'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='%230D111A' stroke='url(%23g)' stroke-width='4'/%3E%3Crect x='19' y='28' width='5' height='16' rx='2.5' fill='url(%23g)'/%3E%3Crect x='29.5' y='18' width='5' height='26' rx='2.5' fill='url(%23g)'/%3E%3Crect x='40' y='24' width='5' height='20' rx='2.5' fill='url(%23g)'/%3E%3C/svg%3E">
-<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="tailwind.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="https://accounts.google.com/gsi/client" async defer></script>
-<script>
-tailwind.config = {
-  darkMode: 'class',
-  theme: { extend: {
-    fontFamily: { sans: ['"Plus Jakarta Sans"','sans-serif'], display: ['Cinzel','serif'], mono: ['"JetBrains Mono"','monospace'] },
-    colors: {
-      gold: { 300:'#FCD34D', 400:'#FBBF24', 500:'#D4AF37', 600:'#B4941F' },
-      yt: { red:'#FF0000' },
-      obsidian: { 950:'#07090E', 900:'#0D111A', 800:'#161D2B', 700:'#212B3F' }
-    }
-  } }
-}
-</script>
 <style>
 body{background-color:#07090E;color:#F3F4F6;
   background-image:radial-gradient(circle at 12% 15%,rgba(212,175,55,.09) 0%,transparent 45%),radial-gradient(circle at 88% 82%,rgba(255,0,0,.06) 0%,transparent 45%),radial-gradient(circle at 50% 50%,rgba(30,41,59,.15) 0%,transparent 60%);
@@ -102,7 +94,7 @@ input[type=range]{accent-color:#f59e0b}
           <span class="font-mono text-xs font-bold text-emerald-400" id="header-subs-total">0</span>
         </div>
         <button onclick="openChannelModal()" class="btn-gold px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5">
-          <i class="fa-solid fa-plus"></i><span class="hidden sm:inline">Chaîne</span>
+          <i class="fa-solid fa-plus" aria-hidden="true"></i><span class="hidden sm:inline">Chaîne</span>
         </button>
       </div>
       <div id="user-area" class="hidden items-center gap-2"></div>
@@ -119,12 +111,12 @@ input[type=range]{accent-color:#f59e0b}
     <div class="absolute top-0 right-0 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute bottom-0 left-0 w-72 h-72 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
     <div class="relative z-10 max-w-3xl">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-400 text-xs font-semibold mb-4"><i class="fa-solid fa-headphones"></i> Votre studio musical</div>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-400 text-xs font-semibold mb-4"><i class="fa-solid fa-headphones" aria-hidden="true"></i> Votre studio musical</div>
       <h1 class="font-display text-3xl sm:text-5xl font-bold text-white tracking-tight leading-tight mb-3">Toute la musique libre,<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 via-amber-200 to-red-400">à portée d'un clic</span></h1>
       <p class="text-gray-300 text-sm sm:text-base leading-relaxed mb-6">Cherchez dans des centaines de milliers de morceaux Creative Commons, filtrez par genre, ambiance et licence, ajoutez-les à vos chaînes et générez les crédits prêts pour YouTube.</p>
       <div class="flex flex-wrap gap-3">
-        <button onclick="switchTab('discover')" class="btn-gold px-5 py-3 rounded-xl text-sm font-bold flex items-center gap-2"><i class="fa-solid fa-compass"></i> Découvrir de la musique</button>
-        <button onclick="surpriseMe()" class="px-5 py-3 rounded-xl text-sm font-bold flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/15"><i class="fa-solid fa-dice"></i> Surprends-moi</button>
+        <button onclick="switchTab('discover')" class="btn-gold px-5 py-3 rounded-xl text-sm font-bold flex items-center gap-2"><i class="fa-solid fa-compass" aria-hidden="true"></i> Découvrir de la musique</button>
+        <button onclick="surpriseMe()" class="px-5 py-3 rounded-xl text-sm font-bold flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/15"><i class="fa-solid fa-dice" aria-hidden="true"></i> Surprends-moi</button>
       </div>
     </div>
   </div>
@@ -133,12 +125,12 @@ input[type=range]{accent-color:#f59e0b}
 
   <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-obsidian-900/60 border border-white/10">
     <div class="relative w-full sm:w-80">
-      <i class="fa-solid fa-magnifying-glass text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 text-xs"></i>
-      <input id="home-search" type="text" oninput="renderHome()" placeholder="Filtrer ma bibliothèque (titre, artiste)…" class="w-full pl-9 pr-4 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white placeholder-gray-500 text-xs focus:outline-none focus:border-gold-500">
+      <i class="fa-solid fa-magnifying-glass text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 text-xs" aria-hidden="true"></i>
+      <input id="home-search" aria-label="Filtrer ma bibliothèque" type="text" oninput="renderHome()" placeholder="Filtrer ma bibliothèque (titre, artiste)…" class="w-full pl-9 pr-4 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white placeholder-gray-500 text-xs focus:outline-none focus:border-gold-500">
     </div>
     <div class="flex items-center gap-4 text-xs text-gray-400">
       <span>Pistes : <strong class="text-white font-mono" id="home-count">0</strong></span>
-      <button id="home-online-btn" onclick="exploreGenreOnline()" class="btn-gold px-3 py-1.5 rounded-lg font-bold text-[11px]"><i class="fa-solid fa-earth-europe mr-1"></i> Explorer ce genre en ligne</button>
+      <button id="home-online-btn" onclick="exploreGenreOnline()" class="btn-gold px-3 py-1.5 rounded-lg font-bold text-[11px]"><i class="fa-solid fa-earth-europe mr-1" aria-hidden="true"></i> Explorer ce genre en ligne</button>
     </div>
   </div>
   <div id="home-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
@@ -149,32 +141,36 @@ input[type=range]{accent-color:#f59e0b}
   <div class="rounded-3xl p-6 sm:p-8 border border-white/10 bg-obsidian-900/80 space-y-5">
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
       <div>
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-2"><i class="fa-solid fa-globe"></i> Recherche multi-sources en direct</div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-2"><i class="fa-solid fa-globe" aria-hidden="true"></i> Recherche multi-sources en direct</div>
         <h2 class="font-display text-2xl sm:text-3xl font-bold text-white">Découvrir</h2>
         <p class="text-xs text-gray-400 mt-1">Les résultats viennent en direct des catalogues ouverts. Vérifiez toujours la licence avant publication.</p>
       </div>
       <div class="flex gap-2">
-        <button onclick="surpriseMe()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15 border border-white/15 flex items-center gap-2"><i class="fa-solid fa-dice"></i> Surprends-moi</button>
-        <button onclick="openYTMusic()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-red-600/15 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 flex items-center gap-2"><i class="fa-brands fa-youtube"></i> Ouvrir dans YouTube Music</button>
-        <button onclick="openImportModal()" class="btn-gold px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2"><i class="fa-solid fa-link"></i> Importer une URL</button>
+        <button onclick="surpriseMe()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15 border border-white/15 flex items-center gap-2"><i class="fa-solid fa-dice" aria-hidden="true"></i> Surprends-moi</button>
+        <button onclick="openYTMusic()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-red-600/15 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/30 flex items-center gap-2"><i class="fa-brands fa-youtube" aria-hidden="true"></i> Ouvrir dans YouTube Music</button>
+        <button onclick="openImportModal()" class="btn-gold px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2"><i class="fa-solid fa-link" aria-hidden="true"></i> Importer une URL</button>
       </div>
     </div>
 
     <form onsubmit="event.preventDefault();runSearch(true)" class="flex gap-2">
       <div class="relative flex-1">
-        <i class="fa-solid fa-magnifying-glass text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 text-sm"></i>
-        <input id="q" type="search" list="q-hist" autocomplete="off" placeholder="Instrument, ambiance, artiste, titre… (ex : piano rain, saxophone, 80s synth)" class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-obsidian-950 border border-white/15 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-gold-500">
+        <i class="fa-solid fa-magnifying-glass text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 text-sm" aria-hidden="true"></i>
+        <input id="q" aria-label="Rechercher une musique" type="search" list="q-hist" autocomplete="off" placeholder="Instrument, ambiance, artiste, titre… (ex : piano rain, saxophone, 80s synth)" class="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-obsidian-950 border border-white/15 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-gold-500">
         <datalist id="q-hist"></datalist>
       </div>
-      <button class="btn-gold px-6 rounded-2xl font-bold text-sm flex items-center gap-2"><i class="fa-solid fa-magnifying-glass"></i><span class="hidden sm:inline">Rechercher</span></button>
+      <button class="btn-gold px-6 rounded-2xl font-bold text-sm flex items-center gap-2"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><span class="hidden sm:inline">Rechercher</span></button>
     </form>
 
     <div>
-      <div class="text-[10px] uppercase tracking-wider text-gray-500 mb-2 font-semibold">Genres</div>
+      <div class="text-[10px] uppercase tracking-wider text-gray-400 mb-2 font-semibold">Langue des chansons</div>
+      <div id="lang-chips" class="flex flex-wrap gap-2"></div>
+    </div>
+    <div>
+      <div class="text-[10px] uppercase tracking-wider text-gray-400 mb-2 font-semibold">Genres</div>
       <div id="genre-chips" class="flex flex-wrap gap-2"></div>
     </div>
     <div>
-      <div class="text-[10px] uppercase tracking-wider text-gray-500 mb-2 font-semibold">Ambiances</div>
+      <div class="text-[10px] uppercase tracking-wider text-gray-400 mb-2 font-semibold">Ambiances</div>
       <div id="mood-chips" class="flex flex-wrap gap-2"></div>
     </div>
 
@@ -191,7 +187,7 @@ input[type=range]{accent-color:#f59e0b}
         <select id="f-sort" onchange="applyFilters()" class="mt-1 w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs">
           <option value="rel">Pertinence (mixte)</option><option value="dur-desc">Plus longs</option><option value="dur-asc">Plus courts</option><option value="title">Titre A→Z</option>
         </select></label>
-      <label class="flex items-center gap-2 text-[11px] text-gray-300 cursor-pointer md:col-span-1"><input id="f-commercial" type="checkbox" checked onchange="runSearch(true)" class="rounded"> Usage commercial uniquement <span class="text-gray-500">(décochez pour inclure l'écoute seule sur YouTube)</span></label>
+      <label class="flex items-center gap-2 text-[11px] text-gray-300 cursor-pointer md:col-span-1"><input id="f-commercial" type="checkbox" checked onchange="runSearch(true)" class="rounded"> Usage commercial uniquement <span class="text-gray-400">(décochez pour inclure l'écoute seule sur YouTube)</span></label>
       <div class="flex flex-wrap gap-2 justify-end" id="source-pills"></div>
     </div>
     <details class="text-xs text-gray-400">
@@ -199,14 +195,27 @@ input[type=range]{accent-color:#f59e0b}
       <div class="mt-3 grid md:grid-cols-2 gap-3">
         <label>Jamendo client_id (gratuit sur developer.jamendo.com)
           <input id="jamendo-key" type="text" placeholder="ex : 1a2b3c4d" onchange="saveSettings()" class="mt-1 w-full px-3 py-2 rounded-xl bg-obsidian-950 border border-white/15 text-white text-xs font-mono"></label>
-        <p class="text-[11px] leading-relaxed self-end">Openverse et Internet Archive marchent sans clé. Jamendo ajoute des milliers de morceaux d'artistes indépendants, mais exige une clé. Le quota anonyme d'Openverse est limité : en cas d'erreur 429, patientez une minute.</p>
+        <p class="text-[11px] leading-relaxed self-end">Openverse et Internet Archive marchent sans clé. Jamendo ajoute des milliers de morceaux d'artistes indépendants, mais exige une clé, et son usage commercial (chaîne monétisée) demande une licence Jamendo : source désactivée par défaut. Le quota anonyme d'Openverse est limité : en cas d'erreur 429, patientez une minute.</p>
       </div>
     </details>
   </div>
 
   <div class="flex items-center justify-between text-xs text-gray-400"><div id="search-status">Lancez une recherche ou choisissez un genre.</div><div id="result-count" class="font-mono"></div></div>
   <div id="discover-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
-  <div class="text-center"><button id="more-btn" onclick="runSearch(false)" class="hidden px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-sm font-bold"><i class="fa-solid fa-angles-down mr-2"></i> Charger plus de résultats</button></div>
+  <div class="text-center"><button id="more-btn" onclick="runSearch(false)" class="hidden px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-sm font-bold"><i class="fa-solid fa-angles-down mr-2" aria-hidden="true"></i> Charger plus de résultats</button></div>
+</section>
+
+<!-- TENDANCES (écoute et visionnage uniquement) -->
+<section id="tab-trending" class="hidden space-y-6">
+  <div class="rounded-3xl p-6 sm:p-8 border border-white/10 bg-obsidian-900/80 space-y-4">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/15 border border-sky-500/30 text-sky-300 text-xs font-semibold"><i class="fa-solid fa-eye" aria-hidden="true"></i> Écoute et visionnage uniquement</div>
+    <h2 class="font-display text-2xl sm:text-3xl font-bold text-white">Musiques tendance</h2>
+    <p class="text-xs text-gray-400 max-w-3xl">Les titres les plus écoutés du moment sur YouTube, par langue. Ils sont lus dans le lecteur officiel YouTube : ils ne sont jamais ajoutés à vos chaînes ni à votre bibliothèque, et ne peuvent pas être réutilisés dans vos vidéos.</p>
+    <div id="trend-lang" class="flex flex-wrap gap-2"></div>
+  </div>
+  <div id="trend-status" class="text-xs text-gray-400"></div>
+  <div id="trend-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+  <div class="text-center"><button id="trend-more" onclick="loadTrending(false)" class="hidden px-6 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-sm font-bold"><i class="fa-solid fa-angles-down mr-2" aria-hidden="true"></i> Charger plus</button></div>
 </section>
 
 <!-- BIBLIOTHÈQUE -->
@@ -218,9 +227,9 @@ input[type=range]{accent-color:#f59e0b}
         <p class="text-xs text-gray-400 mt-1">Favoris, pistes placées dans vos chaînes, crédits et sauvegarde.</p>
       </div>
       <div class="flex flex-wrap gap-2">
-        <button onclick="copyAllCredits()" class="btn-gold px-4 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-copy mr-1.5"></i> Crédits YouTube</button>
-        <button onclick="exportBackup()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15"><i class="fa-solid fa-download mr-1.5"></i> Sauvegarde JSON</button>
-        <label class="px-4 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15 cursor-pointer"><i class="fa-solid fa-upload mr-1.5"></i> Restaurer<input type="file" accept="application/json" class="hidden" onchange="importBackup(this)"></label>
+        <button onclick="copyAllCredits()" class="btn-gold px-4 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-copy mr-1.5" aria-hidden="true"></i> Crédits YouTube</button>
+        <button onclick="exportBackup()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15"><i class="fa-solid fa-download mr-1.5" aria-hidden="true"></i> Sauvegarde JSON</button>
+        <label class="px-4 py-2.5 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/15 cursor-pointer"><i class="fa-solid fa-upload mr-1.5" aria-hidden="true"></i> Restaurer<input type="file" accept="application/json" class="hidden" onchange="importBackup(this)"></label>
       </div>
     </div>
     <div class="flex gap-2 mt-5" id="lib-tabs"></div>
@@ -236,7 +245,7 @@ input[type=range]{accent-color:#f59e0b}
         <h2 class="font-display text-2xl sm:text-3xl font-bold text-white">Mes Chaînes YouTube</h2>
         <p class="text-xs text-gray-300 mt-1 max-w-2xl">Le paramètre <code class="text-gold-400 bg-black/40 px-1 rounded font-mono text-[11px]">?sub_confirmation=1</code> est ajouté automatiquement aux liens.</p>
       </div>
-      <button onclick="openChannelModal()" class="btn-gold font-bold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2"><i class="fa-solid fa-plus"></i> Ajouter une chaîne</button>
+      <button onclick="openChannelModal()" class="btn-gold font-bold text-xs px-4 py-2.5 rounded-xl flex items-center gap-2"><i class="fa-solid fa-plus" aria-hidden="true"></i> Ajouter une chaîne</button>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
       <div class="p-4 rounded-2xl bg-obsidian-950/70 border border-white/10"><span class="text-[10px] text-gray-400 uppercase tracking-wider block">Chaînes</span><span class="text-2xl font-bold font-mono text-white" id="kpi-channel-count">0</span></div>
@@ -264,12 +273,12 @@ input[type=range]{accent-color:#f59e0b}
         <input id="cfg-adpub" placeholder="ca-pub-1234567890123456" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white font-mono text-[11px]"></label>
       <label>AdSense : ID du bloc d'annonce (slot)
         <input id="cfg-adslot" placeholder="1234567890" class="mt-1 w-full px-3 py-2.5 rounded-xl bg-obsidian-950 border border-white/15 text-white font-mono text-[11px]"></label>
-      <label class="flex items-center gap-2"><input id="cfg-login" type="checkbox" class="rounded"> Connexion Google obligatoire</label>
+      <label class="flex items-center gap-2"><input id="cfg-login" type="checkbox" class="rounded"> Connexion Google obligatoire <span class="text-amber-300">(déconseillé : AdSense ne verrait que la porte d'accès)</span></label>
       <label class="flex items-center gap-2"><input id="cfg-sub" type="checkbox" class="rounded"> Abonnement au réseau obligatoire <span class="text-amber-300">(déconseillé : interdit par les règles de l'API YouTube)</span></label>
     </div>
     <div class="flex flex-wrap gap-3">
-      <button onclick="saveConfig()" class="btn-gold px-5 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-floppy-disk mr-1.5"></i> Enregistrer</button>
-      <button onclick="exportConfig()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-file-export mr-1.5"></i> Exporter la configuration</button>
+      <button onclick="saveConfig()" class="btn-gold px-5 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-floppy-disk mr-1.5" aria-hidden="true"></i> Enregistrer</button>
+      <button onclick="exportConfig()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2.5 rounded-xl text-xs font-bold"><i class="fa-solid fa-file-export mr-1.5" aria-hidden="true"></i> Exporter la configuration</button>
     </div>
     <details class="text-xs text-gray-400"><summary class="cursor-pointer text-gold-400 font-semibold">Comment obtenir le Client ID Google ?</summary>
       <ol class="list-decimal ml-5 mt-2 space-y-1 leading-relaxed">
@@ -305,7 +314,7 @@ input[type=range]{accent-color:#f59e0b}
           <button class="w-full btn-gold font-bold text-xs py-2.5 rounded-xl">S'inscrire aux alertes</button>
         </form>
       </div>
-      <button onclick="exportSubscribersCSV()" class="mt-6 w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-bold"><i class="fa-solid fa-download text-gold-400 mr-2"></i>Télécharger les e-mails (.CSV)</button>
+      <button onclick="exportSubscribersCSV()" class="mt-6 w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-bold"><i class="fa-solid fa-download text-gold-400 mr-2" aria-hidden="true"></i>Télécharger les e-mails (.CSV)</button>
     </div>
   </div>
 </section>
@@ -323,17 +332,17 @@ input[type=range]{accent-color:#f59e0b}
   <h3 class="text-lg font-bold text-white">Conseils pour les créateurs YouTube</h3>
   <p>Activez « Usage commercial uniquement » si votre chaîne est monétisée, copiez les crédits dès que vous utilisez un morceau et gardez la page source. Une licence peut changer : vérifiez-la chez l'auteur avant de publier. Les titres YouTube marqués « Écoute seule » ne sont pas réutilisables dans vos vidéos.</p>
   <h3 class="text-lg font-bold text-white">Questions fréquentes</h3>
-  <p><b>Pourquoi une connexion Google ?</b> Elle permet de vérifier l'abonnement au réseau de chaînes. Rien n'est envoyé à un serveur : tout reste dans votre navigateur. <b>Où sont mes favoris ?</b> Dans ce navigateur : utilisez la sauvegarde JSON de la bibliothèque pour les déplacer. <b>Une piste ne se lance pas ?</b> Son fichier a peut-être été retiré : l'application passe à la suivante.</p>
+  <p><b>Pourquoi une connexion Google ?</b> Elle est facultative : elle sert uniquement à la recherche YouTube et aux tendances. Rien n'est envoyé à un serveur : tout reste dans votre navigateur. <b>Où sont mes favoris ?</b> Dans ce navigateur : utilisez la sauvegarde JSON de la bibliothèque pour les déplacer. <b>Une piste ne se lance pas ?</b> Son fichier a peut-être été retiré : l'application passe à la suivante.</p>
 </section>
 </main>
 
 <!-- LECTEUR YOUTUBE (visible, conforme aux règles de YouTube) -->
 <div id="yt-dock" class="hidden fixed left-4 bottom-40 md:bottom-24 z-40 w-72 rounded-2xl bg-obsidian-900 border border-red-500/40 shadow-2xl overflow-hidden">
-  <div class="flex items-center justify-between px-3 py-1.5 border-b border-white/10 text-[10px] uppercase tracking-wider text-red-400 font-semibold"><span><i class="fa-brands fa-youtube mr-1"></i>YouTube Music</span><button onclick="stopYT()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button></div>
+  <div class="flex items-center justify-between px-3 py-1.5 border-b border-white/10 text-[10px] uppercase tracking-wider text-red-400 font-semibold"><span><i class="fa-brands fa-youtube mr-1" aria-hidden="true"></i>YouTube Music</span><button onclick="stopYT()" class="text-gray-400 hover:text-white" aria-label="Fermer"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div>
   <div id="yt-holder" class="aspect-video bg-black"></div>
 </div>
 
-<footer class="max-w-7xl mx-auto w-full px-4 sm:px-6 pb-8 text-center text-[11px] text-gray-500 space-y-3">
+<footer class="max-w-7xl mx-auto w-full px-4 sm:px-6 pb-8 text-center text-[11px] text-gray-400 space-y-3">
   <div id="ad-slot" class="hidden"></div>
   <p>Music — musiques sous licences Creative Commons : respectez les crédits exigés par chaque licence. · <a href="privacy.html" target="_blank" rel="noopener" class="underline hover:text-gold-400">Politique de confidentialité</a></p>
 </footer>
@@ -351,15 +360,15 @@ input[type=range]{accent-color:#f59e0b}
   </div>
   <div class="flex flex-col items-center gap-1.5 w-full md:w-2/5">
     <div class="flex items-center gap-3">
-      <button id="p-shuf" onclick="toggleShuffle()" title="Aléatoire" class="p-1.5 text-gray-400 hover:text-white"><i class="fa-solid fa-shuffle"></i></button>
-      <button onclick="prevTrack()" class="p-1.5 text-gray-300 hover:text-white"><i class="fa-solid fa-backward-step"></i></button>
-      <button onclick="togglePlay()" class="w-10 h-10 rounded-full bg-gold-500 hover:bg-gold-400 text-obsidian-950 flex items-center justify-center shadow-lg"><i id="p-icon" class="fa-solid fa-play ml-0.5"></i></button>
-      <button onclick="nextTrack()" class="p-1.5 text-gray-300 hover:text-white"><i class="fa-solid fa-forward-step"></i></button>
-      <button id="p-rep" onclick="toggleRepeat()" title="Répéter" class="p-1.5 text-gray-400 hover:text-white"><i class="fa-solid fa-repeat"></i></button>
+      <button id="p-shuf" onclick="toggleShuffle()" title="Aléatoire" aria-label="Lecture aléatoire" class="p-1.5 text-gray-400 hover:text-white"><i class="fa-solid fa-shuffle" aria-hidden="true"></i></button>
+      <button onclick="prevTrack()" aria-label="Piste précédente" class="p-1.5 text-gray-300 hover:text-white"><i class="fa-solid fa-backward-step" aria-hidden="true"></i></button>
+      <button onclick="togglePlay()" aria-label="Lecture / pause" class="w-10 h-10 rounded-full bg-gold-500 hover:bg-gold-400 text-obsidian-950 flex items-center justify-center shadow-lg"><i id="p-icon" class="fa-solid fa-play ml-0.5"></i></button>
+      <button onclick="nextTrack()" aria-label="Piste suivante" class="p-1.5 text-gray-300 hover:text-white"><i class="fa-solid fa-forward-step" aria-hidden="true"></i></button>
+      <button id="p-rep" onclick="toggleRepeat()" title="Répéter" aria-label="Répéter" class="p-1.5 text-gray-400 hover:text-white"><i class="fa-solid fa-repeat" aria-hidden="true"></i></button>
     </div>
     <div class="w-full flex items-center gap-2.5 text-[11px] font-mono text-gray-400">
       <span id="p-cur" class="w-10 text-right tabular-nums">0:00</span>
-      <input type="range" id="p-seek" min="0" max="1000" value="0" oninput="handleSeek(this.value)" class="flex-1 h-1 cursor-pointer">
+      <input type="range" id="p-seek" aria-label="Position dans le morceau" min="0" max="1000" value="0" oninput="handleSeek(this.value)" class="flex-1 h-1 cursor-pointer">
       <span id="p-dur" class="w-10 tabular-nums">0:00</span>
     </div>
   </div>
@@ -367,29 +376,29 @@ input[type=range]{accent-color:#f59e0b}
     <select id="p-sleep" onchange="setSleep(this.value)" title="Minuteur de sommeil" class="text-[11px] py-1 px-2 rounded-lg bg-obsidian-900 border border-white/15 text-gray-300">
       <option value="0">Minuteur</option><option value="15">15 min</option><option value="30">30 min</option><option value="60">60 min</option><option value="120">2 h</option>
     </select>
-    <i class="fa-solid fa-volume-high text-gray-400 text-xs"></i>
-    <input type="range" min="0" max="1" step="0.05" value="0.85" oninput="setVol(this.value)" class="w-20 h-1 cursor-pointer">
-    <button onclick="toggleFavCurrent()" id="p-fav" class="p-2 text-gray-400 hover:text-red-400"><i class="fa-regular fa-heart"></i></button>
+    <i class="fa-solid fa-volume-high text-gray-400 text-xs" aria-hidden="true"></i>
+    <input type="range" aria-label="Volume" min="0" max="1" step="0.05" value="0.85" oninput="setVol(this.value)" class="w-20 h-1 cursor-pointer">
+    <button onclick="toggleFavCurrent()" id="p-fav" aria-label="Ajouter aux favoris" class="p-2 text-gray-400 hover:text-red-400"><i class="fa-regular fa-heart" aria-hidden="true"></i></button>
   </div>
 </aside>
 
 <!-- PORTE D'ACCÈS -->
 <div id="auth-gate" class="fixed inset-0 z-[70] hidden items-center justify-center p-4 bg-obsidian-950/98 backdrop-blur-xl overflow-y-auto">
   <div class="max-w-md w-full rounded-3xl border border-gold-500/40 bg-obsidian-900 p-7 sm:p-8 text-center shadow-2xl my-6">
-    <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-gold-500/20 to-red-600/20 border border-gold-500/40 flex items-center justify-center text-gold-400 text-2xl mb-3"><i class="fa-solid fa-headphones"></i></div>
+    <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-gold-500/20 to-red-600/20 border border-gold-500/40 flex items-center justify-center text-gold-400 text-2xl mb-3"><i class="fa-solid fa-headphones" aria-hidden="true"></i></div>
     <h2 class="font-display text-2xl font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-gold-300 to-red-400">MUSIC</h2>
     <p class="text-xs text-gray-300 mt-2 mb-5">Connectez-vous avec Google pour accéder à la musique.</p>
     <ul id="auth-steps" class="text-left text-xs text-gray-200 space-y-3 mb-5"></ul>
     <div class="space-y-3">
-      <button id="auth-btn-login" onclick="googleSignIn()" class="w-full py-3.5 rounded-2xl bg-white text-gray-900 font-bold text-sm flex items-center justify-center gap-2.5 hover:bg-gray-100"><i class="fa-brands fa-google"></i> Se connecter avec Google</button>
-      <button id="auth-btn-sub" onclick="subscribeNetwork()" class="hidden w-full py-3.5 rounded-2xl btn-youtube text-white font-bold text-sm items-center justify-center gap-2.5"><i class="fa-brands fa-youtube text-lg"></i> S'abonner au réseau en 1 clic</button>
+      <button id="auth-btn-login" onclick="googleSignIn()" class="w-full py-3.5 rounded-2xl bg-white text-gray-900 font-bold text-sm flex items-center justify-center gap-2.5 hover:bg-gray-100"><i class="fa-brands fa-google" aria-hidden="true"></i> Se connecter avec Google</button>
+      <button id="auth-btn-sub" onclick="subscribeNetwork()" class="hidden w-full py-3.5 rounded-2xl btn-youtube text-white font-bold text-sm items-center justify-center gap-2.5"><i class="fa-brands fa-youtube text-lg" aria-hidden="true"></i> S'abonner au réseau en 1 clic</button>
       <button id="auth-btn-verify" onclick="verifySubscriptions()" class="hidden w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-semibold">J'ai déjà fait : vérifier mon abonnement</button>
-      <button id="auth-btn-admin" onclick="location.hash='admin'" class="hidden w-full py-3 rounded-2xl bg-gold-500 text-obsidian-950 font-bold text-sm"><i class="fa-solid fa-gear mr-2"></i>Je suis l'administrateur : ouvrir et configurer</button>
+      <button id="auth-btn-admin" onclick="location.hash='admin'" class="hidden w-full py-3 rounded-2xl bg-gold-500 text-obsidian-950 font-bold text-sm"><i class="fa-solid fa-gear mr-2" aria-hidden="true"></i>Je suis l'administrateur : ouvrir et configurer</button>
     </div>
     <p id="auth-msg" class="text-xs mt-4 text-gray-400"></p>
     <p class="text-[11px] text-gray-400 mt-5 leading-relaxed border-t border-white/10 pt-4">Music est un moteur de recherche de musiques libres de droits (Creative Commons) : jazz, lo-fi, électro, classique, ambient et plus de 20 genres, avec crédits prêts à copier pour vos vidéos.</p>
-    <p class="text-[10px] text-gray-500 mt-3 leading-relaxed">Google vous demande l'accès à votre profil et à votre compte YouTube, uniquement pour vérifier et créer l'abonnement. Aucune donnée n'est envoyée à un serveur : tout reste dans votre navigateur. <a href="privacy.html" target="_blank" rel="noopener" class="underline hover:text-gold-400">Politique de confidentialité</a></p>
-    <button onclick="signOut()" id="auth-signout" class="hidden mt-3 text-[11px] text-gray-500 underline hover:text-gold-400">Changer de compte</button>
+    <p class="text-[10px] text-gray-400 mt-3 leading-relaxed">Google vous demande l'accès à votre profil et à la lecture de YouTube, uniquement pour la recherche et les tendances. Aucune donnée n'est envoyée à un serveur : tout reste dans votre navigateur. <a href="privacy.html" target="_blank" rel="noopener" class="underline hover:text-gold-400">Politique de confidentialité</a></p>
+    <button onclick="signOut()" id="auth-signout" class="hidden mt-3 text-[11px] text-gray-400 underline hover:text-gold-400">Changer de compte</button>
   </div>
 </div>
 
@@ -399,7 +408,7 @@ input[type=range]{accent-color:#f59e0b}
 <!-- MODALE CHAÎNE -->
 <div id="channel-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
   <div class="bg-obsidian-900 border border-white/15 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative max-h-[92vh] overflow-y-auto">
-    <button onclick="closeModal('channel-modal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 text-gray-400"><i class="fa-solid fa-xmark"></i></button>
+    <button onclick="closeModal('channel-modal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 text-gray-400" aria-label="Fermer"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
     <h3 id="channel-modal-title" class="text-xl font-bold text-white mb-4">Ajouter une chaîne YouTube</h3>
     <form id="channel-form" onsubmit="saveChannel(event)" class="space-y-4">
       <input type="hidden" id="ch-id">
@@ -440,9 +449,9 @@ input[type=range]{accent-color:#f59e0b}
 <!-- MODALE VIDÉO -->
 <div id="video-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/90 backdrop-blur-md">
   <div class="bg-obsidian-900 border border-white/15 rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl">
-    <div class="flex items-center justify-between px-5 py-4 border-b border-white/10"><h3 id="video-title" class="text-sm font-bold text-white truncate"></h3><button onclick="closeVideo()" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/15 text-gray-400"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="flex items-center justify-between px-5 py-4 border-b border-white/10"><h3 id="video-title" class="text-sm font-bold text-white truncate"></h3><button onclick="closeVideo()" class="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/15 text-gray-400" aria-label="Fermer"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div>
     <div class="aspect-video bg-black"><iframe id="video-iframe" class="w-full h-full" src="" title="YouTube" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>
-    <div class="p-4 bg-obsidian-950 flex justify-between items-center gap-4"><span class="text-xs text-gray-400">Vérifiez la licence avant toute réutilisation.</span><button onclick="subFromVideo()" class="btn-youtube text-white font-bold text-xs px-5 py-2.5 rounded-xl"><i class="fa-brands fa-youtube mr-1.5"></i> Ouvrir la chaîne</button></div>
+    <div class="p-4 bg-obsidian-950 flex justify-between items-center gap-4"><span class="text-xs text-gray-400">Vérifiez la licence avant toute réutilisation.</span><button onclick="subFromVideo()" class="btn-youtube text-white font-bold text-xs px-5 py-2.5 rounded-xl"><i class="fa-brands fa-youtube mr-1.5" aria-hidden="true"></i> Ouvrir la chaîne</button></div>
   </div>
 </div>
 
@@ -481,8 +490,25 @@ const GENRES = [
   {id:'afro', label:'Afro & Oriental', icon:'fa-drum', q:'afro oriental', tag:'world'},
   {id:'world', label:'Musiques du monde', icon:'fa-globe', q:'world music', tag:'world'},
   {id:'cinematic', label:'Cinématique & Épique', icon:'fa-film', q:'cinematic epic', tag:'soundtrack'},
-  {id:'meditation', label:'Méditation & Nature', icon:'fa-spa', q:'meditation nature', tag:'relaxation'}
+  {id:'meditation', label:'Méditation & Nature', icon:'fa-spa', q:'meditation nature', tag:'relaxation'},
+  {id:'chanson', label:'Chanson française', icon:'fa-music', q:'chanson française', tag:'chanson', lang:'fr'},
+  {id:'rapfr', label:'Rap français', icon:'fa-microphone', q:'rap français', tag:'rap', lang:'fr'},
+  {id:'arabic_pop', label:'Pop arabe', icon:'fa-star', q:'arabic pop عربي', tag:'arabic', lang:'ar'},
+  {id:'oud', label:'Oud & Tarab', icon:'fa-guitar', q:'oud arabic tarab', tag:'oriental', lang:'ar'},
+  {id:'rai', label:'Raï & Chaâbi', icon:'fa-drum', q:'rai chaabi', tag:'rai', lang:'ar'},
+  {id:'maghreb', label:'Maghreb & Malouf', icon:'fa-sun', q:'maghreb tunisian malouf', tag:'world', lang:'ar'},
+  {id:'arabic_rap', label:'Rap arabe', icon:'fa-microphone', q:'arabic rap', tag:'rap', lang:'ar'},
+  {id:'engpop', label:'Pop & Rock anglais', icon:'fa-headphones', q:'english pop rock', tag:'pop', lang:'en'},
+  {id:'singer', label:'Singer-songwriter', icon:'fa-guitar', q:'singer songwriter', tag:'singersongwriter', lang:'en'}
 ];
+// langue : q = termes ajoutés à la recherche, jam = paramètre lang de Jamendo, ia = langue Internet Archive, region = pays des tendances YouTube
+const LANGS = [
+  {id:'all', label:'Toutes', icon:'fa-language', q:'', jam:'', ia:'', region:'FR', hl:'fr'},
+  {id:'fr', label:'Français', icon:'fa-language', q:'français', jam:'fr', ia:'French', region:'FR', hl:'fr'},
+  {id:'ar', label:'العربية', icon:'fa-language', q:'عربي arabic', jam:'ar', ia:'Arabic', region:'TN', hl:'ar'},
+  {id:'en', label:'English', icon:'fa-language', q:'english', jam:'en', ia:'English', region:'US', hl:'en'}
+];
+const lInfo = id => LANGS.find(l => l.id === id) || LANGS[0];
 const MOODS = [
   {id:'chill', label:'Chill', q:'chill', tag:'chill'}, {id:'focus', label:'Concentration', q:'focus study', tag:'relaxing'},
   {id:'energetic', label:'Énergique', q:'energetic', tag:'energetic'}, {id:'happy', label:'Joyeux', q:'happy', tag:'happy'},
@@ -506,10 +532,11 @@ const DEFAULT_TRACKS = [];
 ===================================================== */
 const TABS = [
   {id:'home', label:'Accueil', icon:'fa-house'}, {id:'discover', label:'Découvrir', icon:'fa-compass'},
+  {id:'trending', label:'Tendances', icon:'fa-fire'},
   {id:'library', label:'Bibliothèque', icon:'fa-bookmark'},
   {id:'channels', label:'Chaînes & Réglages', icon:'fa-sliders', admin:true}, {id:'stats', label:'Stats', icon:'fa-chart-simple', admin:true}
 ];
-const DEFAULT_CONFIG = {googleClientId:'', adminEmails:[], targetChannelId:'auto', targetVideoId:'', requireLogin:true, requireSubscribe:false, youtubeApiKey:'', adsensePublisherId:'', adsenseSlot:''};
+const DEFAULT_CONFIG = {googleClientId:'', adminEmails:[], targetChannelId:'auto', targetVideoId:'', requireLogin:false, requireSubscribe:false, youtubeApiKey:'', adsensePublisherId:'', adsenseSlot:''};
 let CONFIG = {...DEFAULT_CONFIG}, fileChannels = [], localChannels = null, viewsLaunched = 0;
 const SOURCES = {
   openverse:{label:'Openverse', icon:'fa-globe'},
@@ -518,11 +545,14 @@ const SOURCES = {
   youtube:{label:'YouTube Music', icon:'fa-circle-play'}
 };
 let channels = [], tracks = [], favorites = [], subscribers = [], history = [];
-let settings = {jamendoKey:'', sources:{openverse:true, jamendo:true, archive:true, youtube:true}};
+let settings = {jamendoKey:'', sources:{openverse:true, jamendo:false, archive:true, youtube:true}};
 let totalPlays = 0, tab = 'home', homeGenre = 'all', libView = 'all';
-const S = {genre:'all', mood:null, page:1, raw:[], hasMore:{}, loading:false, token:0, searched:false, ytNext:''};
+const S = {genre:'all', mood:null, lang:'all', page:1, raw:[], hasMore:{}, loading:false, token:0, searched:false, ytNext:''};
 const REG = new Map();      // uid -> track
-const CTX = {home:[], discover:[], library:[]};
+const CTX = {home:[], discover:[], library:[], trending:[]};
+const TR = {lang:'all', items:[], next:'', loading:false, token:0};
+const fmtViews = n => n >= 1e6 ? (n/1e6).toFixed(1).replace('.0','') + ' M' : n >= 1e3 ? Math.round(n/1e3) + ' k' : String(n);
+const isoSec = x => { const m = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/.exec(x || ''); return m ? (+m[1] || 0) * 3600 + (+m[2] || 0) * 60 + (+m[3] || 0) : 0; };
 let current = null, queue = [], qi = 0, shuffle = false, repeat = false, pending = null, autoUnlock = false;
 let placing = null, videoChannel = null, sleepTimer = null;
 const audio = new Audio();
@@ -542,7 +572,7 @@ function toast(msg, type='info'){
   const el = document.createElement('div');
   const ok = type==='success', err = type==='error';
   el.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-2xl border shadow-2xl text-xs font-medium backdrop-blur-md transition-all duration-300 ${ok?'border-emerald-500/50 bg-[#071a12]/95 text-emerald-100':err?'border-red-500/50 bg-[#1f0a0a]/95 text-red-100':'border-gold-500/40 bg-obsidian-900/95 text-white'}`;
-  el.innerHTML = `<i class="fa-solid ${ok?'fa-circle-check text-emerald-400':err?'fa-triangle-exclamation text-red-400':'fa-circle-info text-gold-400'}"></i><span>${esc(msg)}</span>`;
+  el.innerHTML = `<i class="fa-solid ${ok?'fa-circle-check text-emerald-400':err?'fa-triangle-exclamation text-red-400':'fa-circle-info text-gold-400'}" aria-hidden="true"></i><span>${esc(msg)}</span>`;
   $('toast-container').appendChild(el);
   setTimeout(() => { el.style.opacity = 0; setTimeout(() => el.remove(), 300); }, 3800);
 }
@@ -567,12 +597,14 @@ const licBase = c => c === 'cc0' || c === 'pdm' ? 'cc0' : c;
    SOURCES DE RECHERCHE
 ===================================================== */
 function buildParams(){
-  const q = $('q').value.trim(), g = gInfo(S.genre), m = MOODS.find(x => x.id === S.mood);
-  return {q, g, m, text:[q, g.q, m && m.q].filter(Boolean).join(' ').trim(), commercial:$('f-commercial').checked};
+  const q = $('q').value.trim(), g = gInfo(S.genre), m = MOODS.find(x => x.id === S.mood), l = lInfo(S.lang);
+  return {q, g, m, l, text:[q, g.q, m && m.q, l.q].filter(Boolean).join(' ').trim(), commercial:$('f-commercial').checked};
 }
+function sessionExpired(){ if (!AUTH.token) return; AUTH.token = null; AUTH.user = null; AUTH.admin = false; AUTH.subscribed = false; AUTH.status = {}; tokenClient = null; applyRole(); renderAuth(); renderAll(); }
 async function getJSON(url, headers){
   let r;
   try { r = await fetch(url, headers ? {headers} : undefined); } catch(e) { throw new Error('réseau indisponible ou accès bloqué par le navigateur'); }
+  if (r.status === 401 && headers && headers.Authorization) { sessionExpired(); const e = new Error('session Google expirée : cliquez sur Connexion'); e.status = 401; throw e; }
   if (r.status === 429) throw new Error('quota dépassé (429)');
   if (r.status === 403) throw new Error('accès refusé ou quota du jour atteint (403)');
   if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -599,9 +631,10 @@ const FETCHERS = {
     u.searchParams.set('limit', 20); u.searchParams.set('offset', (page-1)*20);
     u.searchParams.set('include', 'licenses'); u.searchParams.set('imagesize', 300); u.searchParams.set('audioformat', 'mp32');
     if (p.q) u.searchParams.set('search', p.q);
+    if (p.l.jam) u.searchParams.set('lang', p.l.jam);
     if (p.g.tag) u.searchParams.set('tags', p.g.tag);
     if (p.m) u.searchParams.set('fuzzytags', p.m.tag);
-    if (!p.q && !p.g.tag && !p.m) u.searchParams.set('order', 'popularity_week');
+    if (!p.q && !p.g.tag && !p.m && !p.l.jam) u.searchParams.set('order', 'popularity_week');
     const d = await getJSON(u);
     if (d.headers && d.headers.status === 'failed') throw new Error(d.headers.error_message || 'erreur Jamendo');
     const rows = d.results || [];
@@ -639,8 +672,9 @@ const FETCHERS = {
   async archive(p, page){
     const terms = (p.text || 'music').replace(/["()]/g, ' ').trim().split(/\s+/).filter(Boolean).join(' OR ');
     const lic = p.commercial ? 'licenseurl:(*creativecommons.org*) AND NOT licenseurl:(*-nc*)' : 'licenseurl:(*creativecommons.org*)';
+    const lang = p.l.ia ? ` AND language:(${p.l.ia})` : '';
     const u = new URL('https://archive.org/advancedsearch.php');
-    u.searchParams.set('q', `(${terms}) AND mediatype:audio AND ${lic}`);
+    u.searchParams.set('q', `(${terms}) AND mediatype:audio AND ${lic}${lang}`);
     ['identifier','title','creator','licenseurl'].forEach(f => u.searchParams.append('fl[]', f));
     u.searchParams.append('sort[]', 'downloads desc');
     u.searchParams.set('rows', 20); u.searchParams.set('page', page); u.searchParams.set('output', 'json');
@@ -682,7 +716,7 @@ async function runSearch(reset = true){
   const token = ++S.token;
   S.loading = true;
   if (reset) { $('discover-grid').innerHTML = Array(6).fill('<div class="skeleton h-32 rounded-2xl"></div>').join(''); }
-  $('search-status').innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Recherche en cours…';
+  $('search-status').innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2" aria-hidden="true"></i>Recherche en cours…';
   if (reset && p.q) { history = [p.q, ...history.filter(h => h !== p.q)].slice(0, 12); save('history', history); renderHistory(); }
 
   const res = await Promise.all(active.map(src => FETCHERS[src](p, S.page).then(r => ({src, r})).catch(e => ({src, e}))));
@@ -697,7 +731,7 @@ async function runSearch(reset = true){
   for (let i = 0; lists.some(l => i < l.length); i++) lists.forEach(l => { if (l[i] && !seen.has(l[i].uid)) { seen.add(l[i].uid); merged.push(l[i]); } });
   S.raw.push(...merged);
   const counts = Object.entries(per).map(([s, n]) => `${SOURCES[s].label} ${n}`).join(' · ');
-  $('search-status').innerHTML = `${esc(counts)}${errs.length ? `<span class="text-amber-400 ml-3"><i class="fa-solid fa-triangle-exclamation mr-1"></i>${esc(errs.join(' · '))}</span>` : ''}`;
+  $('search-status').innerHTML = `${esc(counts)}${errs.length ? `<span class="text-amber-400 ml-3"><i class="fa-solid fa-triangle-exclamation mr-1" aria-hidden="true"></i>${esc(errs.join(' · '))}</span>` : ''}`;
   applyFilters();
   $('more-btn').classList.toggle('hidden', !Object.values(S.hasMore).some(Boolean));
 }
@@ -730,12 +764,12 @@ function trackCard(t, ctx){
   const ch = channels.find(c => c.id === t.channelId);
   const warn = t.lic && t.lic.nd ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300" title="Pas de modification (ND)">ND</span>' : '';
   const comm = t.lic ? (t.lic.commercial ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300">Commercial OK</span>' : (t.source === 'youtube' ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-sky-500/15 text-sky-300" title="Lecteur officiel YouTube : pas de réutilisation">Écoute seule</span>' : '<span class="text-[10px] px-1.5 py-0.5 rounded bg-red-500/15 text-red-300">Non commercial</span>')) : '';
-  const a = (act, icon, cls, title) => `<button data-act="${act}" data-uid="${esc(t.uid)}" data-ctx="${ctx}" title="${title}" class="p-2 rounded-xl ${cls} transition text-xs"><i class="${icon}"></i></button>`;
+  const a = (act, icon, cls, title) => `<button data-act="${act}" data-uid="${esc(t.uid)}" data-ctx="${ctx}" title="${title}" aria-label="${title}" class="p-2 rounded-xl ${cls} transition text-xs"><i class="${icon}"></i></button>`;
   return `<article class="glass-card ${isCur ? 'is-current is-playing' : ''} rounded-2xl p-4 flex flex-col gap-3 fade-in">
     <div class="flex items-start gap-3.5">
       <div class="relative shrink-0">
         <img src="${esc(t.coverUrl || PH)}" onerror="this.onerror=null;this.src=PH" loading="lazy" alt="" class="w-20 h-20 rounded-xl object-cover border border-white/10 bg-obsidian-800">
-        <button data-act="play" data-uid="${esc(t.uid)}" data-ctx="${ctx}" class="absolute inset-0 m-auto w-9 h-9 rounded-full bg-gold-500 hover:bg-gold-400 text-obsidian-950 flex items-center justify-center shadow-lg"><i class="fa-solid ${isCur && !audio.paused ? 'fa-pause' : 'fa-play'} text-xs ml-0.5"></i></button>
+        <button data-act="play" data-uid="${esc(t.uid)}" data-ctx="${ctx}" aria-label="Lire ${esc(t.title)}" class="absolute inset-0 m-auto w-9 h-9 rounded-full bg-gold-500 hover:bg-gold-400 text-obsidian-950 flex items-center justify-center shadow-lg"><i class="fa-solid ${isCur && !audio.paused ? 'fa-pause' : 'fa-play'} text-xs ml-0.5" aria-hidden="true"></i></button>
       </div>
       <div class="min-w-0 flex-1">
         <div class="flex flex-wrap items-center gap-1.5 mb-1">
@@ -745,40 +779,40 @@ function trackCard(t, ctx){
         </div>
         <h3 class="font-bold text-sm text-white truncate" title="${esc(t.title)}">${esc(t.title)}</h3>
         <p class="text-xs text-gray-400 truncate">${esc(t.artist)}</p>
-        <p class="text-[11px] text-gray-500 mt-0.5 flex items-center gap-2"><span class="font-mono">${esc(t.duration)}</span><span>·</span><span class="truncate">${esc(t.license)}</span></p>
-        ${t.tags && t.tags.length ? `<p class="text-[10px] text-gray-500 mt-1 truncate">#${t.tags.map(esc).join(' #')}</p>` : ''}
+        <p class="text-[11px] text-gray-400 mt-0.5 flex items-center gap-2"><span class="font-mono">${esc(t.duration)}</span><span>·</span><span class="truncate">${esc(t.license)}</span>${t.views ? `<span>·</span><span class="whitespace-nowrap"><i class="fa-regular fa-eye mr-1" aria-hidden="true"></i>${fmtViews(t.views)}</span>` : ''}</p>
+        ${t.tags && t.tags.length ? `<p class="text-[10px] text-gray-400 mt-1 truncate">#${t.tags.map(esc).join(' #')}</p>` : ''}
       </div>
     </div>
-    ${ctx === 'home' ? `<div class="p-2.5 rounded-xl bg-obsidian-950/70 border border-white/5 flex items-center justify-between"><span class="text-xs text-gray-400 truncate">${esc(ch ? ch.name : 'Chaîne officielle')}</span><span class="text-[11px] text-gray-500">Chaîne</span></div>` : ''}
-    ${ctx === 'library' && ch ? `<div class="text-[11px] text-gold-400/90 truncate"><i class="fa-brands fa-youtube mr-1"></i>${esc(ch.name)}</div>` : ''}
+    ${ctx === 'home' ? `<div class="p-2.5 rounded-xl bg-obsidian-950/70 border border-white/5 flex items-center justify-between"><span class="text-xs text-gray-400 truncate">${esc(ch ? ch.name : 'Chaîne officielle')}</span><span class="text-[11px] text-gray-400">Chaîne</span></div>` : ''}
+    ${ctx === 'library' && ch ? `<div class="text-[11px] text-gold-400/90 truncate"><i class="fa-brands fa-youtube mr-1" aria-hidden="true"></i>${esc(ch.name)}</div>` : ''}
     <div class="pt-2 border-t border-white/10 flex items-center gap-1.5 flex-wrap">
-      ${a('fav', fav ? 'fa-solid fa-heart' : 'fa-regular fa-heart', fav ? 'text-red-400 bg-red-500/10' : 'text-gray-400 bg-white/5 hover:text-red-400', 'Favori')}
-      ${ctx === 'discover' ? a('add', 'fa-solid fa-plus', 'bg-gold-500/15 text-gold-400 hover:bg-gold-500 hover:text-obsidian-950', 'Ajouter à une chaîne') : ''}
+      ${t.source !== 'youtube' ? a('fav', fav ? 'fa-solid fa-heart' : 'fa-regular fa-heart', fav ? 'text-red-400 bg-red-500/10' : 'text-gray-400 bg-white/5 hover:text-red-400', 'Favori') : ''}
       ${ctx === 'library' ? a('remove', 'fa-solid fa-trash', 'bg-red-600/10 text-red-400 hover:bg-red-600 hover:text-white', 'Retirer') : ''}
-      ${a('copy', 'fa-regular fa-copy', 'bg-white/5 text-gray-300 hover:bg-white/15', 'Copier le crédit')}
-      ${t.sourceUrl ? `<a href="${esc(t.sourceUrl)}" target="_blank" rel="noopener" title="Page source" class="p-2 rounded-xl bg-white/5 text-gray-300 hover:bg-white/15 text-xs"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
-      ${t.downloadUrl ? `<a href="${esc(t.downloadUrl)}" target="_blank" rel="noopener" title="Télécharger" class="p-2 rounded-xl bg-white/5 text-gray-300 hover:bg-white/15 text-xs"><i class="fa-solid fa-download"></i></a>` : ''}
-      ${t.youtubeVideoId ? `<button data-act="video" data-uid="${esc(t.uid)}" class="ml-auto p-2 rounded-xl bg-red-600/15 hover:bg-red-600 text-red-500 hover:text-white text-xs"><i class="fa-brands fa-youtube"></i></button>` : ''}
+      ${canIntegrate(t) ? a('copy', 'fa-regular fa-copy', 'bg-white/5 text-gray-300 hover:bg-white/15', 'Copier le crédit') : ''}
+      ${safeUrl(t.sourceUrl) ? `<a href="${esc(safeUrl(t.sourceUrl))}" target="_blank" rel="noopener" title="Page source" class="p-2 rounded-xl bg-white/5 text-gray-300 hover:bg-white/15 text-xs"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>` : ''}
+      ${safeUrl(t.downloadUrl) ? `<a href="${esc(safeUrl(t.downloadUrl))}" target="_blank" rel="noopener" title="Télécharger" class="p-2 rounded-xl bg-white/5 text-gray-300 hover:bg-white/15 text-xs"><i class="fa-solid fa-download" aria-hidden="true"></i></a>` : ''}
+      ${t.youtubeVideoId ? `<button data-act="video" data-uid="${esc(t.uid)}" class="ml-auto p-2 rounded-xl bg-red-600/15 hover:bg-red-600 text-red-500 hover:text-white text-xs"><i class="fa-brands fa-youtube" aria-hidden="true"></i></button>` : ''}
     </div></article>`;
 }
 function renderGrid(id, list, ctx, emptyMsg){
   const el = $(id);
-  el.innerHTML = list.length ? list.map(t => trackCard(t, ctx)).join('') : (emptyMsg ? `<div class="col-span-full text-center text-sm text-gray-500 py-12">${esc(emptyMsg)}</div>` : '');
+  el.innerHTML = list.length ? list.map(t => trackCard(t, ctx)).join('') : (emptyMsg ? `<div class="col-span-full text-center text-sm text-gray-400 py-12">${esc(emptyMsg)}</div>` : '');
 }
 function chipRow(el, items, sel, fn, cls = ''){
   el.innerHTML = '';
   items.forEach(it => {
     const b = document.createElement('button');
     b.className = `chip ${cls} ${sel === it.id ? 'on' : ''}`;
-    b.innerHTML = (it.icon ? `<i class="fa-solid ${it.icon}"></i>` : '') + esc(it.label);
+    b.innerHTML = (it.icon ? `<i class="fa-solid ${it.icon}" aria-hidden="true"></i>` : '') + esc(it.label);
     b.onclick = () => fn(it.id);
     el.appendChild(b);
   });
 }
 function renderChips(){
-  chipRow($('genre-chips'), GENRES, S.genre, id => { S.genre = id; renderChips(); runSearch(true); });
+  chipRow($('lang-chips'), LANGS, S.lang, id => { S.lang = id; const g = gInfo(S.genre); if (g.lang && id !== 'all' && g.lang !== id) S.genre = 'all'; renderChips(); runSearch(true); });
+  chipRow($('genre-chips'), GENRES.filter(g => !g.lang || S.lang === 'all' || g.lang === S.lang), S.genre, id => { S.genre = id; const g = gInfo(id); if (g.lang) S.lang = g.lang; renderChips(); runSearch(true); });
   chipRow($('mood-chips'), MOODS, S.mood, id => { S.mood = S.mood === id ? null : id; renderChips(); runSearch(true); }, 'mood');
-  $('source-pills').innerHTML = Object.entries(SOURCES).map(([k, v]) => `<button class="pill ${settings.sources[k] ? 'on' : ''}" onclick="toggleSource('${k}')"><i class="fa-solid ${v.icon}"></i>${v.label}</button>`).join('');
+  $('source-pills').innerHTML = Object.entries(SOURCES).map(([k, v]) => `<button class="pill ${settings.sources[k] ? 'on' : ''}" onclick="toggleSource('${k}')"><i class="fa-solid ${v.icon}" aria-hidden="true"></i>${v.label}</button>`).join('');
 }
 function toggleSource(k){ settings.sources[k] = !settings.sources[k]; saveSettings(); renderChips(); }
 function saveSettings(){ settings.jamendoKey = $('jamendo-key').value.trim(); save('settings', settings); }
@@ -791,6 +825,66 @@ function renderHome(){
   CTX.home = list; $('home-count').textContent = list.length;
   $('home-online-btn').classList.toggle('hidden', homeGenre === 'all');
   renderGrid('home-grid', list, 'home', 'Bibliothèque vide : choisissez une musique dans Découvrir, elle sera ajoutée automatiquement à la chaîne.');
+}
+/* ---- Tendances : écoute et visionnage uniquement ---- */
+function mapTrend(v){
+  const sn = v.snippet || {}, id = v.id, st = v.statistics || {};
+  return {source:'youtube', origId:id, uid:'youtube:' + id, id:'youtube:' + id, title:sn.title || id, artist:sn.channelTitle || 'YouTube',
+    durSec:isoSec(v.contentDetails && v.contentDetails.duration), audioUrl:'', youtubeVideoId:id,
+    coverUrl:(sn.thumbnails && (sn.thumbnails.medium || sn.thumbnails.default) || {}).url || '',
+    lic:{code:'yt', label:'Écoute seule (YouTube)', commercial:false, nd:false}, license:'Écoute seule (YouTube)', licUrl:'',
+    sourceUrl:'https://www.youtube.com/watch?v=' + id, provider:'YouTube', tags:[], genre:'all', views:+st.viewCount || 0, listenOnly:true, attribution:''};
+}
+async function loadTrending(reset = true){
+  if (TR.loading && !reset) return;
+  if (!AUTH.token && !CONFIG.youtubeApiKey) { $('trend-status').textContent = 'Connexion Google requise pour afficher les tendances.'; return; }
+  if (reset) { TR.items = []; TR.next = ''; }
+  TR.loading = true; const tok = ++TR.token;
+  $('trend-status').innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2" aria-hidden="true"></i>Chargement des tendances…';
+  if (reset) $('trend-grid').innerHTML = Array(6).fill('<div class="skeleton h-32 rounded-2xl"></div>').join('');
+  const l = lInfo(TR.lang), h = AUTH.token ? {Authorization:'Bearer ' + AUTH.token} : null;
+  const withKey = u => { if (!h) u.searchParams.set('key', CONFIG.youtubeApiKey); return u; };
+  const parts = 'snippet,contentDetails,statistics,status';
+  try {
+    let rows = [], next = '';
+    try {
+      const u = new URL('https://www.googleapis.com/youtube/v3/videos');
+      u.searchParams.set('part', parts); u.searchParams.set('chart', 'mostPopular'); u.searchParams.set('videoCategoryId', '10');
+      u.searchParams.set('regionCode', l.region); u.searchParams.set('hl', l.hl); u.searchParams.set('maxResults', 24);
+      if (TR.next) u.searchParams.set('pageToken', TR.next);
+      const d = await getJSON(withKey(u), h);
+      rows = d.items || []; next = d.nextPageToken || '';
+      if (!rows.length && !TR.next) throw new Error('vide');
+    } catch(e) {
+      // Repli : recherche triée par nombre de vues (certains pays n'ont pas de classement musique)
+      const s = new URL('https://www.googleapis.com/youtube/v3/search');
+      s.searchParams.set('part', 'snippet'); s.searchParams.set('type', 'video'); s.searchParams.set('videoCategoryId', '10');
+      s.searchParams.set('videoEmbeddable', 'true'); s.searchParams.set('order', 'viewCount'); s.searchParams.set('maxResults', 24);
+      s.searchParams.set('regionCode', l.region); s.searchParams.set('relevanceLanguage', l.hl); s.searchParams.set('q', (l.q || 'music') + ' official music video');
+      s.searchParams.set('publishedAfter', new Date(Date.now() - 90*864e5).toISOString());
+      if (TR.next) s.searchParams.set('pageToken', TR.next);
+      const sd = await getJSON(withKey(s), h);
+      next = sd.nextPageToken || '';
+      const ids = (sd.items || []).filter(i => i.id && i.id.videoId).map(i => i.id.videoId);
+      if (ids.length) {
+        const v = new URL('https://www.googleapis.com/youtube/v3/videos');
+        v.searchParams.set('part', parts); v.searchParams.set('id', ids.join(','));
+        rows = (await getJSON(withKey(v), h)).items || [];
+      }
+    }
+    if (tok !== TR.token) return;
+    const seen = new Set(TR.items.map(t => t.uid));
+    rows.filter(v => !(v.status && v.status.embeddable === false)).map(mapTrend).forEach(t => { if (!seen.has(t.uid)) { seen.add(t.uid); TR.items.push(t); } });
+    TR.next = next;
+    $('trend-status').textContent = TR.items.length ? `${TR.items.length} titres tendance · ${l.label}` : 'Aucune tendance disponible pour cette langue.';
+  } catch(e) { if (tok === TR.token) $('trend-status').textContent = 'Tendances indisponibles : ' + e.message; }
+  if (tok === TR.token) { TR.loading = false; renderTrending(); }
+}
+function renderTrending(){
+  chipRow($('trend-lang'), LANGS, TR.lang, id => { TR.lang = id; loadTrending(true); });
+  CTX.trending = TR.items;
+  renderGrid('trend-grid', TR.items, 'trending', '');
+  $('trend-more').classList.toggle('hidden', !TR.next);
 }
 function renderLibrary(){
   const views = [['all','Toutes', tracks.length], ['fav','Favoris', favorites.length]];
@@ -810,12 +904,12 @@ function renderChannels(){
     const bad = /youtube\.com\/channel\/UC/.test(ch.url) && !/youtube\.com\/channel\/UC[\w-]{22}(?:[?\/]|$)/.test(ch.url);
     return `<div class="rounded-3xl p-6 bg-obsidian-900/70 border border-white/10 flex flex-col justify-between">
     <div><div class="flex items-start justify-between gap-4 mb-3"><div><span class="text-[10px] font-bold px-2 py-0.5 rounded bg-gold-500/15 text-gold-400 uppercase">${esc(ch.tag)}</span><h3 class="text-xl font-bold text-white mt-1.5">${esc(ch.name)}</h3></div>
-    <div class="flex gap-1.5"><button onclick="openChannelModal('${esc(ch.id)}')" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs"><i class="fa-solid fa-pen"></i></button>${channels.length > 1 ? `<button onclick="deleteChannel('${esc(ch.id)}')" class="p-2 rounded-xl bg-red-600/15 hover:bg-red-600 text-red-400 hover:text-white text-xs"><i class="fa-solid fa-trash"></i></button>` : ''}</div></div>
+    <div class="flex gap-1.5"><button data-chact="edit" data-chid="${esc(ch.id)}" aria-label="Modifier la chaîne" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs"><i class="fa-solid fa-pen" aria-hidden="true"></i></button>${channels.length > 1 ? `<button data-chact="del" data-chid="${esc(ch.id)}" aria-label="Supprimer la chaîne" class="p-2 rounded-xl bg-red-600/15 hover:bg-red-600 text-red-400 hover:text-white text-xs"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>` : ''}</div></div>
     <p class="text-xs text-gray-300 mb-3">${esc(ch.description)}</p>
-    ${bad ? '<p class="text-[11px] text-amber-300 mb-3"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Identifiant de chaîne invalide (24 caractères attendus) : l\'abonnement ne pourra pas être vérifié. Utilisez l\'URL @handle ou le bon identifiant.</p>' : ''}
-    <div class="p-3 rounded-2xl bg-obsidian-950/70 border border-white/5 flex justify-between text-xs mb-3"><div><span class="text-gray-500 uppercase text-[10px]">Base YouTube</span><strong class="block text-white font-mono">${(ch.baseSubscribers||0).toLocaleString('fr-FR')}</strong></div><div><span class="text-gray-500 uppercase text-[10px]">Pistes</span><strong class="block text-white font-mono">${tracks.filter(t => t.channelId === ch.id).length}</strong></div></div>
-    <label class="flex items-center gap-2 text-xs text-gray-300 mb-4 cursor-pointer"><input type="checkbox" class="rounded" ${ch.gate !== false ? 'checked' : ''} onchange="toggleGate('${esc(ch.id)}', this.checked)"> Abonnement obligatoire à l'entrée</label></div>
-    <a href="${esc(ch.url)}" target="_blank" rel="noopener" class="py-2.5 px-3 rounded-xl btn-youtube text-white text-xs font-bold flex items-center justify-center gap-2"><i class="fa-brands fa-youtube"></i> Ouvrir la chaîne</a></div>`;
+    ${bad ? '<p class="text-[11px] text-amber-300 mb-3"><i class="fa-solid fa-triangle-exclamation mr-1" aria-hidden="true"></i>Identifiant de chaîne invalide (24 caractères attendus) : l\'abonnement ne pourra pas être vérifié. Utilisez l\'URL @handle ou le bon identifiant.</p>' : ''}
+    <div class="p-3 rounded-2xl bg-obsidian-950/70 border border-white/5 flex justify-between text-xs mb-3"><div><span class="text-gray-400 uppercase text-[10px]">Base YouTube</span><strong class="block text-white font-mono">${(ch.baseSubscribers||0).toLocaleString('fr-FR')}</strong></div><div><span class="text-gray-400 uppercase text-[10px]">Pistes</span><strong class="block text-white font-mono">${tracks.filter(t => t.channelId === ch.id).length}</strong></div></div>
+    <label class="flex items-center gap-2 text-xs text-gray-300 mb-4 cursor-pointer"><input type="checkbox" class="rounded" ${ch.gate !== false ? 'checked' : ''} data-chact="gate" data-chid="${esc(ch.id)}"> Inclure dans la vérification d'abonnement (si activée)</label></div>
+    <a href="${esc(ch.url)}" target="_blank" rel="noopener" class="py-2.5 px-3 rounded-xl btn-youtube text-white text-xs font-bold flex items-center justify-center gap-2"><i class="fa-brands fa-youtube" aria-hidden="true"></i> Ouvrir la chaîne</a></div>`;
   }).join('');
 }
 function toggleGate(id, v){ const ch = channels.find(c => c.id === id); if (ch) { ch.gate = v; persist(); } }
@@ -826,11 +920,11 @@ function renderStats(){
   $('stats-bars').innerHTML = channels.map((ch, i) => `<div class="p-3 rounded-2xl bg-obsidian-950/70 border border-white/5"><div class="flex justify-between text-xs mb-1.5"><span class="text-white font-medium">${esc(ch.name)}</span><span class="font-mono font-bold text-emerald-400">${counts[i]}</span></div><div class="w-full h-2 bg-obsidian-800 rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-gold-500 to-emerald-400" style="width:${Math.round(counts[i]/max*100)}%"></div></div></div>`).join('');
 }
 function renderHeader(){ $('header-subs-total').textContent = totalPlays; }
-function renderAll(){ renderHeader(); renderHome(); if (tab === 'discover') applyFilters(); renderLibrary(); renderChannels(); renderStats(); renderNav(); renderAdminSettings(); }
+function renderAll(){ renderHeader(); renderHome(); if (tab === 'discover') applyFilters(); if (tab === 'trending') renderTrending(); renderLibrary(); renderChannels(); renderStats(); renderNav(); renderAdminSettings(); }
 function renderNav(){
   const tabs = TABS.filter(t => !t.admin || isAdmin());
-  $('nav-desktop').innerHTML = tabs.map(t => `<button onclick="switchTab('${t.id}')" class="px-3.5 py-1.5 rounded-lg text-xs ${tab === t.id ? 'font-bold bg-gold-500 text-obsidian-950' : 'font-medium text-gray-300 hover:text-white hover:bg-white/5'} transition"><i class="fa-solid ${t.icon} mr-1.5"></i>${t.label}</button>`).join('');
-  $('nav-mobile').innerHTML = tabs.map(t => `<button onclick="switchTab('${t.id}')" class="px-2 py-1 ${tab === t.id ? 'text-gold-400 font-bold' : 'text-gray-400'}"><i class="fa-solid ${t.icon} block text-center mb-0.5"></i>${t.label.split(' ')[0]}</button>`).join('');
+  $('nav-desktop').innerHTML = tabs.map(t => `<button onclick="switchTab('${t.id}')" class="px-3.5 py-1.5 rounded-lg text-xs ${tab === t.id ? 'font-bold bg-gold-500 text-obsidian-950' : 'font-medium text-gray-300 hover:text-white hover:bg-white/5'} transition"><i class="fa-solid ${t.icon} mr-1.5" aria-hidden="true"></i>${t.label}</button>`).join('');
+  $('nav-mobile').innerHTML = tabs.map(t => `<button onclick="switchTab('${t.id}')" class="px-2 py-1 ${tab === t.id ? 'text-gold-400 font-bold' : 'text-gray-400'}"><i class="fa-solid ${t.icon} block text-center mb-0.5" aria-hidden="true"></i>${t.label.split(' ')[0]}</button>`).join('');
   const aa = $('admin-actions'); aa.classList.toggle('hidden', !isAdmin()); aa.classList.toggle('flex', isAdmin());
 }
 function switchTab(id){
@@ -840,6 +934,7 @@ function switchTab(id){
   TABS.forEach(t => $('tab-' + t.id).classList.toggle('hidden', t.id !== id));
   renderAll(); window.scrollTo({top:0, behavior:'smooth'});
   if (id === 'discover' && !S.raw.length && !S.loading) runSearch(true);
+  if (id === 'trending' && !TR.items.length && !TR.loading) loadTrending(true);
 }
 function renderAdminSettings(){
   if (!isAdmin()) return;
@@ -848,7 +943,7 @@ function renderAdminSettings(){
   $('cfg-target').innerHTML = '<option value="auto">Automatique (selon le genre)</option>' + channels.map(c => `<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('');
   $('cfg-target').value = CONFIG.targetChannelId || 'auto';
   $('cfg-video').value = CONFIG.targetVideoId || '';
-  $('cfg-login').checked = CONFIG.requireLogin !== false; $('cfg-sub').checked = CONFIG.requireSubscribe !== false;
+  $('cfg-login').checked = CONFIG.requireLogin === true; $('cfg-sub').checked = CONFIG.requireSubscribe === true;
   $('cfg-ytkey').value = CONFIG.youtubeApiKey || ''; $('cfg-adpub').value = CONFIG.adsensePublisherId || ''; $('cfg-adslot').value = CONFIG.adsenseSlot || '';
 }
 function parseVideoId(v){ v = String(v || '').trim(); const m = v.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/); return m ? m[1] : (/^[\w-]{11}$/.test(v) ? v : ''); }
@@ -881,8 +976,13 @@ document.addEventListener('click', e => {
   else if (act === 'copy') copyText(t.attribution || `« ${t.title} » — ${t.artist} — ${t.license}`, 'Crédit copié !');
   else if (act === 'video') openVideo(t.youtubeVideoId, t.title, t.channelId);
 });
+const safeUrl = u => /^https?:\/\//i.test(String(u || '')) ? String(u) : '';
+document.addEventListener('click', e => { const b = e.target.closest('[data-chact]'); if (!b || b.dataset.chact === 'gate') return; if (b.dataset.chact === 'edit') openChannelModal(b.dataset.chid); else if (b.dataset.chact === 'del') deleteChannel(b.dataset.chid); });
+document.addEventListener('change', e => { const b = e.target.closest('[data-chact="gate"]'); if (b) toggleGate(b.dataset.chid, b.checked); });
 const isFav = uid => favorites.some(f => f.uid === uid);
 function toggleFav(uid){
+  const tt = REG.get(uid);
+  if (tt && tt.source === 'youtube' && !isFav(uid)) return toast('Les titres YouTube ne peuvent pas être gardés en favoris (règles de l\'API YouTube).');
   if (isFav(uid)) favorites = favorites.filter(f => f.uid !== uid);
   else { const t = REG.get(uid); if (t) favorites = [...favorites, {...t}]; }
   persist(); renderAll(); updatePlayerUI();
@@ -930,6 +1030,7 @@ function authMsg(m, err){
   AUTH.msg = m || '';
   const el = $('auth-msg'); if (!el) return;
   el.textContent = AUTH.msg; el.className = 'text-xs mt-4 ' + (err ? 'text-red-400' : 'text-gray-400');
+  if (err && AUTH.msg && $('auth-gate').classList.contains('hidden')) toast(AUTH.msg, 'error');
 }
 function googleSignIn(){
   if (!CONFIG.googleClientId) return authMsg("Connexion non configurée : l'administrateur doit renseigner le Client ID Google.", true);
@@ -943,6 +1044,7 @@ async function onToken(resp){
   if (!google.accounts.oauth2.hasGrantedAllScopes(resp, gateScope().split(' ').pop()))
     return authMsg("Autorisez l'accès à votre compte YouTube (case à cocher sur l'écran Google) : il sert uniquement à vérifier et créer l'abonnement.", true);
   AUTH.token = resp.access_token; authMsg('Vérification du compte…');
+  clearTimeout(AUTH.expTimer); AUTH.expTimer = setTimeout(() => { if (AUTH.token) { sessionExpired(); toast('Session Google expirée : reconnectez-vous.', 'info'); } }, Math.max(60, (+resp.expires_in || 3600) - 60) * 1000);
   try {
     const r = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {headers:{Authorization:'Bearer ' + AUTH.token}});
     if (!r.ok) throw new Error('profil inaccessible (' + r.status + ')');
@@ -1012,7 +1114,7 @@ function renderAuth(){
   const ok = passed(), g = $('auth-gate');
   g.classList.toggle('hidden', ok); g.classList.toggle('flex', !ok);
   if (!ok) {
-    const conf = !!CONFIG.googleClientId, ico = v => v === 'ok' ? '<i class="fa-solid fa-circle-check text-emerald-400"></i>' : v === 'unknown' ? '<i class="fa-regular fa-circle-question text-gray-500"></i>' : '<i class="fa-regular fa-circle text-gray-500"></i>';
+    const conf = !!CONFIG.googleClientId, ico = v => v === 'ok' ? '<i class="fa-solid fa-circle-check text-emerald-400" aria-hidden="true"></i>' : v === 'unknown' ? '<i class="fa-regular fa-circle-question text-gray-400" aria-hidden="true"></i>' : '<i class="fa-regular fa-circle text-gray-400" aria-hidden="true"></i>';
     $('auth-steps').innerHTML = `<li class="flex items-center gap-3">${AUTH.user ? ico('ok') : ico('todo')}<span>1. Connexion avec Google${AUTH.user ? ' · <b>' + esc(AUTH.user.name) + '</b>' : ''}</span></li>
       ${CONFIG.requireSubscribe !== false ? `<li><div class="flex items-center gap-3">${AUTH.user && AUTH.subscribed ? ico('ok') : ico('todo')}<span>2. Abonnement au réseau YouTube</span></div>
       <ul class="ml-8 mt-2 space-y-1.5 text-[11px] text-gray-400">${gateChannels().map(c => `<li class="flex items-center gap-2">${ico(AUTH.status[c.id])}${esc(c.name)}</li>`).join('')}</ul></li>` : ''}`;
@@ -1025,10 +1127,13 @@ function renderAuth(){
   const ua = $('user-area');
   if (AUTH.user) {
     ua.classList.remove('hidden'); ua.classList.add('flex');
-    ua.innerHTML = `${AUTH.user.picture ? `<img src="${esc(AUTH.user.picture)}" referrerpolicy="no-referrer" alt="" class="w-8 h-8 rounded-full border border-white/15">` : ''}<div class="hidden sm:block text-right leading-tight"><div class="text-xs font-semibold text-white max-w-[9rem] truncate">${esc(AUTH.user.name)}</div><div class="text-[10px] ${AUTH.admin ? 'text-gold-400' : 'text-gray-500'}">${AUTH.admin ? 'Administrateur' : 'Abonné'}</div></div><button onclick="signOut()" title="Se déconnecter" class="p-2 rounded-xl bg-white/5 hover:bg-white/15 text-gray-300 text-xs"><i class="fa-solid fa-right-from-bracket"></i></button>`;
+    ua.innerHTML = `${AUTH.user.picture ? `<img src="${esc(AUTH.user.picture)}" referrerpolicy="no-referrer" alt="" class="w-8 h-8 rounded-full border border-white/15">` : ''}<div class="hidden sm:block text-right leading-tight"><div class="text-xs font-semibold text-white max-w-[9rem] truncate">${esc(AUTH.user.name)}</div><div class="text-[10px] ${AUTH.admin ? 'text-gold-400' : 'text-gray-400'}">${AUTH.admin ? 'Administrateur' : 'Abonné'}</div></div><button onclick="signOut()" title="Se déconnecter" class="p-2 rounded-xl bg-white/5 hover:bg-white/15 text-gray-300 text-xs"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i></button>`;
   } else if (setupMode()) {
     ua.classList.remove('hidden'); ua.classList.add('flex');
     ua.innerHTML = '<span class="text-[10px] font-mono px-2 py-1 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">Mode configuration</span>';
+  } else if (CONFIG.googleClientId && !gateRequired()) {
+    ua.classList.remove('hidden'); ua.classList.add('flex');
+    ua.innerHTML = '<button onclick="googleSignIn()" title="Connexion Google (facultative) : recherche YouTube et tendances" class="px-3 py-2 rounded-xl bg-white text-gray-900 font-bold text-xs flex items-center gap-1.5 hover:bg-gray-100"><i class="fa-brands fa-google" aria-hidden="true"></i><span class="hidden sm:inline">Connexion</span></button>';
   } else { ua.classList.add('hidden'); ua.classList.remove('flex'); ua.innerHTML = ''; }
 }
 window.addEventListener('hashchange', () => { applyRole(); renderAuth(); renderAll(); });
@@ -1039,18 +1144,20 @@ function targetChannel(t){
   if (id && id !== 'auto') { const c = channels.find(x => x.id === id); if (c) return c; }
   return channels.find(x => x.id === t.channelId) || channels.find(x => x.genre === t.genre) || channels[0];
 }
+// Ajout silencieux à la chaîne : aucune fenêtre, aucun message. Jamais pour les pistes en écoute seule (YouTube, tendances, licence non commerciale).
+const canIntegrate = t => !!t && !t.listenOnly && t.source !== 'youtube' && !!(t.lic && t.lic.commercial);
 function onTrackChosen(t){
+  if (!canIntegrate(t)) return;
   const ch = targetChannel(t); if (!ch) return;
   if (!t.channelId || (CONFIG.targetChannelId && CONFIG.targetChannelId !== 'auto')) t.channelId = ch.id;
   if (!tracks.some(x => x.uid === t.uid)) { tracks.unshift({...t}); }
-  showChannelCard(ch);
 }
 function showChannelCard(ch){
   const vid = CONFIG.targetVideoId || ch.featuredVideoId || '', card = $('chan-card');
   card.classList.remove('hidden');
-  card.innerHTML = `<div class="flex items-center justify-between px-3 py-2 border-b border-white/10"><div class="min-w-0"><div class="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">Ajoutée à la chaîne</div><div class="text-xs font-bold text-white truncate">${esc(ch.name)}</div></div><button onclick="closeChannelCard()" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/15 text-gray-400"><i class="fa-solid fa-xmark"></i></button></div>
-    ${vid ? `<div id="chan-video" class="relative aspect-video bg-black cursor-pointer" onclick="launchChannelVideo('${esc(vid)}')"><img src="https://i.ytimg.com/vi/${esc(vid)}/hqdefault.jpg" alt="" class="w-full h-full object-cover opacity-80"><span class="absolute inset-0 m-auto w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white shadow-lg"><i class="fa-solid fa-play ml-0.5"></i></span></div>` : ''}
-    <div class="p-3"><a href="${esc(ch.url)}" target="_blank" rel="noopener" class="block text-center btn-youtube text-white text-[11px] font-bold py-2 rounded-xl"><i class="fa-brands fa-youtube mr-1"></i>Ouvrir la chaîne</a></div>`;
+  card.innerHTML = `<div class="flex items-center justify-between px-3 py-2 border-b border-white/10"><div class="min-w-0"><div class="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">Ajoutée à la chaîne</div><div class="text-xs font-bold text-white truncate">${esc(ch.name)}</div></div><button onclick="closeChannelCard()" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/15 text-gray-400" aria-label="Fermer"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div>
+    ${vid ? `<div id="chan-video" class="relative aspect-video bg-black cursor-pointer" onclick="launchChannelVideo('${esc(vid)}')"><img src="https://i.ytimg.com/vi/${esc(vid)}/hqdefault.jpg" alt="" class="w-full h-full object-cover opacity-80"><span class="absolute inset-0 m-auto w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white shadow-lg"><i class="fa-solid fa-play ml-0.5" aria-hidden="true"></i></span></div>` : ''}
+    <div class="p-3"><a href="${esc(ch.url)}" target="_blank" rel="noopener" class="block text-center btn-youtube text-white text-[11px] font-bold py-2 rounded-xl"><i class="fa-brands fa-youtube mr-1" aria-hidden="true"></i>Ouvrir la chaîne</a></div>`;
 }
 function closeChannelCard(){ const c = $('chan-card'); c.classList.add('hidden'); c.innerHTML = ''; }
 function launchChannelVideo(vid){
@@ -1093,7 +1200,7 @@ async function playTrack(t, list){
   if (!passed()) { renderAuth(); return; }
   if (list) { queue = list.length ? list : [t]; qi = Math.max(0, queue.findIndex(x => x.uid === t.uid)); }
   current = t; totalPlays++; failedUid = null;
-  if (list) onTrackChosen(t);
+  onTrackChosen(t);
   persist(); updatePlayerUI();
   try {
     if (t.source === 'youtube') await playYT(t);
@@ -1138,7 +1245,7 @@ function syncPlayState(){
   $('player').classList.toggle('is-playing', on); $('brand').classList.toggle('playing', on);
   document.title = on && current ? `▶ ${current.title} — Music` : 'Music — Hub musical sans droits';
 }
-function renderPlayingMarks(){ if (tab === 'home') renderHome(); else if (tab === 'discover') applyFilters(); else if (tab === 'library') renderLibrary(); }
+function renderPlayingMarks(){ if (tab === 'home') renderHome(); else if (tab === 'discover') applyFilters(); else if (tab === 'library') renderLibrary(); else if (tab === 'trending') renderTrending(); }
 function togglePlay(){ if (!current) { const f = CTX.home[0] || CTX.discover[0]; if (f) playTrack(f, CTX.home[0] ? CTX.home : CTX.discover); return; } if (usingYT()) { isPlaying() ? ytPlayer.pauseVideo() : ytPlayer.playVideo(); } else { audio.paused ? audio.play().catch(() => {}) : audio.pause(); } }
 function step(d){
   if (!queue.length) return;
@@ -1247,8 +1354,8 @@ function importBackup(input){
   r.onload = () => { try {
     const d = JSON.parse(r.result);
     if (Array.isArray(d.channels) && d.channels.length) channels = d.channels;
-    if (Array.isArray(d.tracks)) tracks = d.tracks;
-    favorites = (d.favorites || []).filter(f => f && typeof f === 'object'); subscribers = d.subscribers || []; totalPlays = d.totalPlays || 0;
+    if (Array.isArray(d.tracks)) tracks = d.tracks.filter(t => t && t.title && t.uid && t.source !== 'youtube');
+    favorites = (d.favorites || []).filter(f => f && typeof f === 'object' && f.source !== 'youtube'); subscribers = d.subscribers || []; totalPlays = d.totalPlays || 0;
     persist(); renderAll(); toast('Sauvegarde restaurée.', 'success');
   } catch(e) { toast('Fichier de sauvegarde invalide.', 'error'); } input.value = ''; };
   r.readAsText(f);
@@ -1280,10 +1387,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (location.hash === '#reset') { try { ['config', 'channels'].forEach(k => localStorage.removeItem('music_hub_' + k)); } catch(e) {} history.replaceState(null, '', location.pathname); }
   localChannels = load('channels', null, 'yt_hub_html_channels');
   tracks = (load('tracks', []) || []).map(t => ({...t, uid:t.uid || ('lib:' + t.id), source:t.source || 'local'}));
-  subscribers = load('subs', []); favorites = (load('favs', []) || []).filter(f => f && typeof f === 'object');
+  subscribers = load('subs', []); favorites = (load('favs', []) || []).filter(f => f && typeof f === 'object' && f.source !== 'youtube');
+  tracks = tracks.filter(t => t.source !== 'youtube');
   totalPlays = load('plays', 0); viewsLaunched = load('views', 0);
   history = load('history', []); settings = {...settings, ...load('settings', {})};
-  settings.sources = {openverse:true, jamendo:true, archive:true, youtube:true, ...(settings.sources || {})};
+  settings.sources = {openverse:true, jamendo:false, archive:true, youtube:true, ...(settings.sources || {})};
   $('jamendo-key').value = settings.jamendoKey || '';
   tracks.forEach(t => REG.set(t.uid, t));
   current = null; audio.volume = 0.85; $('p-cover').src = PH;

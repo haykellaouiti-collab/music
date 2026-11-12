@@ -5,9 +5,21 @@
   ],
   "targetChannelId": "auto",
   "targetVideoId": "",
-  "requireLogin": false,
-  "requireSubscribe": false,
+  "requireLogin": true,
+  "requireSubscribe": true,
   "youtubeApiKey": "",
   "adsensePublisherId": "ca-pub-3266873353292561",
-  "adsenseSlot": ""
+  "adsenseSlot": "",
+  "channels": [
+    {
+      "id": "ch-1794476312366",
+      "name": "Music Hub – Libre de Droits",
+      "url": "https://www.youtube.com/@MusicHubLibredeDroits?sub_confirmation=1",
+      "genre": "jazz",
+      "tag": "HUB",
+      "description": "Music Hub, votre source dédiée aux meilleures ambiances sonores libres de droits.",
+      "baseSubscribers": 1000,
+      "subscribersGained": 0
+    }
+  ]
 }

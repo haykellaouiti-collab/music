@@ -500,6 +500,8 @@
   const DIR = {fr: 'ltr', en: 'ltr', ar: 'rtl'};
   const LOCALE = {fr: 'fr-FR', en: 'en-US', ar: 'ar-u-nu-latn'};
   function detect() {
+    const fixed = document.documentElement.getAttribute('data-ui');
+    if (fixed && DIR[fixed]) return fixed;
     let v = null;
     try { v = localStorage.getItem('music_hub_ui'); } catch (e) {}
     if (v && DIR[v]) return v;
@@ -516,11 +518,12 @@
     walk(document.body);
     const sel = document.getElementById('ui-lang'); if (sel) sel.value = l;
     const ttl = tr('Music — Hub musical sans droits', l);
-    document.title = ttl;
+    const fixedPage = h.hasAttribute('data-ui');
+    if (!fixedPage) document.title = ttl;
     const desc = tr('Music : recherche pro de musiques libres de droits (Openverse, Jamendo, Internet Archive), 27 genres, bibliothèque, crédits YouTube et gestion de chaînes.', l);
-    setMeta('meta[name="description"]', 'content', l === 'fr' ? 'Music : recherche pro de musiques libres de droits (Openverse, Jamendo, Internet Archive), 36 genres, bibliothèque, crédits YouTube et gestion de chaînes.' : desc);
-    setMeta('meta[property="og:title"]', 'content', ttl);
-    setMeta('meta[property="og:locale"]', 'content', {fr: 'fr_FR', en: 'en_US', ar: 'ar_AR'}[l]);
+    if (!fixedPage) setMeta('meta[name="description"]', 'content', l === 'fr' ? 'Music : recherche pro de musiques libres de droits (Openverse, Jamendo, Internet Archive), 36 genres, bibliothèque, crédits YouTube et gestion de chaînes.' : desc);
+    if (!fixedPage) setMeta('meta[property="og:title"]', 'content', ttl);
+    if (!fixedPage) setMeta('meta[property="og:locale"]', 'content', {fr: 'fr_FR', en: 'en_US', ar: 'ar_AR'}[l]);
     paintTheme();
     if (window.__appReady) { ['renderChips', 'renderHistory', 'renderAll'].forEach(f => { if (typeof window[f] === 'function') { try { window[f](); } catch (e) {} } }); }
     if (typeof window.syncPlayState === 'function') { try { window.syncPlayState(); } catch (e) {} }
@@ -560,7 +563,12 @@
   function init() {
     theme = detectTheme();
     const sel = document.getElementById('ui-lang');
-    if (sel) sel.addEventListener('change', () => applyLang(sel.value, true));
+    if (sel) sel.addEventListener('change', () => {
+      if (document.documentElement.hasAttribute('data-ui')) {
+        try { localStorage.setItem('music_hub_ui', sel.value); } catch (e) {}
+        location.href = '../' + sel.value + '/' + location.hash;
+      } else applyLang(sel.value, true);
+    });
     const tb = document.getElementById('theme-btn');
     if (tb) tb.addEventListener('click', () => setTheme(theme === 'light' ? 'dark' : 'light', true));
     applyLang(detect(), false);

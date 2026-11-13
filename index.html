@@ -15,11 +15,15 @@
 <meta property="og:title" content="Music — Royalty-free music hub">
 <meta property="og:url" content="https://haykellaouiti-collab.github.io/music/">
 <script>
-/* Redirige vers la langue mémorisée ou celle du navigateur ; la page reste utilisable sans JavaScript. */
+/* Redirige vers la langue mémorisée ou celle du navigateur,
+   mais SEULEMENT si la page de cette langue existe (évite le 404). */
 (function(){try{
   var l=localStorage.getItem("music_hub_ui");
   if(l!=="fr"&&l!=="en"&&l!=="ar"){l=(navigator.language||"en").slice(0,2).toLowerCase();if(l!=="fr"&&l!=="ar")l="en"}
-  location.replace("./"+l+"/"+location.hash);
+  var target="./"+l+"/index.html";
+  fetch(target,{method:"HEAD",cache:"no-store"}).then(function(r){
+    if(r.ok){location.replace("./"+l+"/"+location.hash);}
+  }).catch(function(){});
 }catch(e){}})();
 </script>
 <style>
